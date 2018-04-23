@@ -1,0 +1,10 @@
+ǩ������ʹ��eclipse clean ��Ŀ ��ǩ��
+
+
+standard:alpha1s_2015_4_10_ubtrobot
+First and Last Name�������ű�ѡ
+Organizational Unit�������ű�ѡ
+Organizational�������ű�ѡ
+City of Locality������
+State or Province���㶫
+Country Code��XX����CN
