@@ -1,0 +1,9 @@
+include ':materialstyleslib'
+
+/*include ":baselib"
+project(':baselib').projectDir = new File(settingsDir, '../Alpha1Ebot_En/baselib')*/
+
+/*include ":app"
+project(':app').projectDir = new File(settingsDir, '../Alpha1Ebot_En/app')*/
+
+//include ":mainmodule", ":app"
