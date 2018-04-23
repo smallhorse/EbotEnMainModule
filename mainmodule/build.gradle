@@ -1,0 +1,67 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.ubt.alpha1e'
+apply plugin: 'com.jakewharton.butterknife'
+
+android {
+    compileSdkVersion build_versions.target_sdk
+    buildToolsVersion build_versions.build_tools
+    defaultConfig {
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    android.libraryVariants.all { variant ->
+        variant.outputs.all {
+            if (outputFileName.endsWith('.aar')) {
+                if (variant.buildType.name == "debug") {
+                    outputFileName = "${archivesBaseName}-debug-${android.defaultConfig.versionName}.aar"
+                } else {
+                    outputFileName = "${archivesBaseName}-${android.defaultConfig.versionName}.aar"
+                }
+            }
+        }
+    }
+
+    resourcePrefix "main"
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation deps.support.app_compat
+    implementation deps.constraint_layout
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    //butterknife
+    implementation deps.butterknife.runtime
+    annotationProcessor deps.butterknife.compiler
+
+    //eventbus3.0.0
+    implementation deps.eventbus.eventbus
+    implementation project(':materialstyleslib')
+
+}
