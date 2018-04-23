@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_contact_us_customer_service"
+            android:textColor="#FF666666"
+            android:textSize="14sp"
+            />
+        <TextView
+            android:id="@+id/tv_contact_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_contact_us_telephone"
+            android:textColor="#FF37AAFF"
+            android:textSize="17sp"
+            android:clickable="true"
+            android:focusable="true"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_contact_us_email"
+            android:textColor="#FF666666"
+            android:textSize="14sp"
+            android:layout_marginTop="30dp"
+            />
+        <TextView
+            android:id="@+id/tv_contact_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_contact_us_email_address"
+            android:textColor="#FF37AAFF"
+            android:textSize="17sp"
+            android:clickable="true"
+            android:focusable="true"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_contact_us_website_name"
+            android:textColor="#FF666666"
+            android:textSize="14sp"
+            android:layout_marginTop="30dp"
+            />
+        <TextView
+            android:id="@+id/tv_contact_website"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_contact_us_website_address"
+            android:textColor="#FF37AAFF"
+            android:textSize="17sp"
+            android:background="@drawable/main_touch_bg"
+            android:clickable="true"
+            android:focusable="true" />
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,71 @@
+<resources>
+    <string name="main_blockly">Blockly</string>
+    <string name="main_joystick">Joystick</string>
+    <string name="main_actions">Actions</string>
+    <string name="main_community">Community</string>
+
+    <!--控制中心字符-->
+    <string name="main_ctl_control_center_title">Control Center</string>
+    <string name="main_ctl_fall_down_protection">Turn this on so Alpha will protect itself when falling down.
+        Please don’t hold the robot in case of pinching your fingers.</string>
+    <string name="main_ctl_ir_sensor">Turn this on so Alpha will say hello if it detects things within 50 cm in front of it.</string>
+    <string name="main_ctl_volume">Volume</string>
+    <string name="main_ctl_fall_down">Fall-down Protection</string>
+    <string name="main_ctl_ir">IR Sensor</string>
+    <string name="main_ctl_min">MIN</string>
+    <string name="main_ctl_max">MAX</string>
+    
+    <!--用户中心-->
+    <string name="main_save">Save</string>
+    <string name="main_profile_tab">Profile</string>
+    <string name="main_profile_photo_camera">Camera</string>
+    <string name="main_profile_photo_albums">Albums</string>
+    <string name="main_profile_photo_cancel">Cancel</string>
+    <string name="main_profile_birthday">Birthday</string>
+    <string name="main_profile_gender">Gender</string>
+    <string name="main_profile_gender_female">Female</string>
+    <string name="main_profile_gender_male">Male</string>
+    <string name="main_profile_gender_robot">Robot</string>
+    <string name="main_profile_country">Country</string>
+
+
+    <string name="main_notifications_tab">Notifications</string>
+    <string name="main_notifications_nothing">No Notifications Yet</string>
+
+    <string name="main_about_app_tab">About app</string>
+    <string name="main_about_app_version">Alpha Ebot </string>
+    <string name="main_about_app_check">Check for Updates</string>
+    <string name="main_about_app_check_latest_version_toast">This is the latest version.</string>
+    <string name="main_about_app_check_update_dialogue">Are you sure to update to the latest version?</string>
+    <string name="main_about_app_check_update_succeed">Update was successful.</string>
+    <string name="main_about_app_check_updatet_fail_toast">Failed to update the App.  Please check the network..</string>
+
+
+    <string name="main_contact_us_tab">Contact us</string>
+    <string name="main_contact_us_customer_service">Customer Service Number</string>
+    <string name="main_contact_us_telephone">86&#8211;400&#8211;6666&#8211;700</string>
+    <string name="main_contact_us_telephone_call">Call 86&#8211;400&#8211;6666&#8211;700?</string>
+
+    <string name="main_contact_us_email">Email</string>
+    <string name="main_contact_us_email_address">ucare@ubtrobot.com</string>
+    <string name="main_contact_us_email_send">Send an email to ucare@ubtrobot.com?</string>
+
+
+    <string name="main_contact_us_website_name">Official website</string>
+    <string name="main_contact_us_website_address">www.ubtrobot.com</string>
+    <string name="main_contact_us_website_go">Go to www.ubtrobot.com?</string>
+
+    <string name="main_help_feedback_tab">Help &#38; Feedback</string>
+    <string name="main_help_feedback_title">FAQ</string>
+    <string name="main_help_feedback_details">Details</string>
+    <string name="main_help_feedback_give_feedback">Give feedback</string>
+    <string name="main_help_feedback_give_feedback_helpful">Helpful</string>
+    <string name="main_help_feedback_give_feedback_helpless">Helpless</string>
+
+
+    <string name="main_language_tab">Language</string>
+    <string name="main_language_content">Language：English</string>
+    <string name="main_log_out_tab">Log out</string>
+    <string name="main_log_out_button">Log out account</string>
+    <string name="main_log_out_dialogue">Are you sure to log out?</string>
+</resources>

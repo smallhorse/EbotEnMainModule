@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+<android.support.constraint.ConstraintLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="111dp">
+
+
+    <ImageView
+        android:id="@+id/iv_profile_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:src="@mipmap/main_logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_profile_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="Cristina Song"
+        android:textColor="#FF333333"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_profile_icon" />
+
+    <ImageView
+        android:id="@+id/iv_user_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:clickable="true"
+        android:src="@mipmap/main_profile_edit"
+        app:layout_constraintStart_toEndOf="@+id/tv_profile_name"
+        app:layout_constraintTop_toTopOf="@+id/tv_profile_name"
+        android:focusable="true" />
+
+    <TextView
+        android:id="@+id/tv_profile_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:text="349599058@hotmail.com"
+        android:textColor="#FF999999"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_profile_name" />
+
+
+    <TextView
+        android:id="@+id/tv_profile_age"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/main_profile_birthday"
+        app:layout_constraintRight_toLeftOf="@id/mainGuideline2"
+        app:layout_constraintTop_toBottomOf="@id/tv_profile_id"
+        android:textColor="#FF999999"
+        android:textSize="14sp"
+        />
+
+    <TextView
+        android:id="@+id/tv_profile_age_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="17dp"
+        app:layout_constraintStart_toStartOf="@id/mainGuideline2"
+        android:text="Unfilled"
+        android:textColor="#FF333333"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_profile_age"
+        />
+
+
+    <TextView
+        android:id="@+id/tv_profile_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/main_profile_gender"
+        android:textColor="#FF999999"
+        android:textSize="14sp"
+        app:layout_constraintRight_toLeftOf="@id/mainGuideline2"
+        app:layout_constraintTop_toBottomOf="@id/tv_profile_age" />
+
+    <TextView
+        android:id="@+id/tv_profile_gender_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="17dp"
+        app:layout_constraintStart_toStartOf="@id/mainGuideline2"
+        android:text="@string/main_profile_gender_female"
+        android:textColor="#FF333333"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_profile_gender"
+        />
+
+    <TextView
+        android:id="@+id/tv_profile_country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/main_profile_country"
+        android:textColor="#FF999999"
+        android:textSize="14sp"
+        app:layout_constraintRight_toLeftOf="@id/mainGuideline2"
+        app:layout_constraintTop_toBottomOf="@id/tv_profile_gender" />
+
+    <TextView
+        android:id="@+id/tv_profile_country_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="17dp"
+        app:layout_constraintStart_toStartOf="@id/mainGuideline2"
+        android:text="Unfilled"
+        android:textColor="#FF333333"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_profile_country"
+        />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/mainGuideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/main_ctl_bg"
+    >
+
+
+    <!--volume框开始-->
+    <ImageView
+        android:id="@+id/iv_ctl_volume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/main_ctl_volume"
+        android:layout_marginTop="40.5dp"
+        android:layout_marginStart="30dp"
+        android:paddingTop="4dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_volume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/iv_ctl_volume"
+        android:layout_alignTop="@id/iv_ctl_volume"
+        android:layout_marginStart="9dp"
+        android:text="@string/main_ctl_volume"
+        android:textColor="#FF1D3740"
+        android:textSize="15sp"
+        />
+
+    <TextView
+        android:id="@+id/tv_min"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/main_ctl_min"
+        android:textColor="#FF1D3740"
+        android:textSize="12sp"
+        android:layout_alignStart="@id/tv_volume"
+        android:layout_below="@id/tv_volume"
+        android:layout_marginTop="20.5dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_max"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/main_ctl_max"
+        android:textColor="#FF1D3740"
+        android:textSize="12sp"
+        android:layout_alignTop="@id/tv_min"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="130dp"
+        />
+
+    <SeekBar
+        android:id="@+id/seekbar_volume"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/tv_min"
+        android:layout_below="@id/tv_volume"
+        android:layout_marginStart="10.5dp"
+        android:layout_toStartOf="@id/tv_max"
+        android:layout_marginTop="15dp"
+        />
+
+    <View
+        android:id="@+id/view_volume_line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#FFCDCED2"
+        android:layout_marginStart="30dp"
+        android:layout_below="@id/tv_min"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        />
+    <!--volume框结束-->
+
+    <!--跌倒保护开始-->
+    <ImageView
+        android:id="@+id/iv_ctl_fall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/main_ctl_fail"
+        android:layout_below="@id/view_volume_line"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_fall_down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/iv_ctl_fall"
+        android:layout_alignTop="@id/iv_ctl_fall"
+        android:layout_marginStart="9dp"
+        android:text="@string/main_ctl_fall_down"
+        android:textColor="#FF1D3740"
+        android:textSize="15sp"
+        />
+
+    <Switch
+        android:id="@+id/switch_fall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/iv_ctl_fall"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="30dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_fall_descript"
+        android:layout_width="305dp"
+        android:layout_height="wrap_content"
+        android:text="@string/main_ctl_fall_down_protection"
+        android:layout_below="@id/tv_fall_down"
+        android:layout_alignStart="@id/tv_fall_down"
+        android:layout_marginTop="10dp"
+        android:textColor="#FFA2A2A2"
+        android:textSize="12sp"
+        />
+
+    <View
+        android:id="@+id/view_fall_line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#FFCDCED2"
+        android:layout_marginStart="30dp"
+        android:layout_below="@id/tv_fall_descript"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="30dp"
+        />
+    <!--跌倒保护结束-->
+
+    <!--红外控制框开始-->
+    <ImageView
+        android:id="@+id/iv_ctl_ir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/main_ctl_ir"
+        android:layout_below="@id/view_fall_line"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:paddingTop="2dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_ir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/iv_ctl_ir"
+        android:layout_alignTop="@id/iv_ctl_ir"
+        android:layout_marginStart="9dp"
+        android:text="@string/main_ctl_ir"
+        android:textColor="#FF1D3740"
+        android:textSize="15sp"
+        />
+
+    <Switch
+        android:id="@+id/switch_ir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/iv_ctl_ir"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="30dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_ir_descript"
+        android:layout_width="305dp"
+        android:layout_height="wrap_content"
+        android:text="@string/main_ctl_ir_sensor"
+        android:layout_below="@id/tv_ir"
+        android:layout_alignStart="@id/tv_ir"
+        android:layout_marginTop="10dp"
+        android:textColor="#FFA2A2A2"
+        android:textSize="12sp"
+        />
+    <!--红外控制框结束-->
+</RelativeLayout>

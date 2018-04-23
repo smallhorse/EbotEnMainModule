@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
+
+    <!--上面按钮开始-->
+    <RelativeLayout
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/right_bar"
+        >
+        <ImageView
+            android:id="@+id/iv_robot_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/main_robot_status"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            />
+
+        <ImageView
+            android:id="@+id/iv_robot_status_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/main_robot_status_error"
+            android:layout_alignBottom="@id/iv_robot_status"
+            android:layout_alignEnd="@id/iv_robot_status"
+            />
+
+        <ImageView
+            android:id="@+id/iv_robot_status_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/main_robot_status_ok"
+            android:layout_alignBottom="@id/iv_robot_status"
+            android:layout_alignEnd="@id/iv_robot_status"
+            android:visibility="gone"
+            />
+        <TextView
+            android:id="@+id/tv_charging_backgroup"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/main_charging_backgroup"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/iv_robot_status"
+            android:layout_centerVertical="true"
+            android:text="40%"
+            android:drawableStart="@mipmap/main_charging_yellow"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:paddingLeft="8dp"
+            />
+
+        <ImageView
+            android:id="@+id/iv_play_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:src="@mipmap/main_play_center"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            />
+
+        <ImageView
+            android:id="@+id/iv_voice_cmd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:src="@mipmap/main_voice_cmd"
+            android:layout_toStartOf="@id/iv_play_center"
+            android:layout_marginEnd="70dp"
+            android:layout_alignTop="@id/iv_play_center"
+            android:clickable="true"
+            android:focusable="true"
+            />
+    </RelativeLayout>
+    <!--上面按钮结束-->
+
+    <!--中心按钮布局-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@id/right_bar"
+        android:layout_marginEnd="2dp"
+        android:layout_below="@id/top_bar"
+        android:layout_marginTop="5dp"
+        >
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/constraintLayout">
+
+            <ImageView
+                android:id="@+id/iv_actions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/constraintLayout"
+                android:layout_alignStart="@+id/constraintLayout"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@mipmap/main_actions"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/iv_actions"
+                android:layout_alignTop="@id/iv_actions"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/main_actions"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_blockly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/iv_actions"
+                android:layout_marginStart="4dp"
+                android:layout_toEndOf="@+id/iv_actions"
+                android:adjustViewBounds="false"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:cropToPadding="false"
+                android:focusable="true"
+                android:src="@mipmap/main_blockly"
+                android:scaleType="centerInside"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toTopOf="@+id/iv_actions" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/main_blockly"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_community"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/iv_actions"
+                android:layout_alignStart="@+id/iv_blockly"
+                android:layout_below="@+id/iv_blockly"
+                android:layout_marginStart="4dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@mipmap/main_community"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_actions"
+                app:layout_constraintStart_toStartOf="@+id/guideline2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/iv_community"
+                android:layout_alignTop="@id/iv_community"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/main_community"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toTopOf="@+id/iv_community" />
+
+            <ImageView
+                android:id="@+id/iv_joystick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/iv_community"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_toRightOf="@id/iv_community"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@mipmap/main_joystick"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_community"
+                app:layout_constraintEnd_toEndOf="@+id/iv_blockly"
+                app:layout_constraintStart_toEndOf="@+id/iv_community"
+                app:layout_constraintTop_toTopOf="@+id/iv_community"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/iv_joystick"
+                android:layout_alignTop="@id/iv_joystick"
+                android:layout_marginBottom="92dp"
+                android:layout_marginEnd="48dp"
+                android:text="@string/main_joystick"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.36" />
+
+        </android.support.constraint.ConstraintLayout>
+    </RelativeLayout>
+</RelativeLayout>
