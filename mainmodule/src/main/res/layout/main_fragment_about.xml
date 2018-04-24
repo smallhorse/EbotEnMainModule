@@ -11,13 +11,13 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/iv_logout_icon"
+            android:id="@+id/iv_about_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/main_about_icon" />
 
         <TextView
-            android:id="@+id/tv_logout_name"
+            android:id="@+id/tv_about_version"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
@@ -26,13 +26,16 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/tv_logout_id"
+            android:id="@+id/tv_about_check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="@string/main_about_app_check"
             android:textColor="#FF37AAFF"
             android:clickable="true"
+            android:gravity="center"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/main_update_red_dot"
             android:textSize="12sp"
             android:focusable="true" />
 

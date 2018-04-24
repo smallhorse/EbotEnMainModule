@@ -6,7 +6,6 @@ import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
 import android.support.annotation.Nullable;
 
-import com.ubt.baselib.ConfigureBaseLib;
 import com.ubt.en.alpha1e.R;
 
 
@@ -44,7 +43,7 @@ public class SettingsFragment extends PreferenceFragment {
                 mBuildInNightModePreference.setChecked(false);
                 mSDCardNightModePreference.setChecked(false);
                 boolean boolValue = (boolean) newValue;
-                ConfigureBaseLib.getInstance().setSkinConfig(boolValue);
+//                ConfigureBaseLib.getInstance().setSkinConfig(boolValue);
 //                if (boolValue) {
 //                    SkinCompatManager.getInstance().loadSkin("night.skin", null, SkinCompatManager.SKIN_LOADER_STRATEGY_ASSETS);
 //                } else {

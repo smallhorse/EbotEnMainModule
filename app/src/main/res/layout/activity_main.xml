@@ -17,6 +17,7 @@
     <!--中心按钮布局-->
     <FrameLayout
         android:id="@+id/frame_content"
+        android:layout_toStartOf="@id/right_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginRight="2dp"

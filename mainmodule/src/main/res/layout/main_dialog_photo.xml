@@ -21,12 +21,14 @@
         >
 
         <TextView
+            android:id="@+id/tv_profile_camera"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingBottom="18dp"
             android:paddingTop="18dp"
             android:text="@string/main_profile_photo_camera"
+            android:background="@drawable/main_touch_bg"
             android:textColor="#FF333333"
             android:textSize="15sp" />
 
@@ -36,11 +38,13 @@
             android:background="@color/main_grey" />
 
         <TextView
+            android:id="@+id/tv_profile_albums"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingBottom="18dp"
             android:paddingTop="18dp"
+            android:background="@drawable/main_touch_bg"
             android:text="@string/main_profile_photo_albums"
             android:textColor="#FF333333"
             android:textSize="15sp" />
@@ -51,13 +55,15 @@
             android:background="@color/main_grey" />
 
         <TextView
+            android:id="@+id/tv_profile_cancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:gravity="center"
             android:paddingBottom="18dp"
             android:paddingTop="18dp"
-            android:text="@string/main_profile_photo_cancel"
+            android:text="@string/main_common_cancel"
+            android:background="@drawable/main_touch_bg"
             android:textColor="#37AAFF"
             android:textSize="15sp" />
     </LinearLayout>

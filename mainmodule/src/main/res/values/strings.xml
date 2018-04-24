@@ -20,7 +20,6 @@
     <string name="main_profile_tab">Profile</string>
     <string name="main_profile_photo_camera">Camera</string>
     <string name="main_profile_photo_albums">Albums</string>
-    <string name="main_profile_photo_cancel">Cancel</string>
     <string name="main_profile_birthday">Birthday</string>
     <string name="main_profile_gender">Gender</string>
     <string name="main_profile_gender_female">Female</string>
@@ -44,11 +43,11 @@
     <string name="main_contact_us_tab">Contact us</string>
     <string name="main_contact_us_customer_service">Customer Service Number</string>
     <string name="main_contact_us_telephone">86&#8211;400&#8211;6666&#8211;700</string>
-    <string name="main_contact_us_telephone_call">Call 86&#8211;400&#8211;6666&#8211;700?</string>
+    <string name="main_contact_us_telephone_call">Call \n86&#8211;400&#8211;6666&#8211;700?</string>
 
     <string name="main_contact_us_email">Email</string>
     <string name="main_contact_us_email_address">ucare@ubtrobot.com</string>
-    <string name="main_contact_us_email_send">Send an email to ucare@ubtrobot.com?</string>
+    <string name="main_contact_us_email_send">Send an email to \n ucare@ubtrobot.com?</string>
 
 
     <string name="main_contact_us_website_name">Official website</string>
@@ -68,4 +67,10 @@
     <string name="main_log_out_tab">Log out</string>
     <string name="main_log_out_button">Log out account</string>
     <string name="main_log_out_dialogue">Are you sure to log out?</string>
+
+
+    <string name="main_common_cancel">Cancel</string>
+    <string name="main_common_sure">Sure</string>
+    <string name="main_common_confirm">Confirm</string>
+
 </resources>

@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ubt.mainmodule" >
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
 <application>
     <activity android:name=".user.profile.edit.UserInfoEditActivity"
         android:launchMode="singleTop"

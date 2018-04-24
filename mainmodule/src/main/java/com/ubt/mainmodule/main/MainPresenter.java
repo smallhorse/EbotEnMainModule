@@ -69,6 +69,7 @@ public class MainPresenter extends BasePresenterImpl<MainContract.View> implemen
         }else{
             if(batteryTimer != null){
                 batteryTimer.cancel();
+                batteryTimer = null;
             }
         }
     }

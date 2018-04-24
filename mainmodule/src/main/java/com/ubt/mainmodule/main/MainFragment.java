@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.ubt.baselib.commonModule.ModuleUtils;
 import com.ubt.baselib.mvp.MVPBaseFragment;
 import com.ubt.mainmodule.R;
 import com.ubt.mainmodule.R2;
@@ -104,23 +106,20 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
     @OnClick({R2.id.iv_robot_status, R2.id.iv_play_center, R2.id.iv_voice_cmd, R2.id.iv_actions,
             R2.id.iv_blockly, R2.id.iv_community, R2.id.iv_joystick})
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            /*case R.id.iv_robot_status:
-                break;
-            case R.id.iv_play_center:
-                break;
-            case R.id.iv_voice_cmd:
-                break;
-            case R.id.iv_actions:
-                break;
-            case R.id.iv_blockly:
-                break;
-            case R.id.iv_community:
-                break;
-            case R.id.iv_joystick:
-                break;*/
-            default:
-                break;
+        if(view.getId() == R.id.iv_robot_status){
+            ARouter.getInstance().build(ModuleUtils.Bluetooh_BleStatuActivity).navigation();
+        }else if(view.getId() == R.id.iv_play_center){
+            ARouter.getInstance().build(ModuleUtils.Playcenter_module).navigation();
+        }else if(view.getId() == R.id.iv_voice_cmd){
+
+        }else if(view.getId() == R.id.iv_actions){
+            ARouter.getInstance().build(ModuleUtils.Actions_ActionProgram).navigation();
+        }else if(view.getId() == R.id.iv_blockly){
+            ARouter.getInstance().build(ModuleUtils.Blockly_BlocklyProgram).navigation();
+        }else if(view.getId() == R.id.iv_community){
+            ARouter.getInstance().build(ModuleUtils.Community_ActionProgram).navigation();
+        }else if(view.getId() == R.id.iv_joystick){
+            ARouter.getInstance().build(ModuleUtils.Joystick_ActionProgram).navigation();
         }
     }
 
@@ -155,7 +154,7 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
      * 刷新机器人电池状态
      */
     public void refreshBatteryStatus(int power) {
-        if (prePower == power) {
+        if (prePower == power && isAdded() && getActivity()!= null) {
             return;
         }
         //纠正参数
