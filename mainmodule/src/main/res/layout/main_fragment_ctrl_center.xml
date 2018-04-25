@@ -62,6 +62,7 @@
         android:layout_marginStart="10.5dp"
         android:layout_toStartOf="@id/tv_max"
         android:layout_marginTop="15dp"
+        android:max="255"
         />
 
     <View

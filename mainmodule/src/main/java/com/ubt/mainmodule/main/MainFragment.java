@@ -32,26 +32,16 @@ import butterknife.Unbinder;
 
 public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresenter> implements MainContract.View {
 
-    @BindView(R2.id.iv_robot_status)
-    ImageView ivRobotStatus;
-    @BindView(R2.id.iv_robot_status_error)
-    ImageView ivRobotStatusError;
-    @BindView(R2.id.iv_robot_status_ok)
-    ImageView ivRobotStatusOk;
-    @BindView(R2.id.tv_charging_backgroup)
-    TextView tvChargingBattary;
-    @BindView(R2.id.iv_play_center)
-    ImageView ivPlayCenter;
-    @BindView(R2.id.iv_voice_cmd)
-    ImageView ivVoiceCmd;
-    @BindView(R2.id.iv_actions)
-    ImageView ivActions;
-    @BindView(R2.id.iv_blockly)
-    ImageView ivBlockly;
-    @BindView(R2.id.iv_community)
-    ImageView ivCommunity;
-    @BindView(R2.id.iv_joystick)
-    ImageView ivJoystick;
+    @BindView(R2.id.iv_robot_status)    ImageView ivRobotStatus;
+    @BindView(R2.id.iv_robot_status_error)    ImageView ivRobotStatusError;
+    @BindView(R2.id.iv_robot_status_ok)    ImageView ivRobotStatusOk;
+    @BindView(R2.id.tv_charging_backgroup)    TextView tvChargingBattary;
+    @BindView(R2.id.iv_play_center)    ImageView ivPlayCenter;
+    @BindView(R2.id.iv_voice_cmd)    ImageView ivVoiceCmd;
+    @BindView(R2.id.iv_actions)    ImageView ivActions;
+    @BindView(R2.id.iv_blockly)    ImageView ivBlockly;
+    @BindView(R2.id.iv_community)    ImageView ivCommunity;
+    @BindView(R2.id.iv_joystick)    ImageView ivJoystick;
 
     Unbinder unbinder;
     private Handler mHandler;
@@ -113,6 +103,8 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
         }else if(view.getId() == R.id.iv_voice_cmd){
 
         }else if(view.getId() == R.id.iv_actions){
+//            BlueClientUtil.getInstance().connect("A0:2C:36:89:F3:7D");
+//            BlueClientUtil.getInstance().connect("88:83:5D:B8:39:0C");
             ARouter.getInstance().build(ModuleUtils.Actions_ActionProgram).navigation();
         }else if(view.getId() == R.id.iv_blockly){
             ARouter.getInstance().build(ModuleUtils.Blockly_BlocklyProgram).navigation();

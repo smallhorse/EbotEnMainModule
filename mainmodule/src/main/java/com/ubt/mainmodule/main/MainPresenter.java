@@ -65,7 +65,7 @@ public class MainPresenter extends BasePresenterImpl<MainContract.View> implemen
                         mBTUtil.sendData(new BTCmdReadBattery().toByteArray());
                     }
                 }
-            },0, 60000);//每1分钟执行一次
+            },200, 60000);//每1分钟执行一次
         }else{
             if(batteryTimer != null){
                 batteryTimer.cancel();

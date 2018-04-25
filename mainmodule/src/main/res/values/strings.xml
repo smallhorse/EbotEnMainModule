@@ -32,7 +32,7 @@
     <string name="main_notifications_nothing">No Notifications Yet</string>
 
     <string name="main_about_app_tab">About app</string>
-    <string name="main_about_app_version">Alpha Ebot </string>
+    <string name="main_about_app_version">Alpha Ebot V</string>
     <string name="main_about_app_check">Check for Updates</string>
     <string name="main_about_app_check_latest_version_toast">This is the latest version.</string>
     <string name="main_about_app_check_update_dialogue">Are you sure to update to the latest version?</string>
