@@ -26,6 +26,8 @@
     <string name="main_profile_gender_male">Male</string>
     <string name="main_profile_gender_robot">Robot</string>
     <string name="main_profile_country">Country</string>
+    <string name="main_profile_unfilled">Unfilled</string>
+    <string name="main_profile_saveFail">Save profile fail!</string>
 
 
     <string name="main_notifications_tab">Notifications</string>

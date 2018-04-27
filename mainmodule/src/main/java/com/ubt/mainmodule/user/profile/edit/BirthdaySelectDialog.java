@@ -5,9 +5,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 
+import com.ubt.baselib.globalConst.Constant1E;
+import com.ubt.baselib.model1E.UserInfoModel;
+import com.ubt.baselib.utils.SPUtils;
 import com.ubt.mainmodule.R;
 import com.ubt.mainmodule.R2;
 import com.weigan.loopview.LoopView;
@@ -25,16 +29,11 @@ public class BirthdaySelectDialog extends Dialog {
 
     private static final int START_YEAR = 1900;
     private static final int END_YEAR = 2014;
-    @BindView(R2.id.loopView_year)
-    LoopView loopViewYear;
-    @BindView(R2.id.loopView_month)
-    LoopView loopViewMonth;
-    @BindView(R2.id.loopView_day)
-    LoopView loopViewDay;
-    @BindView(R2.id.btn_birth_cancel)
-    Button btnBirthCancel;
-    @BindView(R2.id.btn_birth_confirm)
-    Button btnBirthConfirm;
+    @BindView(R2.id.loopView_year)    LoopView loopViewYear;
+    @BindView(R2.id.loopView_month)    LoopView loopViewMonth;
+    @BindView(R2.id.loopView_day)    LoopView loopViewDay;
+    @BindView(R2.id.btn_birth_cancel)    Button btnBirthCancel;
+    @BindView(R2.id.btn_birth_confirm)    Button btnBirthConfirm;
 
 
     private List<String> listYear;
@@ -66,9 +65,12 @@ public class BirthdaySelectDialog extends Dialog {
 
 
     private void initView() {
+        UserInfoModel userInfo = (UserInfoModel) SPUtils.getInstance().readObject(Constant1E.SP_USER_INFO);
+
         getYearData();
         loopViewYear.setItemsVisibleCount(5);
         loopViewYear.setTextSize(18);
+
 
         getMonthData();
         loopViewMonth.setItemsVisibleCount(5);
@@ -77,6 +79,19 @@ public class BirthdaySelectDialog extends Dialog {
         getDayData(31); //默认设置每月有31天，然后根据选择的月份再计算出相应月份的天数
         loopViewDay.setItemsVisibleCount(5);
         loopViewDay.setTextSize(18);
+
+        //初始化当前位置
+        if(userInfo != null && !TextUtils.isEmpty(userInfo.getBirthDate())){
+            String[] birth = userInfo.getBirthDate().split("-");
+            int yearPos = Integer.valueOf(birth[0]) - 1900;
+            loopViewYear.setCurrentPosition(yearPos);
+
+            int monthPos = Integer.valueOf(birth[1]) - 1;
+            loopViewMonth.setCurrentPosition(monthPos);
+
+            int dayPos = Integer.valueOf(birth[1]) - 1;
+            loopViewDay.setCurrentPosition(dayPos);
+        }
 
         loopViewYear.setListener(new OnItemSelectedListener() {
             @Override

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -38,10 +39,10 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
     @BindView(R2.id.tv_charging_backgroup)    TextView tvChargingBattary;
     @BindView(R2.id.iv_play_center)    ImageView ivPlayCenter;
     @BindView(R2.id.iv_voice_cmd)    ImageView ivVoiceCmd;
-    @BindView(R2.id.iv_actions)    ImageView ivActions;
-    @BindView(R2.id.iv_blockly)    ImageView ivBlockly;
-    @BindView(R2.id.iv_community)    ImageView ivCommunity;
-    @BindView(R2.id.iv_joystick)    ImageView ivJoystick;
+    @BindView(R2.id.iv_actions)    RelativeLayout ivActions;
+    @BindView(R2.id.iv_blockly)    RelativeLayout ivBlockly;
+    @BindView(R2.id.iv_community)    RelativeLayout ivCommunity;
+    @BindView(R2.id.iv_joystick)    RelativeLayout ivJoystick;
 
     Unbinder unbinder;
     private Handler mHandler;

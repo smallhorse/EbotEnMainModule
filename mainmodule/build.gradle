@@ -62,6 +62,6 @@ dependencies {
 
     //eventbus3.0.0
     implementation deps.eventbus.eventbus
-    implementation project(':materialstyleslib')
+//    implementation project(':materialstyleslib')
 
 }

@@ -4,6 +4,7 @@ import android.os.Handler;
 
 import com.ubt.baselib.mvp.BasePresenter;
 import com.ubt.baselib.mvp.BaseView;
+import com.ubt.mainmodule.user.profile.UserModel;
 
 /**
  * @作者：bin.zhang@ubtrobot.com
@@ -12,6 +13,7 @@ import com.ubt.baselib.mvp.BaseView;
  */
 
 public class UserInfoEditContract {
+    public static final int HCMD_UPDATE_COMPLET = 1;
 
     public interface View extends BaseView {
         Handler getViewHandler();
@@ -20,5 +22,7 @@ public class UserInfoEditContract {
     interface Presenter extends BasePresenter<View> {
         void init();
         void release();
+        void saveUserInfo();
+        UserModel getUserModel();
     }
 }

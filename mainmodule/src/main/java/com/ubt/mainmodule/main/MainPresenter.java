@@ -104,7 +104,7 @@ public class MainPresenter extends BasePresenterImpl<MainContract.View> implemen
                 switch (packet.getmCmd()){
                     case BTCmd.DV_READ_BATTERY: //更新电量
                         Message msg = mViewHandler.obtainMessage(MainContract.HCMD_REFRESH_BATTERY);
-                        msg.arg1 = (int)packet.getmParam()[0];
+                        msg.arg1 = (int)packet.getmParam()[3];
                         mViewHandler.sendMessage(msg);
                         break;
                 }

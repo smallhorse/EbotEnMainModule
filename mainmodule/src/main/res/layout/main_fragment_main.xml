@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   >
+    android:background="@mipmap/main_bg"
+    tools:ignore="ResourceName">
 
     <!--上面按钮开始-->
     <RelativeLayout
@@ -85,148 +86,134 @@
     </RelativeLayout>
     <!--上面按钮结束-->
 
-    <!--中心按钮布局-->
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_toLeftOf="@id/right_bar"
-        android:layout_marginEnd="2dp"
-        android:layout_below="@id/top_bar"
-        android:layout_marginTop="5dp"
-        >
+        android:layout_below="@+id/top_bar"
+        android:orientation="horizontal">
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:id="@+id/constraintLayout">
+        <RelativeLayout
+            android:id="@+id/iv_actions"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="5dp"
+            >
 
             <ImageView
-                android:id="@+id/iv_actions"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/constraintLayout"
-                android:layout_alignStart="@+id/constraintLayout"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@mipmap/main_actions"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/main_actions"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@id/iv_actions"
-                android:layout_alignTop="@id/iv_actions"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
                 android:text="@string/main_actions"
-                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
                 android:textSize="20sp"
-                android:textColor="@android:color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textStyle="bold"
+                />
+        </RelativeLayout>
 
-            <ImageView
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
                 android:id="@+id/iv_blockly"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/iv_actions"
-                android:layout_marginStart="4dp"
-                android:layout_toEndOf="@+id/iv_actions"
-                android:adjustViewBounds="false"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:cropToPadding="false"
-                android:focusable="true"
-                android:src="@mipmap/main_blockly"
-                android:scaleType="centerInside"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toTopOf="@+id/iv_actions" />
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:background="@mipmap/main_blockly"
+                android:layout_marginEnd="10dp"
+                >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/main_blockly"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:textColor="@android:color/white"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:gravity="center"
+                    android:text="@string/main_blockly"
+                    android:textColor="@color/white"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    />
+            </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/iv_community"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/iv_actions"
-                android:layout_alignStart="@+id/iv_blockly"
-                android:layout_below="@+id/iv_blockly"
-                android:layout_marginStart="4dp"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@mipmap/main_community"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_actions"
-                app:layout_constraintStart_toStartOf="@+id/guideline2" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.6"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@id/iv_community"
-                android:layout_alignTop="@id/iv_community"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/main_community"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:textColor="@android:color/white"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toTopOf="@+id/iv_community" />
+                <RelativeLayout
+                    android:id="@+id/iv_community"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.6"
+                    android:background="@mipmap/main_community"
+                    >
 
-            <ImageView
-                android:id="@+id/iv_joystick"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/iv_community"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_toRightOf="@id/iv_community"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@mipmap/main_joystick"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_community"
-                app:layout_constraintEnd_toEndOf="@+id/iv_blockly"
-                app:layout_constraintStart_toEndOf="@+id/iv_community"
-                app:layout_constraintTop_toTopOf="@+id/iv_community"
-                app:layout_constraintVertical_bias="0.0" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@id/iv_joystick"
-                android:layout_alignTop="@id/iv_joystick"
-                android:layout_marginBottom="92dp"
-                android:layout_marginEnd="48dp"
-                android:text="@string/main_joystick"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:gravity="center"
+                        android:text="@string/main_community"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="15dp"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        />
+                </RelativeLayout>
 
-            <android.support.constraint.Guideline
-                android:id="@+id/guideline2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.36" />
+                <RelativeLayout
+                    android:id="@+id/iv_joystick"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:background="@mipmap/main_joystick"
+                    android:layout_marginStart="8dp"
+                    >
 
-        </android.support.constraint.ConstraintLayout>
-    </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:gravity="center"
+                        android:text="@string/main_joystick"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="15dp"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+    <!--上面按钮结束-->
+
+
 </RelativeLayout>

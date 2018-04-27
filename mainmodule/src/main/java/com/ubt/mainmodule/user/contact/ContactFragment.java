@@ -1,5 +1,6 @@
 package com.ubt.mainmodule.user.contact;
 
+import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,8 +13,15 @@ import android.widget.TextView;
 
 import com.orhanobut.dialogplus.DialogPlus;
 import com.ubt.baselib.customView.BaseDialog;
+import com.ubt.baselib.utils.ContextUtils;
 import com.ubt.mainmodule.R;
 import com.ubt.mainmodule.R2;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.PermissionListener;
+import com.yanzhenjie.permission.Rationale;
+import com.yanzhenjie.permission.RationaleListener;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,16 +72,40 @@ public class ContactFragment extends SupportFragment {
         if (i == R.id.tv_contact_phone) {
             showDialog(R.string.main_contact_us_telephone_call, new BaseDialog.ButtonOnClickListener() {
                 @Override
-                public void onClick(DialogPlus dialog, View view) {
+                public void onClick(final DialogPlus dialog, View view) {
                     if (view.getId() == com.ubt.baselib.R.id.button_confirm) {
                         dialog.dismiss();
                     } else if (view.getId() == com.ubt.baselib.R.id.button_cancle) {
-                        Intent intent = new Intent();
-                        intent.setAction(Intent.ACTION_CALL);
-//                        intent.setData(Uri.parse("tel:4006666700"));
-                        intent.setData(Uri.parse("tel:"+getString(R.string.main_contact_us_telephone)));
-                        startActivity(intent);
-                        dialog.dismiss();
+                        AndPermission.with(ContextUtils.getContext())
+                                .requestCode(10000)
+                                .permission(Manifest.permission.CALL_PHONE)
+                                .callback(new PermissionListener() {
+                                    @Override
+                                    public void onSucceed(int requestCode, @NonNull List<String> grantPermissions) {
+                                        Intent intent = new Intent();
+                                        intent.setAction(Intent.ACTION_DIAL);
+                                        intent.setData(Uri.parse("tel:"+getString(R.string.main_contact_us_telephone)));
+                                        startActivity(intent);
+                                        dialog.dismiss();
+                                    }
+
+                                    @Override
+                                    public void onFailed(int requestCode, @NonNull List<String> deniedPermissions) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                // rationale作用是：用户拒绝一次权限，再次申请时先征求用户同意，再打开授权对话框；
+                                // 这样避免用户勾选不再提示，导致以后无法申请权限。
+                                // 你也可以不设置。
+                                .rationale(new RationaleListener() {
+                                    @Override
+                                    public void showRequestPermissionRationale(int requestCode, Rationale rationale) {
+                                        rationale.resume();
+                                    }
+                                })
+                                .start();
+
+
                     }
                 }
             });

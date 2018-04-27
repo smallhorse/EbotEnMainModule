@@ -3,6 +3,7 @@ package com.ubt.mainmodule.user.logout;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.bumptech.glide.Glide;
 import com.orhanobut.dialogplus.DialogPlus;
+import com.ubt.baselib.commonModule.ModuleUtils;
 import com.ubt.baselib.customView.BaseDialog;
+import com.ubt.baselib.globalConst.Constant1E;
+import com.ubt.baselib.model1E.UserInfoModel;
+import com.ubt.baselib.utils.SPUtils;
 import com.ubt.mainmodule.R;
 import com.ubt.mainmodule.R2;
+import com.vise.log.ViseLog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +43,7 @@ public class LogoutFragment extends SupportFragment {
     @BindView(R2.id.btn_logout)    Button btnLogout;
 
     Unbinder unbinder;
+    private UserInfoModel userInfo;
 
     public static LogoutFragment newInstance() {
 
@@ -50,8 +59,30 @@ public class LogoutFragment extends SupportFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_fragment_logout, container, false);
         unbinder = ButterKnife.bind(this, view);
-
+//        initData();
         return view;
+    }
+
+    private void initData() {
+        userInfo = (UserInfoModel) SPUtils.getInstance().readObject(Constant1E.SP_USER_INFO);
+        if(userInfo != null){
+            ViseLog.i("userInfo="+userInfo.toString());
+            tvLogoutName.setText(userInfo.getNickName());
+            tvLogoutId.setText(userInfo.getEmail());
+            if(!TextUtils.isEmpty(userInfo.getHeadPic())){
+                Glide.with(this).load(userInfo.getHeadPic()).centerCrop().into(ivLogoutIcon);
+            }
+        }else{
+            ViseLog.e("userInfo is null");
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            initData();
+        }
     }
 
     @Override
@@ -74,7 +105,12 @@ public class LogoutFragment extends SupportFragment {
                         if (view.getId() == com.ubt.baselib.R.id.button_confirm) {
                             dialog.dismiss();
                         } else if (view.getId() == com.ubt.baselib.R.id.button_cancle) {
+                            ARouter.getInstance().build(ModuleUtils.Login_Module).navigation();
+                            SPUtils.getInstance().remove(Constant1E.SP_USER_INFO);
                             dialog.dismiss();
+                            if(getActivity() != null) {
+                                getActivity().finish();
+                            }
                         }
                     }
                 })

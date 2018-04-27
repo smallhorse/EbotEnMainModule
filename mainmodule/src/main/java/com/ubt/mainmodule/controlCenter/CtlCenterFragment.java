@@ -60,6 +60,10 @@ public class CtlCenterFragment extends MVPBaseFragment<CtlContract.View, CtlPres
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if(System.currentTimeMillis() - volTime > 500){
+                    if(!mPresenter.isBTConnected()){
+                        ViseLog.e("蓝牙未连接!!!");
+                        return;
+                    }
                     ViseLog.i("progress vol="+progress);
                     volTime = System.currentTimeMillis();
                     mPresenter.setVol(progress);

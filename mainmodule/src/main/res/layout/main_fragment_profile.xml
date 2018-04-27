@@ -7,21 +7,22 @@
     >
 
 <android.support.constraint.ConstraintLayout
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_centerInParent="true"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="111dp">
+    >
 
 
-    <ImageView
+    <com.ubt.baselib.customView.ShapedImageView
         android:id="@+id/iv_profile_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:scaleType="fitXY"
+        app:shape_mode="circle"
         android:src="@mipmap/main_logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="17dp"
         app:layout_constraintStart_toStartOf="@id/mainGuideline2"
-        android:text="Unfilled"
+        android:text="@string/main_profile_unfilled"
         android:textColor="#FF333333"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/tv_profile_age"
@@ -134,7 +135,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="17dp"
         app:layout_constraintStart_toStartOf="@id/mainGuideline2"
-        android:text="Unfilled"
+        android:text="@string/main_profile_unfilled"
         android:textColor="#FF333333"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/tv_profile_country"
