@@ -94,6 +94,12 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
         unbinder.unbind();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.release();
+    }
+
     @OnClick({R2.id.iv_robot_status, R2.id.iv_play_center, R2.id.iv_voice_cmd, R2.id.iv_actions,
             R2.id.iv_blockly, R2.id.iv_community, R2.id.iv_joystick})
     public void onViewClicked(View view) {

@@ -14,7 +14,6 @@ import com.ubt.baselib.btCmd1E.cmd.BTCmdReadDevStatus;
 import com.ubt.baselib.btCmd1E.cmd.BTCmdSensorControl;
 import com.ubt.baselib.btCmd1E.cmd.BTCmdVolumeAdjust;
 import com.ubt.baselib.mvp.BasePresenterImpl;
-import com.ubt.baselib.utils.ByteHexHelper;
 import com.ubt.bluetoothlib.blueClient.BlueClientUtil;
 import com.vise.log.ViseLog;
 
@@ -95,7 +94,6 @@ public class CtlPresenter extends BasePresenterImpl<CtlContract.View> implements
 
     @Subscribe
     public void onBTRead(BTReadData data){
-        ViseLog.i(""+ ByteHexHelper.bytesToHexString(data.getDatas()));
         BTCmdHelper.parseBTCmd(data.getDatas(), mBTCmdListener);
     }
 

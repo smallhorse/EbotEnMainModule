@@ -225,7 +225,8 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
     }
 
     @OnClick({R2.id.iv_topbar_back, R2.id.tv_topbar_save, R2.id.iv_edit_icon, R2.id.iv_edit_icon_edit,
-            R2.id.rg_edit_gender_select, R2.id.iv_edit_age_more, R2.id.iv_edit_country_more})
+            R2.id.rg_edit_gender_select, R2.id.iv_edit_age_more, R2.id.iv_edit_country_more,
+            R2.id.tv_edit_birthday_content})
     public void onViewClicked(View view) {
         if (view.getId() == R.id.iv_topbar_back) {
             Intent intent = new Intent();
@@ -235,7 +236,7 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
             showPhotoDialog();
         } else if (view.getId() == R.id.tv_topbar_save) {
             mPresenter.saveUserInfo();
-        } else if (view.getId() == R.id.iv_edit_age_more) {
+        } else if ((view.getId() == R.id.iv_edit_age_more) || (view.getId() == R.id.tv_edit_birthday_content)) {
             new BirthdaySelectDialog(UserInfoEditActivity.this, R.style.mainBirthDialogStyle)
                     .setListener(new BirthdaySelectDialog.IBirthDialogListener() {
                         @Override
@@ -246,7 +247,7 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
                         }
                     })
                     .show();
-        } else if (view.getId() == R.id.iv_edit_country_more) {
+        } else if ((view.getId() == R.id.iv_edit_country_more)||(view.getId() == R.id.tv_edit_country_content)) {
 
         }
     }
@@ -294,4 +295,9 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
         startActivityForResult(cameraIntent, PHOTO_BY_SHOOT);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.release();
+    }
 }

@@ -149,4 +149,9 @@ public class UserMainFragment extends MVPBaseFragment<UserMainContract.View, Use
         unbinder.unbind();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.release();
+    }
 }

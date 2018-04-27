@@ -17,11 +17,16 @@ import com.orhanobut.dialogplus.DialogPlus;
 import com.ubt.baselib.commonModule.ModuleUtils;
 import com.ubt.baselib.customView.BaseDialog;
 import com.ubt.baselib.globalConst.Constant1E;
+import com.ubt.baselib.model1E.ManualEvent;
 import com.ubt.baselib.model1E.UserInfoModel;
+import com.ubt.baselib.utils.ContextUtils;
 import com.ubt.baselib.utils.SPUtils;
+import com.ubt.bluetoothlib.blueClient.BlueClientUtil;
 import com.ubt.mainmodule.R;
 import com.ubt.mainmodule.R2;
 import com.vise.log.ViseLog;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -105,10 +110,19 @@ public class LogoutFragment extends SupportFragment {
                         if (view.getId() == com.ubt.baselib.R.id.button_confirm) {
                             dialog.dismiss();
                         } else if (view.getId() == com.ubt.baselib.R.id.button_cancle) {
+                            //清除用户参数
                             ARouter.getInstance().build(ModuleUtils.Login_Module).navigation();
                             SPUtils.getInstance().remove(Constant1E.SP_USER_INFO);
                             dialog.dismiss();
+                            //断开自动连接蓝牙服务
+                            BlueClientUtil.getInstance().disconnect();
+                            ManualEvent manualEvent = new ManualEvent(ContextUtils.getContext(),
+                                    ManualEvent.Event.START_AUTOSERVICE);
+                            manualEvent.setManual(false);
+                            EventBus.getDefault().post(manualEvent);
+
                             if(getActivity() != null) {
+                                ViseLog.d("MainActivity退出!!");
                                 getActivity().finish();
                             }
                         }
