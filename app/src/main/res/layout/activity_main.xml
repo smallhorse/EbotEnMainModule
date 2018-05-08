@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
    >
 
-    <com.ubt.baselib.customView.RightBar
+    <com.ubt.en.alpha1e.customView.RightBar
         android:id="@+id/right_bar"
         android:layout_width="50dp"
         android:layout_height="match_parent"

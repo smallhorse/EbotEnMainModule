@@ -63,7 +63,6 @@
             android:text="@string/main_contact_us_website_address"
             android:textColor="#FF37AAFF"
             android:textSize="17sp"
-            android:background="@drawable/main_touch_bg"
             android:clickable="true"
             android:focusable="true" />
     </LinearLayout>

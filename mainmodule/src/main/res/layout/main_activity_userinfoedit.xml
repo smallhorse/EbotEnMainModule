@@ -7,7 +7,7 @@
 
     <include
         android:id="@+id/edit_topbar"
-        layout="@layout/main_top_bar"
+        layout="@layout/base_top_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
 

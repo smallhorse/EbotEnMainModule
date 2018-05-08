@@ -108,7 +108,7 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
         }else if(view.getId() == R.id.iv_play_center){
             ARouter.getInstance().build(ModuleUtils.Playcenter_module).navigation();
         }else if(view.getId() == R.id.iv_voice_cmd){
-
+            ARouter.getInstance().build(ModuleUtils.VolumeCmd_module).navigation();
         }else if(view.getId() == R.id.iv_actions){
 //            BlueClientUtil.getInstance().connect("A0:2C:36:89:F3:7D");
 //            BlueClientUtil.getInstance().connect("88:83:5D:B8:39:0C");

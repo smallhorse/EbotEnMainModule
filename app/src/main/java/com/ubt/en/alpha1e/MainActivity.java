@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.ubt.baselib.commonModule.ModuleUtils;
-import com.ubt.baselib.customView.RightBar;
+import com.ubt.en.alpha1e.customView.RightBar;
 import com.ubt.mainmodule.controlCenter.CtlCenterFragment;
 import com.ubt.mainmodule.main.MainFragment;
 import com.ubt.mainmodule.user.UserMainFragment;
