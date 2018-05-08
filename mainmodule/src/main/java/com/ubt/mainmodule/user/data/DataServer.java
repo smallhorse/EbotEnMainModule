@@ -16,28 +16,38 @@ import java.util.List;
  */
 
 public class DataServer {
+    private static List<LeftMenuModel> datas = new ArrayList<>();
+
     private DataServer(){
 
     }
 
     public static List<LeftMenuModel> getLeftData(){
-        List<LeftMenuModel> datas = new ArrayList<>();
-        Context context = ContextUtils.getContext();
-        datas.add(new LeftMenuModel(context.getString(R.string.main_profile_tab),
+        if(datas.size() <= 0) {
+            Context context = ContextUtils.getContext();
+            datas.add(new LeftMenuModel(context.getString(R.string.main_profile_tab),
                     true, R.mipmap.main_user_profile, 0));
-        datas.add(new LeftMenuModel(context.getString(R.string.main_notifications_tab),
+            datas.add(new LeftMenuModel(context.getString(R.string.main_notifications_tab),
                     false, R.mipmap.main_user_notification, 0));
-        datas.add(new LeftMenuModel(context.getString(R.string.main_about_app_tab),
-                        false, R.mipmap.main_user_about, 0));
-        datas.add(new LeftMenuModel(context.getString(R.string.main_contact_us_tab),
-                        false, R.mipmap.main_user_contact, 0));
-        datas.add(new LeftMenuModel(context.getString(R.string.main_help_feedback_tab),
-                        false, R.mipmap.main_user_help, 0));
-        datas.add(new LeftMenuModel(context.getString(R.string.main_language_tab),
-                        false, R.mipmap.main_user_lanuague, 0));
-        datas.add(new LeftMenuModel(context.getString(R.string.main_log_out_tab),
-                        false, R.mipmap.main_user_logout, 0));
-
+            datas.add(new LeftMenuModel(context.getString(R.string.main_about_app_tab),
+                    false, R.mipmap.main_user_about, 0));
+            datas.add(new LeftMenuModel(context.getString(R.string.main_contact_us_tab),
+                    false, R.mipmap.main_user_contact, 0));
+            datas.add(new LeftMenuModel(context.getString(R.string.main_help_feedback_tab),
+                    false, R.mipmap.main_user_help, 0));
+            datas.add(new LeftMenuModel(context.getString(R.string.main_language_tab),
+                    false, R.mipmap.main_user_lanuague, 0));
+            datas.add(new LeftMenuModel(context.getString(R.string.main_log_out_tab),
+                    false, R.mipmap.main_user_logout, 0));
+        }
         return datas;
+    }
+
+    public static void clearChick(){
+        if(datas.size() > 0){
+            for (LeftMenuModel model: datas) {
+                model.setChick(false);
+            }
+        }
     }
 }

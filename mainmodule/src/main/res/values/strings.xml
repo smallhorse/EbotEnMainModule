@@ -75,4 +75,10 @@
     <string name="main_common_sure">Sure</string>
     <string name="main_common_confirm">Confirm</string>
 
+
+
+    <string-array name="main_vol_labels">
+        <item>@string/main_ctl_min</item>
+        <item>@string/main_ctl_max</item>
+    </string-array>
 </resources>

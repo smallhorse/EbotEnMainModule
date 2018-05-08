@@ -4,6 +4,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.ubt.baselib.utils.ContextUtils;
 import com.ubt.mainmodule.R;
 import com.ubt.mainmodule.user.data.DataServer;
 
@@ -30,6 +31,11 @@ public class LeftAdapter extends BaseQuickAdapter<LeftMenuModel, BaseViewHolder>
             helper.setVisible(R.id.tv_msgcnt, true);
             barView.setText(item.getCountUnRead()+"");
         }
+        if (item.isChick()) {
+              helper.setBackgroundColor(R.id.rl_item, ContextUtils.getContext().getResources().getColor(R.color.main_grey));
+        } else {
+              helper.setBackgroundColor(R.id.rl_item, ContextUtils.getContext().getResources().getColor(R.color.white));
+        }
        /* Drawable drawable = getActivity().getResources().getDrawable(item.getImageId());
         /// 这一步必须要做,否则不会显示.
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
@@ -53,5 +59,9 @@ public class LeftAdapter extends BaseQuickAdapter<LeftMenuModel, BaseViewHolder>
             barView.setVisibility(View.GONE);
         }*/
 
+    }
+
+    public void clearChick(){
+        DataServer.clearChick();
     }
 }

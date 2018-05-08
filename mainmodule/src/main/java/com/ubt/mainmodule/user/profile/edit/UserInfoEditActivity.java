@@ -192,7 +192,7 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
             if (requestCode == PHOTO_BY_SHOOT) {
                 //用相机返回的照片去调用剪裁也需要对Uri进行处理
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    mImageUri = FileProvider.getUriForFile(ContextUtils.getContext(), "com.ubt.setting", cameraFile);
+                    mImageUri = FileProvider.getUriForFile(ContextUtils.getContext(), "com.ubt.mainmodule.user.profile.edit", cameraFile);
                 } else {
                     mImageUri = Uri.fromFile(cameraFile);
                 }
@@ -284,7 +284,7 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
         //判断版本
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {   //如果在Android7.0以上,使用FileProvider获取Uri
             cameraIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            Uri contentUri = FileProvider.getUriForFile(ContextUtils.getContext(), "com.ubt.setting", cameraFile);
+            Uri contentUri = FileProvider.getUriForFile(ContextUtils.getContext(), "com.ubt.mainmodule.user.profile.edit", cameraFile);
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, contentUri);
         } else {    //否则使用Uri.fromFile(file)方法获取Uri
             mImageUri = Uri.fromFile(cameraFile);

@@ -131,6 +131,9 @@ public class UserMainFragment extends MVPBaseFragment<UserMainContract.View, Use
                 if(fragmentCur != position) {
                     showHideFragment(mFragments[position], mFragments[fragmentCur]);
                     fragmentCur = position;
+                    leftAdapter.clearChick();
+                    leftAdapter.getItem(position).setChick(true);
+                    leftAdapter.notifyDataSetChanged();
                 }
             }
         });

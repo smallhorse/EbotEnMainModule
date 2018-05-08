@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:gravity="center_vertical"
-    android:background="@drawable/main_touch_bg"
+    android:id="@+id/rl_item"
     >
 
 <ImageView

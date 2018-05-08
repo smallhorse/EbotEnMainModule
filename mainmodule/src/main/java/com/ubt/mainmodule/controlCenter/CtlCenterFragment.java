@@ -9,12 +9,12 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SeekBar;
 import android.widget.Switch;
 
 import com.ubt.baselib.mvp.MVPBaseFragment;
 import com.ubt.mainmodule.R;
 import com.ubt.mainmodule.R2;
+import com.ubt.mainmodule.signSeekBar.SignSeekBar;
 import com.vise.log.ViseLog;
 
 import butterknife.BindView;
@@ -31,7 +31,7 @@ public class CtlCenterFragment extends MVPBaseFragment<CtlContract.View, CtlPres
 
 
     @BindView(R2.id.seekbar_volume)
-    SeekBar seekbarVolume;
+    SignSeekBar seekbarVolume;
     @BindView(R2.id.switch_fall)
     Switch switchFall;
     @BindView(R2.id.switch_ir)
@@ -55,10 +55,10 @@ public class CtlCenterFragment extends MVPBaseFragment<CtlContract.View, CtlPres
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_fragment_ctrl_center, container, false);
         unbinder = ButterKnife.bind(this, view);
-
-        seekbarVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        seekbarVolume.setOnProgressChangedListener(new SignSeekBar.OnProgressChangedListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            public void onProgressChanged(SignSeekBar signSeekBar, int progress, float progressFloat, boolean fromUser) {
+                ViseLog.i("progress vol="+progress);
                 if(System.currentTimeMillis() - volTime > 500){
                     if(!mPresenter.isBTConnected()){
                         ViseLog.e("蓝牙未连接!!!");
@@ -69,13 +69,20 @@ public class CtlCenterFragment extends MVPBaseFragment<CtlContract.View, CtlPres
                     mPresenter.setVol(progress);
                 }
             }
+
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
+            public void getProgressOnActionUp(SignSeekBar signSeekBar, int progress, float progressFloat) {
+                ViseLog.i("progress vol="+signSeekBar.getProgress());
+                if(!mPresenter.isBTConnected()){
+                    ViseLog.e("蓝牙未连接!!!");
+                    return;
+                }
+                mPresenter.setVol(signSeekBar.getProgress());
             }
+
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                ViseLog.i("progress vol="+seekBar.getProgress());
-                mPresenter.setVol(seekBar.getProgress());
+            public void getProgressOnFinally(SignSeekBar signSeekBar, int progress, float progressFloat, boolean fromUser) {
+                ViseLog.i("progress vol="+signSeekBar.getProgress());
             }
         });
 

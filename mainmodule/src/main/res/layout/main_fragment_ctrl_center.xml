@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/main_ctl_bg"
@@ -53,7 +54,7 @@
         android:layout_marginEnd="130dp"
         />
 
-    <SeekBar
+    <!--<SeekBar
         android:id="@+id/seekbar_volume"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -63,6 +64,21 @@
         android:layout_toStartOf="@id/tv_max"
         android:layout_marginTop="15dp"
         android:max="255"
+        />-->
+    <com.ubt.mainmodule.signSeekBar.SignSeekBar
+        android:id="@+id/seekbar_volume"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/tv_min"
+        android:layout_below="@id/tv_volume"
+        android:layout_marginStart="10.5dp"
+        android:layout_toStartOf="@id/tv_max"
+        android:layout_alignTop="@id/tv_min"
+        app:main_max="255"
+        app:main_second_track_color="@color/base_blue"
+        app:main_track_color="#E2E2E2"
+        app:main_track_size="3dp"
+
         />
 
     <View
