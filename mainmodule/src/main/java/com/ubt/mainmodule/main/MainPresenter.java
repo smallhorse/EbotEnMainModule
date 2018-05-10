@@ -9,6 +9,7 @@ import com.ubt.baselib.btCmd1E.BTCmd;
 import com.ubt.baselib.btCmd1E.BTCmdHelper;
 import com.ubt.baselib.btCmd1E.IProtolPackListener;
 import com.ubt.baselib.btCmd1E.ProtocolPacket;
+import com.ubt.baselib.btCmd1E.cmd.BTCmdGetWifiStatus;
 import com.ubt.baselib.btCmd1E.cmd.BTCmdReadBattery;
 import com.ubt.baselib.mvp.BasePresenterImpl;
 import com.ubt.bluetoothlib.blueClient.BlueClientUtil;
@@ -16,6 +17,8 @@ import com.vise.log.ViseLog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -93,6 +96,7 @@ public class MainPresenter extends BasePresenterImpl<MainContract.View> implemen
         }else if(stateChanged.getState() == BTServiceStateChanged.STATE_CONNECTED){//蓝牙连接成功
             mViewHandler.sendEmptyMessage(MainContract.HCMD_BT_CONNETED);
             queryBattery(true);
+            mBTUtil.sendData(new BTCmdGetWifiStatus().toByteArray()); //查询WIFI联网状态
         }
     }
 
@@ -106,6 +110,22 @@ public class MainPresenter extends BasePresenterImpl<MainContract.View> implemen
                         Message msg = mViewHandler.obtainMessage(MainContract.HCMD_REFRESH_BATTERY);
                         msg.arg1 = (int)packet.getmParam()[3];
                         mViewHandler.sendMessage(msg);
+                        break;
+                    case BTCmd.DV_READ_NETWORK_STATUS: //wifi联网状态
+                        String status = new String(packet.getmParam());
+                        try {
+                            JSONObject jStatus = new JSONObject(status);
+                            if(jStatus.has("status")){
+                                ViseLog.i("status="+status);
+                                if(jStatus.getBoolean("status")){
+                                    mViewHandler.sendEmptyMessage(MainContract.HCMD_ROBOT_WIFI_CONNETED);
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    default:
                         break;
                 }
             }

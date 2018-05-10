@@ -18,6 +18,7 @@ public class MainContract {
     public static final int HCMD_REFRESH_BATTERY = 1;  //刷新电量显示
     public static final int HCMD_LOST_BT = 2;           //蓝牙断开
     public static final int HCMD_BT_CONNETED = 3;           //蓝牙连接成功
+    public static final int HCMD_ROBOT_WIFI_CONNETED = 4;           //机器人WIFI连接成功
 
 
     public interface View extends BaseView {

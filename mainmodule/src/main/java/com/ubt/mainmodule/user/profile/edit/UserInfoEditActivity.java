@@ -20,6 +20,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.ubt.baselib.customView.BaseDialog;
+import com.ubt.baselib.customView.BaseLoadingDialog;
 import com.ubt.baselib.mvp.MVPBaseActivity;
 import com.ubt.baselib.skin.SkinManager;
 import com.ubt.baselib.utils.ContextUtils;
@@ -69,7 +72,7 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
     private String headPath;
     private Uri mImageUri;
 
-    private UserModel userModel; //传过来的用户参数
+    private UserModel userModel; //用户参数
     private Handler mHandler;
 
     public static void startActivity(Fragment context) {
@@ -104,6 +107,7 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
                         }else{
                             ToastUtils.showShort(SkinManager.getInstance().getTextById(R.string.main_profile_saveFail));
                         }
+                        BaseLoadingDialog.dismiss(UserInfoEditActivity.this);
                         break;
                 }
             }
@@ -215,8 +219,6 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
                 Bitmap bitmap = FileUtils.getBitmapFormUri(ContextUtils.getContext(), mImageUri);
                 ivEditIcon.setImageBitmap(bitmap);
                 headPath = FileUtils.SaveImage(ContextUtils.getContext(), "head", bitmap);
-//                    mPresenter.updateHead(headPath);
-//                    LoadingDialog.show(getActivity());
                 userModel.setIcon(headPath);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -229,13 +231,18 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
             R2.id.tv_edit_birthday_content})
     public void onViewClicked(View view) {
         if (view.getId() == R.id.iv_topbar_back) {
-            Intent intent = new Intent();
-            UserInfoEditActivity.this.setResult(RESULT_CANCELED, intent);
-            finish();
+            if(mPresenter.isUserInfoModified()){
+                showQuitDialog();
+            }else {
+                Intent intent = new Intent();
+                UserInfoEditActivity.this.setResult(RESULT_CANCELED, intent);
+                finish();
+            }
         } else if ((view.getId() == R.id.iv_edit_icon) || (view.getId() == R.id.iv_edit_icon_edit)) {
             showPhotoDialog();
         } else if (view.getId() == R.id.tv_topbar_save) {
-            mPresenter.saveUserInfo();
+            BaseLoadingDialog.show(UserInfoEditActivity.this);
+            mPresenter.saveUserInfo(headPath);
         } else if ((view.getId() == R.id.iv_edit_age_more) || (view.getId() == R.id.tv_edit_birthday_content)) {
             new BirthdaySelectDialog(UserInfoEditActivity.this, R.style.mainBirthDialogStyle)
                     .setListener(new BirthdaySelectDialog.IBirthDialogListener() {
@@ -299,5 +306,25 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
     protected void onDestroy() {
         super.onDestroy();
         mPresenter.release();
+    }
+
+    private void showQuitDialog(){
+        new BaseDialog.Builder(this)
+                .setMessage(R.string.main_profile_quit_edit)
+                .setConfirmButtonId(R.string.main_common_cancel)
+                .setCancleButtonID(R.string.main_common_sure)
+                .setButtonOnClickListener(new BaseDialog.ButtonOnClickListener() {
+                    @Override
+                    public void onClick(DialogPlus dialog, View view) {
+                        if (view.getId() == com.ubt.baselib.R.id.button_cancle) {//确定按钮
+                            Intent intent = new Intent();
+                            UserInfoEditActivity.this.setResult(RESULT_CANCELED, intent);
+                            UserInfoEditActivity.this.finish();
+                        }
+                        dialog.dismiss();
+                    }
+                })
+                .create()
+                .show();
     }
 }

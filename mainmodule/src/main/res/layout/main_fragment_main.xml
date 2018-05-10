@@ -12,7 +12,6 @@
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="85dp"
-        android:layout_toStartOf="@id/right_bar"
         >
         <ImageView
             android:id="@+id/iv_robot_status"

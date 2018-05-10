@@ -28,6 +28,7 @@
     <string name="main_profile_country">Country</string>
     <string name="main_profile_unfilled">Unfilled</string>
     <string name="main_profile_saveFail">Save profile fail!</string>
+    <string name="main_profile_quit_edit">Your changes have not been saved, are you sure you want to quit?</string>
 
 
     <string name="main_notifications_tab">Notifications</string>

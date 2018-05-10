@@ -103,6 +103,7 @@ public class ProfileFragment extends SupportFragment {
     private void initView() {
         if(userModel != null){
             if(userModel.getIcon() != null) {
+                ViseLog.i("userModel.getIcon()="+userModel.getIcon());
                 Glide.with(this).load(userModel.getIcon()).centerCrop().into(ivProfileIcon);
             }
             tvProfileName.setText(userModel.getName());

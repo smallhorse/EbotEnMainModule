@@ -22,7 +22,8 @@ public class UserInfoEditContract {
     interface Presenter extends BasePresenter<View> {
         void init();
         void release();
-        void saveUserInfo();
+        void saveUserInfo(final String iconPath);
         UserModel getUserModel();
+        boolean isUserInfoModified();
     }
 }

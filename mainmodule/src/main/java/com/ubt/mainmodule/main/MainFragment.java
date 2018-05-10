@@ -137,8 +137,13 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
                         break;
                     case MainContract.HCMD_LOST_BT:
                         setRobotStatus(false);
+                        setRobotChargeStatus(false);
                         break;
                     case MainContract.HCMD_BT_CONNETED:
+                        setRobotChargeStatus(true);
+                        break;
+                    case MainContract.HCMD_ROBOT_WIFI_CONNETED:
+                        setRobotChargeStatus(true);
                         setRobotStatus(true);
                         break;
                     default:
@@ -187,17 +192,27 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
 
     /**
      * 设置机器人状态UI显示
-     * @param isBTConnected 蓝牙是否连接成功
+     * @param isWIFIConnected WIFI是否连接成功
      */
-    private void setRobotStatus(boolean isBTConnected){
-        if(isBTConnected){ //蓝牙连接成功，隐藏错误状态
+    private void setRobotStatus(boolean isWIFIConnected){
+        if(isWIFIConnected){ //蓝牙连接成功，隐藏错误状态
             ivRobotStatusError.setVisibility(View.INVISIBLE);
-            tvChargingBattary.setVisibility(View.VISIBLE);
             ivRobotStatusOk.setVisibility(View.VISIBLE);
         }else{
-            tvChargingBattary.setVisibility(View.INVISIBLE);
             ivRobotStatusOk.setVisibility(View.INVISIBLE);
             ivRobotStatusError.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * 充电状态显示
+     * @param isBTConnected 蓝牙是否连接
+     */
+    private void setRobotChargeStatus(boolean isBTConnected){
+        if(isBTConnected){ //蓝牙连接成功，隐藏错误状态
+            tvChargingBattary.setVisibility(View.VISIBLE);
+        }else{
+            tvChargingBattary.setVisibility(View.INVISIBLE);
         }
     }
 }

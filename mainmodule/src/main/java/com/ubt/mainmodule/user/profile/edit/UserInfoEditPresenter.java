@@ -4,6 +4,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 
+import com.qiniu.android.common.AutoZone;
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.Configuration;
+import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UploadManager;
+import com.ubt.baselib.globalConst.BaseHttpEntity;
 import com.ubt.baselib.globalConst.Constant1E;
 import com.ubt.baselib.model1E.UserInfoModel;
 import com.ubt.baselib.mvp.BasePresenterImpl;
@@ -16,7 +22,9 @@ import com.ubt.mainmodule.user.profile.UserModel;
 import com.vise.log.ViseLog;
 import com.vise.xsnow.http.ViseHttp;
 import com.vise.xsnow.http.callback.ACallback;
-import com.vise.xsnow.http.request.PostRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * @作者：bin.zhang@ubtrobot.com
@@ -29,11 +37,19 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
     private UserModel userModel = new UserModel(); //传过来的用户参数
     private UserInfoModel userInfo;
     private Handler viewHandler;
+    private String qiniuToken;
+    private String qiniuFileUrl;
+    private String qiniuPath;
+    private UploadManager uploadManager;
 
     @Override
     public void init() {
         initData();
         viewHandler = mView.getViewHandler();
+        Configuration config = new Configuration.Builder()
+                .zone(AutoZone.autoZone)
+                .build();
+        uploadManager = new UploadManager(config);
     }
 
     @Override
@@ -41,22 +57,110 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
 
     }
 
+    /**
+     * 获取上传图片所需要的七牛 TOKEN
+     * @param iconPath
+     */
+    private void getQiniuToken(final String iconPath){
+        ViseHttp.GET(MainHttpEntity.GET_UPLOAD_TOKEN)
+                .addHeader("authorization","b0eba1b77a224d449390b3551e1be827803022")
+                .baseUrl(BaseHttpEntity.BASE_FILE_UPLOAD)
+                .addParam("pName", "alphaebot")
+                .request(new ACallback<String>() {
+
+                    @Override
+                    public void onSuccess(String msg) {
+                        ViseLog.i("msg="+msg);
+                        if(saveQiniuInfo(msg)){
+                            uploadIconToQiniu(iconPath);
+                        }else{
+                            sendCompletMsg(false);
+                        }
+                    }
+
+                    @Override
+                    public void onFail(int code, String errmsg) {
+                        ViseLog.e("code="+code+"   errmsg="+errmsg);
+                        sendCompletMsg(false);
+                    }
+                });
+    }
+
+    private boolean saveQiniuInfo(String info){
+        try {
+            JSONObject jInfo = new JSONObject(info);
+            if(jInfo.has("uri")){
+                qiniuFileUrl = jInfo.getString("uri");
+            }
+            if(jInfo.has("token")){
+                qiniuToken = jInfo.getString("token");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return (qiniuFileUrl != null  && qiniuToken != null);
+    }
+
+    /**
+     * 上传头像到七牛
+     * @param iconPath 图片完整路径
+     */
+    private void uploadIconToQiniu(String iconPath){
+
+        uploadManager.put(iconPath, null, qiniuToken,
+                new UpCompletionHandler() {
+                    @Override
+                    public void complete(String key, ResponseInfo info, JSONObject res) {
+                        //  res 包含hash、key等信息，具体字段取决于上传策略的设置。
+                        ViseLog.i("res:"+res.toString());
+                        ViseLog.i("info:"+info.toString());
+                        if(info.isOK()){
+                            try {
+                                if(res.has("key")) {
+                                    qiniuPath = qiniuFileUrl+"/"+res.getString("key");
+                                    userInfo.setHeadPic(qiniuPath);
+                                    SPUtils.getInstance().saveObject(Constant1E.SP_USER_INFO, userInfo);
+                                    updateUserInfo();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }else{
+                            sendCompletMsg(false);
+                        }
+
+                    }
+                }, null);
+    }
+
     @Override
-    public void saveUserInfo() {
+    public void saveUserInfo(final String iconPath) {
         if(userInfo != null) {
             userInfo.setBirthDate(userModel.getBirthday());
             userInfo.setHeadPic(userModel.getIcon());
             userInfo.setSex(String.valueOf(userModel.getGenderId() + 1));
-            SPUtils.getInstance().saveObject(Constant1E.SP_USER_INFO, userInfo);
-            updateUserInfo();
+
+            if(iconPath != null){
+                getQiniuToken(iconPath);
+            }else {
+                SPUtils.getInstance().saveObject(Constant1E.SP_USER_INFO, userInfo);
+                updateUserInfo();
+            }
         }else{
             ViseLog.e("userInfo is null !!!");
-            Message msg = viewHandler.obtainMessage(UserInfoEditContract.HCMD_UPDATE_COMPLET);
-            msg.arg1 = 0;
-            viewHandler.sendMessage(msg);
+            sendCompletMsg(false);
         }
     }
 
+    /**
+     *  发送保存完成命令到VIEW
+     * @param isOk
+     */
+    private void sendCompletMsg(boolean isOk){
+        Message msg = viewHandler.obtainMessage(UserInfoEditContract.HCMD_UPDATE_COMPLET);
+        msg.arg1 = isOk?1:0;
+        viewHandler.sendMessage(msg);
+    }
     @Override
     public UserModel getUserModel() {
         return userModel;
@@ -85,29 +189,53 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
         }
     }
 
-    public void updateUserInfo() {
+    /**
+     *  上传用户信息到后台
+     */
+    private void updateUserInfo() {
         ViseLog.d("url:" + MainHttpEntity.UPDATE_USERINFO + "params:" + userInfo.toString());
-        ViseHttp.BASE(new PostRequest(MainHttpEntity.UPDATE_USERINFO)
-                .setJson(GsonImpl.get().toJson(userInfo)))
+        ViseHttp.POST(MainHttpEntity.UPDATE_USERINFO)
+                .baseUrl("http://10.10.1.14:8088/alphaebot/")
+                .setJson(GsonImpl.get().toJson(userInfo))
                 .request(new ACallback<String>() {
                     @Override
-                    public void onSuccess(String o) {
-                        ViseLog.d("USER_UPDATE onSuccess:" + o.toString());
-                        Message msg = viewHandler.obtainMessage(UserInfoEditContract.HCMD_UPDATE_COMPLET);
-                        msg.arg1 = 1;
-                        viewHandler.sendMessage(msg);
+                    public void onSuccess(String msg) {
+                        ViseLog.d("USER_UPDATE onSuccess:" + msg.toString());
+                        try {
+                            JSONObject jMsg = new JSONObject(msg);
+                            if(jMsg.has("status")){
+                                if(jMsg.getBoolean("status")){
+                                    sendCompletMsg(true);
+                                }else{
+                                    sendCompletMsg(false);
+                                }
+                            }
+                        } catch (JSONException e) {
+                            sendCompletMsg(false);
+                            e.printStackTrace();
+                        }
+
                     }
 
                     @Override
                     public void onFail(int i, String s) {
                         ViseLog.d("USER_UPDATE onFail:" + s);
-                        Message msg = viewHandler.obtainMessage(UserInfoEditContract.HCMD_UPDATE_COMPLET);
-                        msg.arg1 = 0;
-                        viewHandler.sendMessage(msg);
+                        sendCompletMsg(false);
                     }
                 });
 
 
     }
 
+    @Override
+    public boolean isUserInfoModified(){
+        if(userModel.getGenderId() != (Integer.valueOf(userInfo.getSex()) - 1)){
+            return true;
+        }else if(!userModel.getBirthday().equals(userInfo.getBirthDate())){
+            return true;
+        }else if(!userModel.getIcon().equals(userInfo.getHeadPic())){
+            return true;
+        }
+        return false;
+    }
 }
