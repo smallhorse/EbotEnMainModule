@@ -16,5 +16,6 @@ public class MainHttpEntity extends BaseHttpEntity{
     public static final String UPDATE_USERINFO = "overseas/user/update";
     public static final String GET_UPLOAD_TOKEN = "files/up-token";
     public static final String APP_UPGRADE = "sys/appUpgrade";
+    public static final String HELP_FEEDBACK = BASIC_UBX_SYS+"overseas/setHelp.html";
 }
 

@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,22 +18,20 @@ import android.widget.Toast;
 
 import com.orhanobut.dialogplus.DialogPlus;
 import com.ubt.baselib.customView.BaseDialog;
+import com.ubt.baselib.customView.BaseLoadingDialog;
 import com.ubt.baselib.globalConst.Constant1E;
+import com.ubt.baselib.model1E.BaseResponseModel;
 import com.ubt.baselib.model1E.UserInfoModel;
 import com.ubt.baselib.skin.SkinManager;
 import com.ubt.baselib.utils.ContextUtils;
 import com.ubt.baselib.utils.GsonImpl;
 import com.ubt.baselib.utils.SPUtils;
-import com.ubt.globaldialog.customDialog.loading.LoadingDialog;
 import com.ubt.mainmodule.MainHttpEntity;
 import com.ubt.mainmodule.R;
 import com.ubt.mainmodule.R2;
 import com.vise.log.ViseLog;
 import com.vise.xsnow.http.ViseHttp;
 import com.vise.xsnow.http.callback.ACallback;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,11 +81,15 @@ public class AboutFragment extends SupportFragment {
         UserInfoModel  userInfo = (UserInfoModel) SPUtils.getInstance().readObject(Constant1E.SP_USER_INFO);
         updateModel = new UpdateModel();
         updateModel.setType("2");
-        updateModel.setToken("b0eba1b77a224d449390b3551e1be827803022");
+        String token = SPUtils.getInstance().getString(Constant1E.SP_USER_TOKEN);
+        if(!TextUtils.isEmpty(token)) {
+            updateModel.setToken(token);
+        }
         if(userInfo != null) {
             updateModel.setUserId(userInfo.getUserId());
         }
         updateModel.setVersion("V"+getVersionName());
+//        updateModel.setVersion("V1.1.1.9");
     }
 
     @Override
@@ -97,7 +100,7 @@ public class AboutFragment extends SupportFragment {
 
     @OnClick(R2.id.tv_about_check)
     public void onViewClicked() {
-        LoadingDialog.show(getActivity());
+        BaseLoadingDialog.show(getActivity());
         checkUpdate(true);
     }
 
@@ -130,7 +133,8 @@ public class AboutFragment extends SupportFragment {
             context.startActivity(intent);
         } catch (Exception e) {
             	//跳转失败的处理
-            showUpdateToast("update fail!!!");
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://play.google.com/store/apps/details?id=" + context.getPackageName())));
         }
     }
 
@@ -170,35 +174,28 @@ public class AboutFragment extends SupportFragment {
     private void checkUpdate(final boolean isNeedToast){
         ViseHttp.POST(MainHttpEntity.APP_UPGRADE)
                 .setJson(GsonImpl.get().toJson(updateModel))
-                .request(new ACallback<String>() {
+                .request(new ACallback<BaseResponseModel>() {
                     @Override
-                    public void onSuccess(String msg) {
-                        LoadingDialog.dismiss(getActivity());
-                        ViseLog.d("USER_UPDATE onSuccess:" + msg.toString());
-                        try {
-                            JSONObject jMsg = new JSONObject(msg);
-                            if(jMsg.has("models")){
-                                if(jMsg.getString("models") != null){
-                                    showRedDot(true);
-                                    if(isNeedToast) {
-                                        showQuitDialog();
-                                    }
-                                }else{
-                                    if(isNeedToast) {
-                                        showUpdateToast(ContextUtils.getContext()
-                                                .getString(R.string.main_about_app_check_latest_version_toast));
-                                    }
-                                }
+                    public void onSuccess(BaseResponseModel responseModel) {
+                        BaseLoadingDialog.dismiss(getActivity());
+                        ViseLog.d("USER_UPDATE onSuccess: models=" + responseModel.models);
+                        if(responseModel.models != null){
+                            showRedDot(true);
+                            if(isNeedToast) {
+                                showQuitDialog();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        }else{
+                            if(isNeedToast) {
+                                showUpdateToast(ContextUtils.getContext()
+                                        .getString(R.string.main_about_app_check_latest_version_toast));
+                            }
                         }
 
                     }
 
                     @Override
                     public void onFail(int code, String s) {
-                        LoadingDialog.dismiss(getActivity());
+                        BaseLoadingDialog.dismiss(getActivity());
                         ViseLog.d("USER_UPDATE onFail:" + s+"  code="+code);
                         if(isNeedToast) {
                             showUpdateToast(ContextUtils.getContext()

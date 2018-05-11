@@ -41,6 +41,7 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
     private String qiniuFileUrl;
     private String qiniuPath;
     private UploadManager uploadManager;
+    private String token = SPUtils.getInstance().getString(Constant1E.SP_USER_TOKEN);
 
     @Override
     public void init() {
@@ -63,7 +64,7 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
      */
     private void getQiniuToken(final String iconPath){
         ViseHttp.GET(MainHttpEntity.GET_UPLOAD_TOKEN)
-                .addHeader("authorization","b0eba1b77a224d449390b3551e1be827803022")
+                .addHeader("authorization",token)
                 .baseUrl(BaseHttpEntity.BASE_FILE_UPLOAD)
                 .addParam("pName", "alphaebot")
                 .request(new ACallback<String>() {
@@ -196,7 +197,7 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
         JSONObject juser = null;
         try {
             juser = new JSONObject(GsonImpl.get().toJson(userInfo));
-            juser.put("token", "b0eba1b77a224d449390b3551e1be827803022");
+            juser.put("token", token);
         } catch (JSONException e) {
             e.printStackTrace();
         }

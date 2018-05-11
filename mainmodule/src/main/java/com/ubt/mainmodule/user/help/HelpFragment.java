@@ -18,6 +18,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.ubt.mainmodule.MainHttpEntity;
 import com.ubt.mainmodule.R;
 import com.ubt.mainmodule.R2;
 import com.vise.log.ViseLog;
@@ -158,7 +159,8 @@ public class HelpFragment extends SupportFragment {
             });
         }
         helpWebContent.setWebViewClient(webViewClient);
-        helpWebContent.loadUrl(HELP_URL);
+//        helpWebContent.loadUrl(HELP_URL);
+        helpWebContent.loadUrl(MainHttpEntity.HELP_FEEDBACK);
     }
 
     private void showErrorPage() {
