@@ -100,6 +100,7 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
                 super.handleMessage(msg);
                 switch (msg.what){
                     case UserInfoEditContract.HCMD_UPDATE_COMPLET:
+                        BaseLoadingDialog.dismiss(UserInfoEditActivity.this);
                         if(msg.arg1 == 1){
                             Intent intent = new Intent();
                             UserInfoEditActivity.this.setResult(RESULT_OK, intent);
@@ -107,7 +108,6 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
                         }else{
                             ToastUtils.showShort(SkinManager.getInstance().getTextById(R.string.main_profile_saveFail));
                         }
-                        BaseLoadingDialog.dismiss(UserInfoEditActivity.this);
                         break;
                 }
             }

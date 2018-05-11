@@ -89,7 +89,7 @@ public class BirthdaySelectDialog extends Dialog {
             int monthPos = Integer.valueOf(birth[1]) - 1;
             loopViewMonth.setCurrentPosition(monthPos);
 
-            int dayPos = Integer.valueOf(birth[1]) - 1;
+            int dayPos = Integer.valueOf(birth[2]) - 1;
             loopViewDay.setCurrentPosition(dayPos);
         }
 

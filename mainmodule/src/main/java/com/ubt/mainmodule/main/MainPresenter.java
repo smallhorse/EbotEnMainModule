@@ -119,6 +119,8 @@ public class MainPresenter extends BasePresenterImpl<MainContract.View> implemen
                                 ViseLog.i("status="+status);
                                 if(jStatus.getBoolean("status")){
                                     mViewHandler.sendEmptyMessage(MainContract.HCMD_ROBOT_WIFI_CONNETED);
+                                }else{
+                                    mViewHandler.sendEmptyMessage(MainContract.HCMD_ROBOT_WIFI_DISCONNETED);
                                 }
                             }
                         } catch (JSONException e) {

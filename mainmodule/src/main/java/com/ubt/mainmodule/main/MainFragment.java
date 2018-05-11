@@ -135,16 +135,18 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
                     case MainContract.HCMD_REFRESH_BATTERY:
                         refreshBatteryStatus(msg.arg1);
                         break;
-                    case MainContract.HCMD_LOST_BT:
+                    case MainContract.HCMD_LOST_BT: //蓝牙断开充电和机器人状态都断开
                         setRobotStatus(false);
                         setRobotChargeStatus(false);
                         break;
-                    case MainContract.HCMD_BT_CONNETED:
+                    case MainContract.HCMD_BT_CONNETED: //蓝牙连接成功，充电状态
                         setRobotChargeStatus(true);
                         break;
-                    case MainContract.HCMD_ROBOT_WIFI_CONNETED:
-                        setRobotChargeStatus(true);
+                    case MainContract.HCMD_ROBOT_WIFI_CONNETED: //wifi连接成功，机器人状态TURE
                         setRobotStatus(true);
+                        break;
+                    case MainContract.HCMD_ROBOT_WIFI_DISCONNETED://wifi断开，机器人状态FALSE
+                        setRobotStatus(false);
                         break;
                     default:
                         break;

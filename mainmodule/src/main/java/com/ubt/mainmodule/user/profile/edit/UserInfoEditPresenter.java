@@ -143,7 +143,6 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
             if(iconPath != null){
                 getQiniuToken(iconPath);
             }else {
-                SPUtils.getInstance().saveObject(Constant1E.SP_USER_INFO, userInfo);
                 updateUserInfo();
             }
         }else{
@@ -193,10 +192,23 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
      *  上传用户信息到后台
      */
     private void updateUserInfo() {
-        ViseLog.d("url:" + MainHttpEntity.UPDATE_USERINFO + "params:" + userInfo.toString());
+        ViseLog.d("url:" + MainHttpEntity.UPDATE_USERINFO + "  params:" + userInfo.toString());
+        JSONObject juser = null;
+        try {
+            juser = new JSONObject(GsonImpl.get().toJson(userInfo));
+            juser.put("token", "b0eba1b77a224d449390b3551e1be827803022");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if(juser == null){
+            ViseLog.e(("juser is null!!"));
+            return;
+        }
+        ViseLog.i("juser = "+juser.toString());
         ViseHttp.POST(MainHttpEntity.UPDATE_USERINFO)
-                .baseUrl("http://10.10.1.14:8088/alphaebot/")
-                .setJson(GsonImpl.get().toJson(userInfo))
+//                .baseUrl("http://10.10.1.14:8080/alpha1e/")
+                .setJson(juser.toString())
                 .request(new ACallback<String>() {
                     @Override
                     public void onSuccess(String msg) {
@@ -206,6 +218,7 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
                             if(jMsg.has("status")){
                                 if(jMsg.getBoolean("status")){
                                     sendCompletMsg(true);
+                                    SPUtils.getInstance().saveObject(Constant1E.SP_USER_INFO, userInfo);
                                 }else{
                                     sendCompletMsg(false);
                                 }
@@ -218,8 +231,8 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
                     }
 
                     @Override
-                    public void onFail(int i, String s) {
-                        ViseLog.d("USER_UPDATE onFail:" + s);
+                    public void onFail(int code, String s) {
+                        ViseLog.d("USER_UPDATE onFail:" + s+"  code="+code);
                         sendCompletMsg(false);
                     }
                 });

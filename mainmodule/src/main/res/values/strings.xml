@@ -41,6 +41,7 @@
     <string name="main_about_app_check_update_dialogue">Are you sure to update to the latest version?</string>
     <string name="main_about_app_check_update_succeed">Update was successful.</string>
     <string name="main_about_app_check_updatet_fail_toast">Failed to update the App.  Please check the network..</string>
+    <string name="main_about_app_check_fail_toast">Failed to obtain version information. Please check the network.</string>
 
 
     <string name="main_contact_us_tab">Contact us</string>

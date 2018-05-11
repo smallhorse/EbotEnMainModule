@@ -13,7 +13,8 @@ public class MainHttpEntity extends BaseHttpEntity{
     public static final String GET_USER_INFO = BASIC_UBX_SYS + "user/get";
     public static final String REQUEST_SMS_CODE = BASIC_UBX_SYS + "user/register";
     public static final String BIND_ACCOUNT = BASIC_UBX_SYS + "user/bind";
-    public static final String UPDATE_USERINFO = "user/update";
+    public static final String UPDATE_USERINFO = "overseas/user/update";
     public static final String GET_UPLOAD_TOKEN = "files/up-token";
+    public static final String APP_UPGRADE = "sys/appUpgrade";
 }
 
