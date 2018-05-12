@@ -1,5 +1,6 @@
 package com.ubt.mainmodule.user.profile.edit;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -32,6 +33,8 @@ import com.ubt.mainmodule.R;
 import com.ubt.mainmodule.R2;
 import com.ubt.mainmodule.user.profile.UserModel;
 import com.vise.log.ViseLog;
+import com.vise.xsnow.permission.OnPermissionCallback;
+import com.vise.xsnow.permission.PermissionManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -162,7 +165,11 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
         photoDialog.setOnClickListener(new FullSheetDialogFragment.OnItemClickListener() {
             @Override
             public void OnCamera() {
-                getShootCamera();
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    getCameraPermission();
+                }else{
+                    getShootCamera();
+                }
                 photoDialog.dismiss();
             }
 
@@ -326,5 +333,24 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
                 })
                 .create()
                 .show();
+    }
+
+    private void getCameraPermission(){
+        PermissionManager.instance().with(this).request(new OnPermissionCallback() {
+            @Override
+            public void onRequestAllow(String permissionName) {
+                getShootCamera();
+            }
+
+            @Override
+            public void onRequestRefuse(String permissionName) {
+
+            }
+
+            @Override
+            public void onRequestNoAsk(String permissionName) {
+
+            }
+        }, Manifest.permission.CAMERA);
     }
 }

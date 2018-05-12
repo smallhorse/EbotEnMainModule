@@ -208,7 +208,6 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
         }
         ViseLog.i("juser = "+juser.toString());
         ViseHttp.POST(MainHttpEntity.UPDATE_USERINFO)
-//                .baseUrl("http://10.10.1.14:8080/alpha1e/")
                 .setJson(juser.toString())
                 .request(new ACallback<String>() {
                     @Override

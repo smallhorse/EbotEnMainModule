@@ -2,6 +2,7 @@
     package="com.ubt.mainmodule" >
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
 <application>
     <activity android:name=".user.profile.edit.UserInfoEditActivity"
