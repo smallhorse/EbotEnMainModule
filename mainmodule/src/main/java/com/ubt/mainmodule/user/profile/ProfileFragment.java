@@ -88,7 +88,11 @@ public class ProfileFragment extends SupportFragment {
             }
             userModel.setCountry(SkinManager.getInstance().getTextById(R.string.main_profile_unfilled));
             userModel.setId(userInfo.getEmail());
-            userModel.setName(userInfo.getNickName());
+            if(!TextUtils.isEmpty(userInfo.getNickName())) {
+                userModel.setName(userInfo.getNickName());
+            }else{
+                userModel.setName("");
+            }
             userModel.setIcon(userInfo.getHeadPic());
         }else{
             ViseLog.e("userInfo is null!!!!");

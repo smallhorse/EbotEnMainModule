@@ -65,7 +65,7 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
     private void getQiniuToken(final String iconPath){
         ViseHttp.GET(MainHttpEntity.GET_UPLOAD_TOKEN)
                 .addHeader("authorization",token)
-                .baseUrl(BaseHttpEntity.BASE_FILE_UPLOAD)
+                .baseUrl(BaseHttpEntity.BASE_UBX_COMMON)
                 .addParam("pName", "alphaebot")
                 .request(new ACallback<String>() {
 
@@ -176,7 +176,11 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
                 userModel.setBirthday(SkinManager.getInstance().getTextById(R.string.main_profile_unfilled));
             }
             userModel.setCountry(SkinManager.getInstance().getTextById(R.string.main_profile_unfilled));
-            userModel.setId(userInfo.getEmail());
+            if(!TextUtils.isEmpty(userInfo.getEmail())) {
+                userModel.setId(userInfo.getEmail());
+            }else{
+                userModel.setId("");
+            }
             userModel.setName(userInfo.getNickName());
             userModel.setIcon(userInfo.getHeadPic());
         }else{
