@@ -319,7 +319,7 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
         new BaseDialog.Builder(this)
                 .setMessage(R.string.main_profile_quit_edit)
                 .setConfirmButtonId(R.string.main_common_cancel)
-                .setCancleButtonID(R.string.main_common_sure)
+                .setCancleButtonID(R.string.main_common_quit)
                 .setButtonOnClickListener(new BaseDialog.ButtonOnClickListener() {
                     @Override
                     public void onClick(DialogPlus dialog, View view) {

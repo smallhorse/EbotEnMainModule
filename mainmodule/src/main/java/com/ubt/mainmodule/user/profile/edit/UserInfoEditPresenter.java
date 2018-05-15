@@ -137,10 +137,6 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
     @Override
     public void saveUserInfo(final String iconPath) {
         if(userInfo != null) {
-            userInfo.setBirthDate(userModel.getBirthday());
-            userInfo.setHeadPic(userModel.getIcon());
-            userInfo.setSex(String.valueOf(userModel.getGenderId() + 1));
-
             if(iconPath != null){
                 getQiniuToken(iconPath);
             }else {
@@ -197,6 +193,10 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
      *  上传用户信息到后台
      */
     private void updateUserInfo() {
+        userInfo.setBirthDate(userModel.getBirthday());
+        userInfo.setHeadPic(userModel.getIcon());
+        userInfo.setSex(String.valueOf(userModel.getGenderId() + 1));
+
         ViseLog.d("url:" + MainHttpEntity.UPDATE_USERINFO + "  params:" + userInfo.toString());
         JSONObject juser = null;
         try {
@@ -225,9 +225,11 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
                                     SPUtils.getInstance().saveObject(Constant1E.SP_USER_INFO, userInfo);
                                 }else{
                                     sendCompletMsg(false);
+                                    userInfo = (UserInfoModel) SPUtils.getInstance().readObject(Constant1E.SP_USER_INFO); //上传失败重新初始化用户信息
                                 }
                             }
                         } catch (JSONException e) {
+                            userInfo = (UserInfoModel) SPUtils.getInstance().readObject(Constant1E.SP_USER_INFO);
                             sendCompletMsg(false);
                             e.printStackTrace();
                         }
@@ -236,6 +238,7 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
 
                     @Override
                     public void onFail(int code, String s) {
+                        userInfo = (UserInfoModel) SPUtils.getInstance().readObject(Constant1E.SP_USER_INFO);
                         ViseLog.d("USER_UPDATE onFail:" + s+"  code="+code);
                         sendCompletMsg(false);
                     }
@@ -246,11 +249,14 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
 
     @Override
     public boolean isUserInfoModified(){
+        if(userInfo == null){
+            return false;
+        }
         if(userModel.getGenderId() != (Integer.valueOf(userInfo.getSex()) - 1)){
             return true;
         }else if(!userModel.getBirthday().equals(userInfo.getBirthDate())){
             return true;
-        }else if(!userModel.getIcon().equals(userInfo.getHeadPic())){
+        }else if(userModel.getIcon()!= null  &&!userModel.getIcon().equals(userInfo.getHeadPic())){
             return true;
         }
         return false;

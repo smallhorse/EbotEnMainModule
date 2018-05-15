@@ -64,6 +64,7 @@
     <string name="main_help_feedback_give_feedback">Give feedback</string>
     <string name="main_help_feedback_give_feedback_helpful">Helpful</string>
     <string name="main_help_feedback_give_feedback_helpless">Helpless</string>
+    <string name="main_help_network_error">Network error. Tap to load again.</string>
 
 
     <string name="main_language_tab">Language</string>
@@ -76,6 +77,7 @@
     <string name="main_common_cancel">Cancel</string>
     <string name="main_common_sure">Sure</string>
     <string name="main_common_confirm">Confirm</string>
+    <string name="main_common_quit">Quit</string>
 
 
 
