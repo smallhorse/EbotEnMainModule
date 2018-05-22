@@ -1,5 +1,6 @@
 package com.ubt.mainmodule.main;
 
+import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,13 +18,23 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.ubt.baselib.commonModule.ModuleUtils;
 import com.ubt.baselib.mvp.MVPBaseFragment;
+import com.ubt.baselib.skin.SkinManager;
+import com.ubt.baselib.utils.ContextUtils;
+import com.ubt.mainmodule.FloatView;
+import com.ubt.mainmodule.MainHttpEntity;
 import com.ubt.mainmodule.R;
 import com.ubt.mainmodule.R2;
+import com.vise.xsnow.cache.SpCache;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import zhy.com.highlight.HighLight;
+import zhy.com.highlight.interfaces.HighLightInterface;
+import zhy.com.highlight.shape.CircleLightShape;
+import zhy.com.highlight.shape.RectLightShape;
+import zhy.com.highlight.view.HightLightView;
 
 /**
  * @作者：bin.zhang@ubtrobot.com
@@ -31,7 +42,10 @@ import butterknife.Unbinder;
  * @描述:
  */
 
-public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresenter> implements MainContract.View {
+public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresenter> implements MainContract.View,
+        View.OnClickListener{
+
+    private static final String IS_FIRST_RUN = "isFirst";
 
     @BindView(R2.id.iv_robot_status)    ImageView ivRobotStatus;
     @BindView(R2.id.iv_robot_status_error)    ImageView ivRobotStatusError;
@@ -47,6 +61,10 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
     Unbinder unbinder;
     private Handler mHandler;
     private int prePower = -1;
+    private HighLight mHightLight;
+    private View mainView;
+    private FloatView mFloatView;
+    private SpCache spCache;
 
     public static MainFragment newInstance() {
 
@@ -61,11 +79,16 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.main_fragment_main, container, false);
-        unbinder = ButterKnife.bind(this, view);
-
+        mainView = inflater.inflate(R.layout.main_fragment_main, container, false);
+        unbinder = ButterKnife.bind(this, mainView);
+        mFloatView = new FloatView(getContext());
         initHandler();
-        return view;
+        spCache = new SpCache(ContextUtils.getContext());
+        if(spCache.get(IS_FIRST_RUN, true)) {
+            spCache.put(IS_FIRST_RUN, false);
+            showUserGide();
+        }
+        return mainView;
     }
 
     @Override
@@ -108,7 +131,9 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
         }else if(view.getId() == R.id.iv_play_center){
             ARouter.getInstance().build(ModuleUtils.Playcenter_module).navigation();
         }else if(view.getId() == R.id.iv_voice_cmd){
-            ARouter.getInstance().build(ModuleUtils.VolumeCmd_module).navigation();
+            ARouter.getInstance().build(ModuleUtils.BaseWebview_module)
+                    .withString(ModuleUtils.BaseWebview_KEY_URL, MainHttpEntity.VOICE_CMD)
+                    .navigation();
         }else if(view.getId() == R.id.iv_actions){
 //            BlueClientUtil.getInstance().connect("A0:2C:36:89:F3:7D");
 //            BlueClientUtil.getInstance().connect("88:83:5D:B8:39:0C");
@@ -215,6 +240,104 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
             tvChargingBattary.setVisibility(View.VISIBLE);
         }else{
             tvChargingBattary.setVisibility(View.INVISIBLE);
+        }
+    }
+
+
+    /**
+     * 新手指引
+     */
+    public  void showUserGide(){
+        mHightLight = new HighLight(this.getActivity())//
+                .autoRemove(false)
+                .intercept(true)
+                .enableNext()
+                .setOnLayoutCallback(new HighLightInterface.OnLayoutCallback() {
+                    @Override
+                    public void onLayouted() {
+                        //界面布局完成添加tipview
+                        mHightLight.addHighLight(R.id.iv_robot_status,R.layout.main_guide_robot_status, new HighLight.OnPosCallback() {
+                            @Override
+                            public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
+                                marginInfo.leftMargin = rectF.right + 45;
+                                marginInfo.topMargin = rectF.top + 100;
+                            }} ,new CircleLightShape(-18,-18))
+                                .addHighLight(R.id.iv_voice_cmd,R.layout.main_guide_voice_cmd,new HighLight.OnPosCallback() {
+                                    @Override
+                                    public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
+                                        marginInfo.rightMargin = rightMargin + rectF.width() + 45;
+                                        marginInfo.topMargin = rectF.top + 100;
+                                    }},new CircleLightShape(-18,-18))
+                                .addHighLight(R.id.iv_play_center,R.layout.main_guide_play_center,new HighLight.OnPosCallback() {
+                                    @Override
+                                    public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
+                                        marginInfo.rightMargin = rightMargin + rectF.width() + 45;
+                                        marginInfo.topMargin = rectF.top + 100;
+                                    }},new CircleLightShape(-18,-18))
+                                .addHighLight(R.id.iv_actions,R.layout.main_guide_actions,new HighLight.OnPosCallback() {
+                                    @Override
+                                    public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
+                                        marginInfo.leftMargin = rectF.right + 45;
+                                        marginInfo.topMargin = rectF.top + 45;;
+                                    }},new RectLightShape(-5,-5,5,15,15))
+                                .addHighLight(R.id.iv_blockly,R.layout.main_guide_blockly,new HighLight.OnPosCallback() {
+                                    @Override
+                                    public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
+                                        marginInfo.leftMargin = rightMargin ;
+                                        marginInfo.topMargin = rectF.top + rectF.height() -120;
+                                    }},new RectLightShape(-5,-5,5,15,15))
+                                .addHighLight(R.id.iv_community,R.layout.main_guide_community,new HighLight.OnPosCallback() {
+                                    @Override
+                                    public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
+                                        marginInfo.leftMargin = rectF.right - rectF.width() - rightMargin;
+                                        marginInfo.topMargin = bottomMargin +80;
+                                    }},new RectLightShape(-5,-5,5,15,15))
+                                .addHighLight(R.id.iv_joystick,R.layout.main_guide_joystick,new HighLight.OnPosCallback() {
+                                    @Override
+                                    public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
+                                        marginInfo.leftMargin = rectF.right - rectF.width()*2.0f - 45;
+                                        marginInfo.topMargin = bottomMargin +140;
+                                    }},new RectLightShape(-5,-5,5,15,15))
+                          .setOnNextCallback(new HighLightInterface.OnNextCallback() {
+                            @Override
+                            public void onNext(HightLightView hightLightView, View targetView, View tipView) {
+                                // targetView 目标按钮 tipView添加的提示布局 可以直接找到'我知道了'按钮添加监听事件等处理
+                                TextView textView = tipView.findViewById(R.id.tv_got_it);
+                                textView.setOnClickListener(MainFragment.this);
+
+                                if(targetView.getId() == R.id.iv_joystick){
+                                    mFloatView.dismissFloatButton();
+                                }
+
+                            }
+                        });
+                        //然后显示高亮布局
+                        mHightLight.show();
+
+                        mFloatView.addButton(SkinManager.getInstance().getTextById(R.string.main_guide_skip),
+                                40, 120, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mHightLight.remove();
+                                mFloatView.dismissFloatButton();
+                            }
+                        });
+                    }
+                });
+
+
+    }
+
+
+
+    @Override
+    public void onClick(View v) {
+        if(mHightLight.isShowing() && mHightLight.isNext())//如果开启next模式
+        {
+            mHightLight.next();
+        }else
+        {
+            mHightLight.remove();
         }
     }
 }

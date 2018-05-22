@@ -78,7 +78,8 @@ public class UserMainFragment extends MVPBaseFragment<UserMainContract.View, Use
             fragmentCur = savedInstanceState.getInt("fragmentCur", FIRST);
         }
         initFragment();
-        ViseLog.i("onCreateView");
+        leftAdapter.clearChick();
+        leftAdapter.getItem(fragmentCur).setChick(true);
         return view;
 
     }

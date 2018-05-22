@@ -16,5 +16,6 @@ public class MainHttpEntity extends BaseHttpEntity{
 
     //webView
     public static final String HELP_FEEDBACK = BASIC_UBX_SYS+"alpha1e/overseas/setHelp.html";  //帮助反馈页面
+    public static final String VOICE_CMD = BASIC_UBX_SYS+"alpha1e/overseas/voice.html";  //语音指令
 }
 

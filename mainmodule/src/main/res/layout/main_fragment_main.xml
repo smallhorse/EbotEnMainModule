@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:ignore="ResourceName">
+    >
 
     <!--上面按钮开始-->
     <RelativeLayout
@@ -90,6 +90,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/top_bar"
+        android:paddingBottom="10dp"
         android:orientation="horizontal">
 
         <RelativeLayout

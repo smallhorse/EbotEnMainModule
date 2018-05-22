@@ -1,5 +1,7 @@
 package com.ubt.mainmodule.user.help;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
@@ -42,7 +44,6 @@ import me.yokeyword.fragmentation.SupportFragment;
  */
 
 public class HelpFragment extends SupportFragment {
-    private static final String HELP_URL = "http://10.10.32.22:8080/setHelp_en/setHelp.html?userid=803522&token=1eec5419a5294587b87361a9715d11b2803522";
 
     @BindView(R2.id.help_web_content)    WebView helpWebContent;
     @BindView(R2.id.img_net_error)    ImageView imgNetError;
@@ -73,6 +74,14 @@ public class HelpFragment extends SupportFragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(helpWebContent != null) {
+            helpWebContent.loadUrl(MainHttpEntity.HELP_FEEDBACK);
+        }
+    }
+
     private void initWebView() {
         WebSettings webSettings = helpWebContent.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -97,8 +106,18 @@ public class HelpFragment extends SupportFragment {
         WebViewClient webViewClient = new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                super.shouldOverrideUrlLoading(view, url);
                 ViseLog.d("url = " + url);
-                doGotoPage(url);
+
+                if(url.contains("email-report")){
+                    Intent intent= new Intent();
+                    intent.setAction(Intent.ACTION_VIEW);
+                    Uri content_url = Uri.parse(url);
+                    intent.setData(content_url);
+                    startActivity(intent);
+                }else {
+                    doGotoPage(url);
+                }
                 return true;
             }
 

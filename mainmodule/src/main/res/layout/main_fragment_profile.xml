@@ -24,7 +24,7 @@
         android:layout_marginStart="8dp"
         android:scaleType="fitXY"
         app:shape_mode="circle"
-        android:src="@mipmap/main_logout"
+        android:background="@mipmap/main_logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

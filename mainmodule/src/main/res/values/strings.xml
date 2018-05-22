@@ -74,6 +74,22 @@
     <string name="main_log_out_dialogue">Are you sure to log out?</string>
 
 
+
+
+    <string name="main_guide_robotstatus">Click here to connect to the robot and its Wi-Fi.\n
+        More information is also available here.</string>
+    <string name="main_guide_voicecmd">Click here to know how to talk with Alpha.</string>
+    <string name="main_guide_playcenter">A playlist of the robot actions.</string>
+    <string name="main_guide_actions">Make up actions for the robot.\nYou can also get a series of lessons here.</string>
+    <string name="main_guide_blockly">Program for the robot. You can also get a series of lessons here.</string>
+    <string name="main_guide_community">Share your works or communicate with \nother users through the community.</string>
+    <string name="main_guide_joystick">A joystick to control the robot.</string>
+
+    <string name="main_guide_got_it">Got it</string>
+    <string name="main_guide_skip">Skip</string>
+
+
+
     <string name="main_common_cancel">Cancel</string>
     <string name="main_common_sure">Sure</string>
     <string name="main_common_confirm">Confirm</string>
