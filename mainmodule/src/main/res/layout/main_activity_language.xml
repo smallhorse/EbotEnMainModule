@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ubt.mainmodule.user.language.LanguageActivity">
+
+    <ImageView
+        android:id="@+id/main_iv_back"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_12"
+        android:src="@drawable/ic_back"/>
+
+    <TextView
+        android:id="@+id/main_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_50"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/main_language_title"
+        android:textColor="@color/base_tv_large_black"
+        android:textSize="@dimen/sp_18"
+        />
+
+
+    <TextView
+        android:id="@+id/main_tv_done"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_50"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_20"
+        android:gravity="center"
+        android:text="@string/main_language_done"
+        android:textColor="@color/base_tv_large_black"
+        android:textSize="@dimen/sp_18"
+        />
+
+    <View
+        android:id="@+id/main_view1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0_5"
+        android:layout_below="@+id/main_tv_title"
+        android:background="@color/base_line"
+        />
+
+    <View
+        android:id="@+id/main_view2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_20"
+        android:layout_below="@+id/main_view1"
+        android:background="@color/main_grey"
+        />
+
+    <View
+        android:id="@+id/main_view3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0_5"
+        android:layout_below="@+id/main_view2"
+        android:background="@color/base_line"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/main_language_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/main_view3"
+        android:layout_centerHorizontal="true"
+        android:overScrollMode="never"
+        />
+
+</RelativeLayout>

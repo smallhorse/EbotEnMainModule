@@ -25,19 +25,19 @@ public class DataServer {
     public static List<LeftMenuModel> getLeftData(){
         if(datas.size() <= 0) {
             Context context = ContextUtils.getContext();
-            datas.add(new LeftMenuModel(context.getString(R.string.main_profile_tab),
+            datas.add(new LeftMenuModel(R.string.main_profile_tab,
                     true, R.mipmap.main_user_profile, 0));
-            datas.add(new LeftMenuModel(context.getString(R.string.main_notifications_tab),
+            datas.add(new LeftMenuModel(R.string.main_notifications_tab,
                     false, R.mipmap.main_user_notification, 0));
-            datas.add(new LeftMenuModel(context.getString(R.string.main_about_app_tab),
+            datas.add(new LeftMenuModel(R.string.main_about_app_tab,
                     false, R.mipmap.main_user_about, 0));
-            datas.add(new LeftMenuModel(context.getString(R.string.main_contact_us_tab),
+            datas.add(new LeftMenuModel(R.string.main_contact_us_tab,
                     false, R.mipmap.main_user_contact, 0));
-            datas.add(new LeftMenuModel(context.getString(R.string.main_help_feedback_tab),
+            datas.add(new LeftMenuModel(R.string.main_help_feedback_tab,
                     false, R.mipmap.main_user_help, 0));
-            datas.add(new LeftMenuModel(context.getString(R.string.main_language_tab),
+            datas.add(new LeftMenuModel(R.string.main_language_tab,
                     false, R.mipmap.main_user_lanuague, 0));
-            datas.add(new LeftMenuModel(context.getString(R.string.main_log_out_tab),
+            datas.add(new LeftMenuModel(R.string.main_log_out_tab,
                     false, R.mipmap.main_user_logout, 0));
         }
         return datas;

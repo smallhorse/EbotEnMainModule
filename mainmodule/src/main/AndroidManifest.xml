@@ -1,14 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ubt.mainmodule" >
+          package="com.ubt.mainmodule">
 
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
-<application>
-    <activity android:name=".user.profile.edit.UserInfoEditActivity"
-        android:launchMode="singleTop"
-        android:screenOrientation="landscape"
-        />
+    <application>
+        <activity
+            android:name=".user.profile.edit.UserInfoEditActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".user.language.LanguageActivity"
+            android:screenOrientation="landscape">
+        </activity>
+    </application>
 
-</application>
 </manifest>

@@ -116,6 +116,13 @@ public class UserMainFragment extends MVPBaseFragment<UserMainContract.View, Use
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (leftAdapter!=null){
+            leftAdapter.notifyDataSetChanged();
+        }
+    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

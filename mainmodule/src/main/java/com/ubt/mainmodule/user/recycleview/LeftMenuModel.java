@@ -10,27 +10,27 @@ package com.ubt.mainmodule.user.recycleview;
  */
 
 public class LeftMenuModel {
-    private String nameString;
+    private int nameString;
     private boolean chick;   //标识
     private int imageId;
     private int countUnRead;
 
-    public LeftMenuModel(String nameString) {
+    public LeftMenuModel(int nameString) {
         this.nameString = nameString;
     }
 
-    public LeftMenuModel(String nameString, boolean chick, int imageId, int countUnRead) {
+    public LeftMenuModel(int nameString, boolean chick, int imageId, int countUnRead) {
         this.nameString = nameString;
         this.chick = chick;
         this.imageId = imageId;
         this.countUnRead = countUnRead;
     }
 
-    public String getNameString() {
+    public int getNameString() {
         return nameString;
     }
 
-    public void setNameString(String nameString) {
+    public void setNameString(int nameString) {
         this.nameString = nameString;
     }
 

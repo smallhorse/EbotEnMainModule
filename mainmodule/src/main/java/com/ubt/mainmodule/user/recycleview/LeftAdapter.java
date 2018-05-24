@@ -4,6 +4,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.ubt.baselib.skin.SkinManager;
 import com.ubt.baselib.utils.ContextUtils;
 import com.ubt.mainmodule.R;
 import com.ubt.mainmodule.user.data.DataServer;
@@ -22,7 +23,7 @@ public class LeftAdapter extends BaseQuickAdapter<LeftMenuModel, BaseViewHolder>
 
     @Override
     protected void convert(BaseViewHolder helper, LeftMenuModel item) {
-        helper.setText(R.id.tv_tab, item.getNameString());
+        helper.setText(R.id.tv_tab, SkinManager.getInstance().getTextById(item.getNameString()));
         helper.setImageResource(R.id.iv_icon, item.getImageId());
         helper.setVisible(R.id.tv_msgcnt, false);
 

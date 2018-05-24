@@ -1,16 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/main_grey"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/main_grey"
     >
 
+
     <TextView
+        android:id="@+id/main_tv_current_language"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:drawablePadding="@dimen/dp_5"
+        android:drawableTop="@mipmap/img_language"
         android:text="@string/main_language_content"
         android:textColor="#FF999999"
         android:textSize="14sp"
         />
+
+    <TextView
+        android:id="@+id/main_tv_change_language"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_tv_current_language"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textColor="@color/base_blue"
+        android:textSize="@dimen/sp_15"
+        android:text="@string/main_change_language"
+        />
+
 </RelativeLayout>

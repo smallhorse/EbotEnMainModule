@@ -14,7 +14,7 @@
     <string name="main_ctl_ir">IR Sensor</string>
     <string name="main_ctl_min">MIN</string>
     <string name="main_ctl_max">MAX</string>
-    
+
     <!--用户中心-->
     <string name="main_save">Save</string>
     <string name="main_profile_tab">Profile</string>
@@ -68,12 +68,27 @@
 
 
     <string name="main_language_tab">Language</string>
-    <string name="main_language_content">Language：English</string>
+    <string name="main_language_content">Current Language: English</string>
+    <string name="main_change_language">Change Language</string>
+    <string name="main_language_title">App Language</string>
+    <string name="main_language_done">Done</string>
     <string name="main_log_out_tab">Log out</string>
     <string name="main_log_out_button">Log out account</string>
     <string name="main_log_out_dialogue">Are you sure to log out?</string>
 
-
+    <string name="main_ui_settings_language_france">法语</string>
+    <string name="main_ui_settings_language_korean">韩语</string>
+    <string name="main_ui_settings_language_italian">意大利语</string>
+    <string name="main_ui_settings_language_japanese">日语</string>
+    <string name="main_ui_settings_language_spanish">西班牙语</string>
+    <string name="main_ui_settings_language_germen">德语</string>
+    <string name="main_ui_settings_language_english">英语</string>
+    <string name="main_ui_setting_languages_s_chinese">简体中文</string>
+    <string name="main_ui_settings_language_t_chinese">繁体中文</string>
+    <string name="main_ui_settings_language_franch">法语</string>
+    <string name="main_ui_settings_language_russian">俄语</string>
+    <string name="main_ui_settings_language_hungarian">匈牙利语</string>
+    <string name="main_ui_settings_language_turkish">土耳其语</string>
 
 
     <string name="main_guide_robotstatus">Click here to connect to the robot and its Wi-Fi.\n
@@ -89,12 +104,10 @@
     <string name="main_guide_skip">Skip</string>
 
 
-
     <string name="main_common_cancel">Cancel</string>
     <string name="main_common_sure">Sure</string>
     <string name="main_common_confirm">Confirm</string>
     <string name="main_common_quit">Quit</string>
-
 
 
     <string-array name="main_vol_labels">
