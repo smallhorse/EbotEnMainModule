@@ -19,6 +19,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.ubt.baselib.commonModule.ModuleUtils;
 import com.ubt.baselib.mvp.MVPBaseFragment;
 import com.ubt.baselib.skin.SkinManager;
+import com.ubt.baselib.utils.AppStatusUtils;
 import com.ubt.baselib.utils.ContextUtils;
 import com.ubt.mainmodule.FloatView;
 import com.ubt.mainmodule.MainHttpEntity;
@@ -75,6 +76,12 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
         return fragment;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        AppStatusUtils.setBussiness(false);
+        AppStatusUtils.setBtBussiness(false);
+    }
 
     @Nullable
     @Override
@@ -97,6 +104,7 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
         mPresenter.init();
         mPresenter.queryBattery(true);
         setRobotStatus(mPresenter.isRobotConnected());
+        setRobotChargeStatus(mPresenter.isRobotConnected());
     }
 
     @Override
@@ -127,6 +135,7 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
             R2.id.iv_blockly, R2.id.iv_community, R2.id.iv_joystick})
     public void onViewClicked(View view) {
         if(view.getId() == R.id.iv_robot_status){
+//            BaseLowBattaryDialog.getInstance().showLow5Dialog();
             ARouter.getInstance().build(ModuleUtils.Bluetooh_BleStatuActivity).navigation();
         }else if(view.getId() == R.id.iv_play_center){
             ARouter.getInstance().build(ModuleUtils.Playcenter_module).navigation();
@@ -340,4 +349,5 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
             mHightLight.remove();
         }
     }
+
 }

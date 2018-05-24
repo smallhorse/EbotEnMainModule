@@ -7,10 +7,14 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Switch;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.ubt.baselib.commonModule.ModuleUtils;
+import com.ubt.baselib.customView.BaseBTDisconnectDialog;
 import com.ubt.baselib.mvp.MVPBaseFragment;
 import com.ubt.mainmodule.R;
 import com.ubt.mainmodule.R2;
@@ -55,6 +59,17 @@ public class CtlCenterFragment extends MVPBaseFragment<CtlContract.View, CtlPres
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_fragment_ctrl_center, container, false);
         unbinder = ButterKnife.bind(this, view);
+        seekbarVolume.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(!mPresenter.isBTConnected()){
+                    ViseLog.e("蓝牙未连接!!!");
+                    showBTDisDialog();
+                    return true;
+                }
+                return false;
+            }
+        });
         seekbarVolume.setOnProgressChangedListener(new SignSeekBar.OnProgressChangedListener() {
             @Override
             public void onProgressChanged(SignSeekBar signSeekBar, int progress, float progressFloat, boolean fromUser) {
@@ -62,6 +77,7 @@ public class CtlCenterFragment extends MVPBaseFragment<CtlContract.View, CtlPres
                 if(System.currentTimeMillis() - volTime > 500){
                     if(!mPresenter.isBTConnected()){
                         ViseLog.e("蓝牙未连接!!!");
+                        showBTDisDialog();
                         return;
                     }
                     ViseLog.i("progress vol="+progress);
@@ -151,6 +167,12 @@ public class CtlCenterFragment extends MVPBaseFragment<CtlContract.View, CtlPres
     public void onViewClicked(View view) {
         if(!mPresenter.isBTConnected()){
             ViseLog.e("蓝牙未连接!!!");
+            if(view.getId() == R.id.switch_fall){
+                switchFall.setChecked(!switchFall.isChecked());
+            }else if(view.getId() == R.id.switch_ir){
+                switchIr.setChecked(!switchIr.isChecked());
+            }
+            showBTDisDialog();
             return;
         }
         if(view.getId() == R.id.switch_fall){
@@ -159,4 +181,25 @@ public class CtlCenterFragment extends MVPBaseFragment<CtlContract.View, CtlPres
             mPresenter.setIRStatus(switchIr.isChecked());
         }
     }
+
+
+    private void showBTDisDialog(){
+        if(BaseBTDisconnectDialog.getInstance().isShowing()){
+            return;
+        }
+        BaseBTDisconnectDialog.getInstance().show(new BaseBTDisconnectDialog.IDialogClick() {
+            @Override
+            public void onConnect() {
+                ARouter.getInstance().build(ModuleUtils.Bluetooh_BleStatuActivity).navigation();
+                BaseBTDisconnectDialog.getInstance().dismiss();
+            }
+
+            @Override
+            public void onCancel() {
+                BaseBTDisconnectDialog.getInstance().dismiss();
+            }
+        });
+    }
+
+
 }
