@@ -76,8 +76,7 @@
 
 
 
-    <string name="main_guide_robotstatus">Click here to connect to the robot and its Wi-Fi.\n
-        More information is also available here.</string>
+    <string name="main_guide_robotstatus">Click here to connect to the robot and its Wi-Fi.\nMore information is also available here.</string>
     <string name="main_guide_voicecmd">Click here to know how to talk with Alpha.</string>
     <string name="main_guide_playcenter">A playlist of the robot actions.</string>
     <string name="main_guide_actions">Make up actions for the robot.\nYou can also get a series of lessons here.</string>
