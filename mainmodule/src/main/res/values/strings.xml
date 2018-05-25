@@ -68,7 +68,7 @@
 
 
     <string name="main_language_tab">Language</string>
-    <string name="main_language_content">Current Language: English</string>
+    <string name="main_language_content">Current Language: %s</string>
     <string name="main_change_language">Change Language</string>
     <string name="main_language_title">App Language</string>
     <string name="main_language_done">Done</string>

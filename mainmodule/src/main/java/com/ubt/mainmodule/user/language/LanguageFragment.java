@@ -4,12 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.ubt.baselib.globalConst.Constant1E;
+import com.ubt.baselib.skin.SkinManager;
+import com.ubt.baselib.utils.SPUtils;
 import com.ubt.mainmodule.R;
+import com.vise.log.ViseLog;
 
 import me.yokeyword.fragmentation.SupportFragment;
 
@@ -51,5 +56,37 @@ public class LanguageFragment extends SupportFragment {
                 startActivity(new Intent(getActivity(), LanguageActivity.class));
             }
         });
+        initLanguageData();
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initLanguageData();
+    }
+
+    /**
+     * 初始化本地语言包版本号
+     */
+    public void initLanguageData() {
+
+        String[] languagesTitle = SkinManager.getInstance().getSkinArrayResource(R.array.main_ui_lanuages_title);
+        String[] languagesContent = SkinManager.getInstance().getSkinArrayResource(R.array.main_ui_lanuages);
+        String[] languagesUp = SkinManager.getInstance().getSkinArrayResource(R.array.main_ui_lanuages_up);
+        String spLanguageType = SPUtils.getInstance().getString(Constant1E.CURRENT_APP_LANGUAGE);
+        ViseLog.d("initLanguageData===" + spLanguageType);
+        if (TextUtils.isEmpty(spLanguageType)) {
+            tvCurrentLanguage.setText(String.format(SkinManager.getInstance().getTextById(R.string.main_language_content), languagesTitle[0]));
+        } else {
+            for (int i = 0; i < languagesUp.length; i++) {
+                ViseLog.d("languagesUp===" + languagesUp[i]);
+                if (spLanguageType.equals(languagesUp[i])) {
+                    ViseLog.d("languagesUp=equals==" + languagesUp[i]);
+                    tvCurrentLanguage.setText(SkinManager.getInstance().getTextById(R.string.main_language_content) + ":" + languagesTitle[i]);
+                    break;
+                }
+            }
+        }
     }
 }

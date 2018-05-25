@@ -12,7 +12,10 @@ import com.ubt.baselib.mvp.BaseView;
 public class UserLanguageContract {
 
     public interface View extends BaseView {
+        public void showLoadingDialog();
+        public void dimissDialog();
 
+        public void notifyDataSetChanged();
     }
 
     interface Presenter extends BasePresenter<UserLanguageContract.View> {

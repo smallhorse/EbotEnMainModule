@@ -8,14 +8,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.ubt.baselib.customView.BaseLoadingDialog;
+import com.ubt.baselib.globalConst.Constant1E;
 import com.ubt.baselib.model1E.LanguageModel;
 import com.ubt.baselib.mvp.MVPBaseActivity;
 import com.ubt.baselib.skin.SkinManager;
+import com.ubt.baselib.utils.SPUtils;
 import com.ubt.mainmodule.R;
 import com.ubt.mainmodule.R2;
 import com.vise.log.ViseLog;
-
-import org.litepal.crud.DataSupport;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,8 +49,8 @@ public class LanguageActivity extends MVPBaseActivity<UserLanguageContract.View,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mUnbinder = ButterKnife.bind(this);
-        mPresenter.init();
         initData();
+        mPresenter.init();
     }
 
 
@@ -59,12 +60,7 @@ public class LanguageActivity extends MVPBaseActivity<UserLanguageContract.View,
         mMainLanguageList.setLayoutManager(new LinearLayoutManager(this));
         mMainLanguageList.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
-        mLanguageModel = DataSupport.findFirst(LanguageModel.class);
-        if (mLanguageModel != null) {
-            mAdapter.setSelectedTitle(mLanguageModel.getLanguageTitle());
-        }
-
-
+        mAdapter.setSelectedLanguageType(SPUtils.getInstance().getString(Constant1E.CURRENT_APP_LANGUAGE));
     }
 
 
@@ -77,8 +73,7 @@ public class LanguageActivity extends MVPBaseActivity<UserLanguageContract.View,
                 if (mLanguageModel.getLanguageType().equals("en")) {
                     SkinManager.getInstance().restoreDefaultTheme();
                     if (mLanguageModel != null) {
-                        DataSupport.deleteAll(LanguageModel.class);
-                        mLanguageModel.save();
+                        SPUtils.getInstance().put(Constant1E.CURRENT_APP_LANGUAGE, mLanguageModel.getLanguageType());
                     }
                     finish();
                 } else {
@@ -93,8 +88,7 @@ public class LanguageActivity extends MVPBaseActivity<UserLanguageContract.View,
                         public void onSuccess() {
                             ViseLog.d("成功加载多语言");
                             if (mLanguageModel != null) {
-                                DataSupport.deleteAll(LanguageModel.class);
-                                mLanguageModel.save();
+                                SPUtils.getInstance().put(Constant1E.CURRENT_APP_LANGUAGE, mLanguageModel.getLanguageType());
                             }
                             finish();
                         }
@@ -124,15 +118,32 @@ public class LanguageActivity extends MVPBaseActivity<UserLanguageContract.View,
                 mLanguageModel = model;
                 mMainTvDone.setEnabled(true);
                 mMainTvDone.setTextColor(getResources().getColorStateList(R.color.base_blue));
-                mAdapter.setSelectedTitle(mLanguageModel.getLanguageTitle());
+                mAdapter.setSelectedLanguageType(mLanguageModel.getLanguageType());
             }
         } else {
             mMainTvDone.setEnabled(true);
             mMainTvDone.setTextColor(getResources().getColorStateList(R.color.base_blue));
             mLanguageModel = model;
-            mAdapter.setSelectedTitle(mLanguageModel.getLanguageTitle());
+            mAdapter.setSelectedLanguageType(mLanguageModel.getLanguageType());
         }
 
 
+    }
+
+    @Override
+    public void showLoadingDialog() {
+        BaseLoadingDialog.show(this);
+    }
+
+    @Override
+    public void dimissDialog() {
+        BaseLoadingDialog.dismiss(this);
+        mPresenter.initLanguageData();
+
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        mAdapter.notifyDataSetChanged();
     }
 }

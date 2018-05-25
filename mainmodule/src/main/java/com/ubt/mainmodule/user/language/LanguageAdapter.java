@@ -24,10 +24,10 @@ import java.util.List;
 
 public class LanguageAdapter extends BaseQuickAdapter<LanguageModel, BaseViewHolder> {
 
-    private String selectedTitle;
+    private String selectedLanguageType;
 
-    public void setSelectedTitle(String selectedTitle) {
-        this.selectedTitle = selectedTitle;
+    public void setSelectedLanguageType(String selectedLanguageType) {
+        this.selectedLanguageType = selectedLanguageType;
         notifyDataSetChanged();
     }
 
@@ -40,7 +40,7 @@ public class LanguageAdapter extends BaseQuickAdapter<LanguageModel, BaseViewHol
         helper.setText(R.id.main_tv_item_title, item.getLanguageTitle());
         helper.setText(R.id.main_tv_item_content, item.getLanguageContent());
         ImageView ivSelected = helper.getView(R.id.main_item_selected);
-        if (item.getLanguageTitle().equalsIgnoreCase(selectedTitle) || (TextUtils.isEmpty(selectedTitle) && item.getLanguageType().equals("en"))) {
+        if (item.getLanguageType().equalsIgnoreCase(selectedLanguageType) || (TextUtils.isEmpty(selectedLanguageType) && item.getLanguageType().equals("en"))) {
             ivSelected.setVisibility(View.VISIBLE);
         } else {
             ivSelected.setVisibility(View.GONE);
