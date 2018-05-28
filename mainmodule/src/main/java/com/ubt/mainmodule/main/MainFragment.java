@@ -111,7 +111,7 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
     public void onStop() {
         super.onStop();
         mPresenter.release();
-        mPresenter.queryBattery(false);
+//        mPresenter.queryBattery(false);
     }
 
     @Override

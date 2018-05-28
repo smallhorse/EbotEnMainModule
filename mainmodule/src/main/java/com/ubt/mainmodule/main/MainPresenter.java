@@ -20,9 +20,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 
 /**
  * @作者：bin.zhang@ubtrobot.com
@@ -35,7 +32,6 @@ public class MainPresenter extends BasePresenterImpl<MainContract.View> implemen
     private Handler mViewHandler;
     private BlueClientUtil mBTUtil;
     private IProtolPackListener mBTCmdListener;
-    private Timer batteryTimer = null;
 
     @Override
     public void init() {
@@ -56,25 +52,14 @@ public class MainPresenter extends BasePresenterImpl<MainContract.View> implemen
             ViseLog.e("robot not connected");
             return;
         }
-        if(isStart){
-            if(batteryTimer != null){
-                batteryTimer.cancel();
-            }
-            batteryTimer = new Timer();
-            batteryTimer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    if(isRobotConnected() ) {
-                        mBTUtil.sendData(new BTCmdReadBattery().toByteArray());
-                    }
+        mViewHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(isRobotConnected() ) {
+                    mBTUtil.sendData(new BTCmdReadBattery().toByteArray());
                 }
-            },200, 60000);//每1分钟执行一次
-        }else{
-            if(batteryTimer != null){
-                batteryTimer.cancel();
-                batteryTimer = null;
             }
-        }
+        },200);
     }
 
     @Override
