@@ -80,10 +80,13 @@ public class LanguageFragment extends SupportFragment {
             tvCurrentLanguage.setText(String.format(SkinManager.getInstance().getTextById(R.string.main_language_content), languagesTitle[0]));
         } else {
             for (int i = 0; i < languagesUp.length; i++) {
-                ViseLog.d("languagesUp===" + languagesUp[i]);
+
                 if (spLanguageType.equals(languagesUp[i])) {
-                    ViseLog.d("languagesUp=equals==" + languagesUp[i]);
-                    tvCurrentLanguage.setText(SkinManager.getInstance().getTextById(R.string.main_language_content) + ":" + languagesTitle[i]);
+                    ViseLog.d("languagesUp=equals==" + languagesTitle[i]);
+                    String tip = SkinManager.getInstance().getTextById(R.string.main_language_content);
+                    String lang = String.format(tip, languagesTitle[i]);
+                    ViseLog.d("tip=="+tip+"  tit===" + languagesTitle[i]);
+                    tvCurrentLanguage.setText(lang);
                     break;
                 }
             }

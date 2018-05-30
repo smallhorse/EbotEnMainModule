@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/img_bg"
     tools:context="com.ubt.mainmodule.user.language.LanguageActivity">
 
     <ImageView
@@ -47,27 +48,27 @@
         android:background="@color/base_line"
         />
 
-    <View
-        android:id="@+id/main_view2"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_20"
-        android:layout_below="@+id/main_view1"
-        android:background="@color/main_grey"
-        />
+    <!--<View-->
+    <!--android:id="@+id/main_view2"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/dp_20"-->
+    <!--android:layout_below="@+id/main_view1"-->
+    <!--android:background="@color/main_grey"-->
+    <!--/>-->
 
-    <View
-        android:id="@+id/main_view3"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_0_5"
-        android:layout_below="@+id/main_view2"
-        android:background="@color/base_line"
-        />
+    <!--<View-->
+    <!--android:id="@+id/main_view3"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/dp_0_5"-->
+    <!--android:layout_below="@+id/main_view2"-->
+    <!--android:background="@color/base_line"-->
+    <!--/>-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/main_language_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/main_view3"
+        android:layout_below="@+id/main_view1"
         android:layout_centerHorizontal="true"
         android:overScrollMode="never"
         />

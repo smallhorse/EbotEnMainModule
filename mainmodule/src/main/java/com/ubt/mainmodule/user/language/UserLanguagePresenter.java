@@ -90,7 +90,7 @@ public class UserLanguagePresenter extends BasePresenterImpl<UserLanguageContrac
 
     private void getLanguageType(final Context context) {
         GetLanguageRequest request = new GetLanguageRequest();
-        request.setUserId(BaseHttpEntity.getUserId());
+        request.setUserId(String.valueOf(SPUtils.getInstance().getInt(Constant1E.SP_USER_ID)));
         request.setToken(SPUtils.getInstance().getString(Constant1E.SP_USER_TOKEN));
         request.setType("1");
         request.setVersion(SPUtils.getInstance().getString(Constant1E.CURRENT_APP_LANGUAGE_VERSION));
