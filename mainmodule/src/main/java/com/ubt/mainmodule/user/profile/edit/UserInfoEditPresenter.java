@@ -194,7 +194,7 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
      */
     private void updateUserInfo() {
         userInfo.setBirthDate(userModel.getBirthday());
-        userInfo.setHeadPic(userModel.getIcon());
+//        userInfo.setHeadPic(userModel.getIcon());
         userInfo.setSex(String.valueOf(userModel.getGenderId() + 1));
 
         ViseLog.d("url:" + MainHttpEntity.UPDATE_USERINFO + "  params:" + userInfo.toString());
