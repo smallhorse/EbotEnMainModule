@@ -19,7 +19,7 @@
             android:layout_height="70dp"
             android:scaleType="fitXY"
             app:shape_mode="circle"
-            android:src="@mipmap/main_logout" />
+            android:background="@mipmap/main_logout" />
 
         <TextView
             android:id="@+id/tv_logout_name"

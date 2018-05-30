@@ -31,7 +31,8 @@ import butterknife.Unbinder;
  * @日期: 2018/4/18 10:30
  * @描述:
  */
-public class CtlCenterFragment extends MVPBaseFragment<CtlContract.View, CtlPresenter> implements CtlContract.View {
+public class CtlCenterFragment extends MVPBaseFragment<CtlContract.View, CtlPresenter> implements CtlContract.View,
+        View.OnTouchListener{
 
 
     @BindView(R2.id.seekbar_volume)
@@ -59,17 +60,7 @@ public class CtlCenterFragment extends MVPBaseFragment<CtlContract.View, CtlPres
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_fragment_ctrl_center, container, false);
         unbinder = ButterKnife.bind(this, view);
-        seekbarVolume.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(!mPresenter.isBTConnected()){
-                    ViseLog.e("蓝牙未连接!!!");
-                    showBTDisDialog();
-                    return true;
-                }
-                return false;
-            }
-        });
+        seekbarVolume.setOnTouchListener(this);
         seekbarVolume.setOnProgressChangedListener(new SignSeekBar.OnProgressChangedListener() {
             @Override
             public void onProgressChanged(SignSeekBar signSeekBar, int progress, float progressFloat, boolean fromUser) {
@@ -101,7 +92,8 @@ public class CtlCenterFragment extends MVPBaseFragment<CtlContract.View, CtlPres
                 ViseLog.i("progress vol="+signSeekBar.getProgress());
             }
         });
-
+        switchFall.setOnTouchListener(this);
+        switchIr.setOnTouchListener(this);
         initHandler();
         mPresenter.init();
         return view;
@@ -163,18 +155,9 @@ public class CtlCenterFragment extends MVPBaseFragment<CtlContract.View, CtlPres
         unbinder.unbind();
     }
 
+
     @OnClick({R2.id.switch_fall, R2.id.switch_ir})
     public void onViewClicked(View view) {
-        if(!mPresenter.isBTConnected()){
-            ViseLog.e("蓝牙未连接!!!");
-            if(view.getId() == R.id.switch_fall){
-                switchFall.setChecked(!switchFall.isChecked());
-            }else if(view.getId() == R.id.switch_ir){
-                switchIr.setChecked(!switchIr.isChecked());
-            }
-            showBTDisDialog();
-            return;
-        }
         if(view.getId() == R.id.switch_fall){
             mPresenter.setFallDown(switchFall.isChecked());
         }else if(view.getId() == R.id.switch_ir){
@@ -202,4 +185,23 @@ public class CtlCenterFragment extends MVPBaseFragment<CtlContract.View, CtlPres
     }
 
 
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if(mPresenter.isBTConnected()){
+            return false;
+        }
+
+        int viewId = v.getId();
+        if (((viewId == R.id.seekbar_volume) ||
+            (viewId == R.id.switch_ir) ||
+            (viewId == R.id.switch_fall))){
+            if((event.getAction() == MotionEvent.ACTION_UP)) { //抬起时才弹框,其它时候只拦截
+                ViseLog.e("蓝牙未连接!!!viewId=" + viewId);
+                showBTDisDialog();
+            }
+            return true;
+        }
+
+        return false;
+    }
 }
