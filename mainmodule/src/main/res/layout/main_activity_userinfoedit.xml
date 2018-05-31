@@ -182,7 +182,7 @@
                 android:id="@+id/rb_edit_robot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Robot"
+                android:text="@string/main_profile_gender_robot"
 
                 />
 

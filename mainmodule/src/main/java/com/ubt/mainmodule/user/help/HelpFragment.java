@@ -116,7 +116,11 @@ public class HelpFragment extends SupportFragment {
                     intent.setData(content_url);
                     startActivity(intent);
                 }else {
-                    doGotoPage(url);
+                    if(Build.VERSION.SDK_INT<Build.VERSION_CODES.O) {
+                        doGotoPage(url);
+                    }else{
+                        return false;
+                    }
                 }
                 return true;
             }

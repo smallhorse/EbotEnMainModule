@@ -60,17 +60,22 @@ public class ProfileFragment extends SupportFragment {
         View view = inflater.inflate(R.layout.main_fragment_profile, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        initData();
-        initView();
         view.findViewById(R.id.iv_user_edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UserInfoEditActivity.startActivity(ProfileFragment.this);
             }
         });
-
-
         return view;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
+        initView();
+
     }
 
     private void initData() {
@@ -137,8 +142,9 @@ public class ProfileFragment extends SupportFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == UserInfoEditActivity.USERINFO_EDIT  &&resultCode == RESULT_OK){
             ViseLog.i("用户信息保存成功!!!");
-            initData();
-            initView();
+            //兼容语言切换，在onResume()里刷新布局
+            /*initData();
+            initView();*/
         }else{
             ViseLog.i("取消保存!!!");
         }

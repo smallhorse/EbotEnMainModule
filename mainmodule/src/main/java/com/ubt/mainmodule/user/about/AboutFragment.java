@@ -69,18 +69,23 @@ public class AboutFragment extends SupportFragment {
         View view = inflater.inflate(R.layout.main_fragment_about, container, false);
         unbinder = ButterKnife.bind(this, view);
 
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         showRedDot(false);
-        String version =SkinManager.getInstance().getTextById(R.string.main_about_app_version) + getVersionName();
+        String version = SkinManager.getInstance().getTextById(R.string.main_about_app_version) + getVersionName();
         tvAboutVersion.setText(version);
         initData();
         checkUpdate(false);
-        return view;
     }
 
     private void initData() {
         UserInfoModel  userInfo = (UserInfoModel) SPUtils.getInstance().readObject(Constant1E.SP_USER_INFO);
         updateModel = new UpdateModel();
-        updateModel.setType("2");
+        updateModel.setType("2");//英文版类型为 2
         String token = SPUtils.getInstance().getString(Constant1E.SP_USER_TOKEN);
         if(!TextUtils.isEmpty(token)) {
             updateModel.setToken(token);
@@ -185,6 +190,7 @@ public class AboutFragment extends SupportFragment {
                                 showQuitDialog();
                             }
                         }else{
+                            showRedDot(false);
                             if(isNeedToast) {
                                 showUpdateToast(ContextUtils.getContext()
                                         .getString(R.string.main_about_app_check_latest_version_toast));

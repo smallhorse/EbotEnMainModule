@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="17dp"
         app:layout_constraintStart_toStartOf="@id/mainGuideline2"
-        android:text="@string/main_profile_unfilled"
+        android:text="unfilled"
         android:textColor="#FF333333"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/tv_profile_age"
