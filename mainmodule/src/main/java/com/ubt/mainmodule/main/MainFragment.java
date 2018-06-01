@@ -17,10 +17,12 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.ubt.baselib.commonModule.ModuleUtils;
+import com.ubt.baselib.globalConst.Constant1E;
 import com.ubt.baselib.mvp.MVPBaseFragment;
 import com.ubt.baselib.skin.SkinManager;
 import com.ubt.baselib.utils.AppStatusUtils;
 import com.ubt.baselib.utils.ContextUtils;
+import com.ubt.baselib.utils.SPUtils;
 import com.ubt.mainmodule.FloatView;
 import com.ubt.mainmodule.MainHttpEntity;
 import com.ubt.mainmodule.R;
@@ -141,7 +143,10 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
             ARouter.getInstance().build(ModuleUtils.Playcenter_module).navigation();
         }else if(view.getId() == R.id.iv_voice_cmd){
             ARouter.getInstance().build(ModuleUtils.BaseWebview_module)
-                    .withString(ModuleUtils.BaseWebview_KEY_URL, MainHttpEntity.VOICE_CMD)
+                    .withString(ModuleUtils.BaseWebview_KEY_URL, MainHttpEntity.VOICE_CMD
+                            +"?language="
+                            + SPUtils.getInstance().getString(Constant1E.CURRENT_APP_LANGUAGE)
+                    )
                     .navigation();
         }else if(view.getId() == R.id.iv_actions){
 //            BlueClientUtil.getInstance().connect("A0:2C:36:89:F3:7D");
