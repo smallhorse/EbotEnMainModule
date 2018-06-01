@@ -68,9 +68,9 @@ public class UserLanguagePresenter extends BasePresenterImpl<UserLanguageContrac
     public void initLanguageData() {
         mLanguageModels.clear();
 
-        String[] languagesTitle = SkinManager.getInstance().getSkinArrayResource(R.array.main_ui_lanuages_title);
-        String[] languagesContent = SkinManager.getInstance().getSkinArrayResource(R.array.main_ui_lanuages);
-        String[] languagesUp = SkinManager.getInstance().getSkinArrayResource(R.array.main_ui_lanuages_up);
+        String[] languagesTitle = SkinManager.getInstance().getSkinArrayResource(R.array.base_ui_lanuages_title);
+        String[] languagesContent = SkinManager.getInstance().getSkinArrayResource(R.array.base_ui_lanuages);
+        String[] languagesUp = SkinManager.getInstance().getSkinArrayResource(R.array.base_ui_lanuages_up);
         for (int i = 0; i < languagesTitle.length; i++) {
             LanguageModel model = new LanguageModel(languagesTitle[i], languagesContent[i], languagesUp[i]);
             mLanguageModels.add(model);

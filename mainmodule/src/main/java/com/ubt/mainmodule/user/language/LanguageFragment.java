@@ -71,9 +71,9 @@ public class LanguageFragment extends SupportFragment {
      */
     public void initLanguageData() {
 
-        String[] languagesTitle = SkinManager.getInstance().getSkinArrayResource(R.array.main_ui_lanuages_title);
-        String[] languagesContent = SkinManager.getInstance().getSkinArrayResource(R.array.main_ui_lanuages);
-        String[] languagesUp = SkinManager.getInstance().getSkinArrayResource(R.array.main_ui_lanuages_up);
+        String[] languagesTitle = SkinManager.getInstance().getSkinArrayResource(R.array.base_ui_lanuages_title);
+        String[] languagesContent = SkinManager.getInstance().getSkinArrayResource(R.array.base_ui_lanuages);
+        String[] languagesUp = SkinManager.getInstance().getSkinArrayResource(R.array.base_ui_lanuages_up);
         String spLanguageType = SPUtils.getInstance().getString(Constant1E.CURRENT_APP_LANGUAGE);
         ViseLog.d("initLanguageData===" + spLanguageType);
         if (TextUtils.isEmpty(spLanguageType)) {
