@@ -99,7 +99,7 @@ public class UserLanguagePresenter extends BasePresenterImpl<UserLanguageContrac
         ViseLog.d(BaseHttpEntity.BASIC_UBX_SYS);
 
         ViseHttp.POST(MainHttpEntity.GET_LANGUAGE_TYPE)
-                .baseUrl("http://10.10.1.14:8080/")
+                .baseUrl(BaseHttpEntity.BASIC_UBX_SYS)
                 .setJson(GsonImpl.get().toJson(request))
                 .request(new ACallback<String>() {
                     @Override
