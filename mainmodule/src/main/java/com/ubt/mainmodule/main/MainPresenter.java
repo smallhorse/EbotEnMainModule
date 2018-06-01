@@ -92,6 +92,10 @@ public class MainPresenter extends BasePresenterImpl<MainContract.View> implemen
             public void onProtocolPacket(ProtocolPacket packet) {
                 switch (packet.getmCmd()){
                     case BTCmd.DV_READ_BATTERY: //更新电量
+                        if(packet.getmParamLen() < 4){
+                            ViseLog.e("电量参数错误，丢弃!!!");
+                            return;
+                        }
                         Message msg = mViewHandler.obtainMessage(MainContract.HCMD_REFRESH_BATTERY);
                         msg.arg1 = (int)packet.getmParam()[3];
                         mViewHandler.sendMessage(msg);
