@@ -83,6 +83,7 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
         super.onResume();
         AppStatusUtils.setBussiness(false);
         AppStatusUtils.setBtBussiness(false);
+        prePower = -1;
     }
 
     @Nullable
@@ -137,7 +138,6 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
             R2.id.iv_blockly, R2.id.iv_community, R2.id.iv_joystick})
     public void onViewClicked(View view) {
         if(view.getId() == R.id.iv_robot_status){
-//            BaseLowBattaryDialog.getInstance().showLow5Dialog();
             ARouter.getInstance().build(ModuleUtils.Bluetooh_BleStatuActivity).navigation();
         }else if(view.getId() == R.id.iv_play_center){
             ARouter.getInstance().build(ModuleUtils.Playcenter_module).navigation();
@@ -199,7 +199,7 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
      * 刷新机器人电池状态
      */
     public void refreshBatteryStatus(int power) {
-        if (prePower == power && isAdded() && getActivity()!= null) {
+        if (prePower == power || !isAdded() || getActivity() == null) {
             return;
         }
         //纠正参数

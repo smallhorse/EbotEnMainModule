@@ -217,13 +217,21 @@ public class HelpFragment extends SupportFragment {
     }
 
     private void showErrorPage() {
-        loadErrorLayout.setVisibility(View.VISIBLE);
-        helpWebContent.postInvalidate();
+        if(loadErrorLayout != null) {
+            loadErrorLayout.setVisibility(View.VISIBLE);
+            helpWebContent.postInvalidate();
+        }else{
+            ViseLog.e("loadErrorLayout 未加载完成!!");
+        }
     }
 
     private void hideErrorPage() {
-        loadErrorLayout.setVisibility(View.GONE);
-        helpWebContent.postInvalidate();
+        if(loadErrorLayout != null) {
+            loadErrorLayout.setVisibility(View.GONE);
+            helpWebContent.postInvalidate();
+        }else{
+            ViseLog.e("loadErrorLayout 未加载完成!!");
+        }
     }
 
     private void doGotoPage(String url) {

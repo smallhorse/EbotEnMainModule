@@ -74,10 +74,11 @@
         android:layout_marginStart="10.5dp"
         android:layout_toStartOf="@id/tv_max"
         android:layout_alignTop="@id/tv_min"
+        android:layout_marginTop="-5dp"
         app:main_max="255"
         app:main_second_track_color="@color/base_blue"
         app:main_track_color="#E2E2E2"
-        app:main_track_size="3dp"
+        app:main_track_size="5dp"
 
         />
 

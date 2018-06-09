@@ -19,6 +19,7 @@ import com.ubt.baselib.customView.BaseDialog;
 import com.ubt.baselib.globalConst.Constant1E;
 import com.ubt.baselib.model1E.ManualEvent;
 import com.ubt.baselib.model1E.UserInfoModel;
+import com.ubt.baselib.utils.AppStatusUtils;
 import com.ubt.baselib.utils.ContextUtils;
 import com.ubt.baselib.utils.SPUtils;
 import com.ubt.bluetoothlib.blueClient.BlueClientUtil;
@@ -115,6 +116,7 @@ public class LogoutFragment extends SupportFragment {
                             SPUtils.getInstance().remove(Constant1E.SP_USER_INFO);
                             dialog.dismiss();
                             //断开自动连接蓝牙服务
+                            AppStatusUtils.setIsForceDisBT(true);
                             BlueClientUtil.getInstance().disconnect();
                             ManualEvent manualEvent = new ManualEvent(ContextUtils.getContext(),
                                     ManualEvent.Event.START_AUTOSERVICE);
