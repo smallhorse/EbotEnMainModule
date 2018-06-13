@@ -140,7 +140,11 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
         if(view.getId() == R.id.iv_robot_status){
             ARouter.getInstance().build(ModuleUtils.Bluetooh_BleStatuActivity).navigation();
         }else if(view.getId() == R.id.iv_play_center){
-            ARouter.getInstance().build(ModuleUtils.Playcenter_module).navigation();
+            if(mPresenter.isRobotConnected()) {
+                ARouter.getInstance().build(ModuleUtils.Playcenter_module).navigation();
+            }else{
+                ARouter.getInstance().build(ModuleUtils.Bluetooh_BleStatuActivity).navigation();
+            }
         }else if(view.getId() == R.id.iv_voice_cmd){
             ARouter.getInstance().build(ModuleUtils.BaseWebview_module)
                     .withString(ModuleUtils.BaseWebview_KEY_URL, MainHttpEntity.VOICE_CMD

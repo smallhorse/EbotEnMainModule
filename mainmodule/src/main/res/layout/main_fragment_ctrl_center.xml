@@ -79,6 +79,7 @@
         app:main_second_track_color="@color/base_blue"
         app:main_track_color="#E2E2E2"
         app:main_track_size="5dp"
+        app:main_touch_to_seek="false"
 
         />
 
