@@ -25,9 +25,10 @@
         android:layout_below="@+id/main_tv_current_language"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_10"
+        android:padding="@dimen/dp_5"
+        android:text="@string/main_change_language"
         android:textColor="@color/base_blue"
         android:textSize="@dimen/sp_15"
-        android:text="@string/main_change_language"
         />
 
 </RelativeLayout>
