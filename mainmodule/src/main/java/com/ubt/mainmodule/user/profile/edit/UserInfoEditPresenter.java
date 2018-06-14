@@ -171,7 +171,15 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
             }else{
                 userModel.setBirthday(SkinManager.getInstance().getTextById(R.string.main_profile_unfilled));
             }
-            userModel.setCountry(SkinManager.getInstance().getTextById(R.string.main_profile_unfilled));
+            if(TextUtils.isEmpty(userInfo.getCountry())) {
+                userModel.setCountry(SkinManager.getInstance().getTextById(R.string.main_profile_unfilled));
+            }else{
+                try {
+                    userModel.setCountry(userInfo.getCountry());
+                }catch (Exception e){
+
+                }
+            }
             if(!TextUtils.isEmpty(userInfo.getEmail())) {
                 userModel.setId(userInfo.getEmail());
             }else{
@@ -196,7 +204,7 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
         userInfo.setBirthDate(userModel.getBirthday());
 //        userInfo.setHeadPic(userModel.getIcon());
         userInfo.setSex(String.valueOf(userModel.getGenderId() + 1));
-
+        userInfo.setCountry(userModel.getCountry());
         ViseLog.d("url:" + MainHttpEntity.UPDATE_USERINFO + "  params:" + userInfo.toString());
         JSONObject juser = null;
         try {

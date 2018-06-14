@@ -44,7 +44,7 @@
             />
         <TextView
             android:id="@+id/tv_charging_backgroup"
-            android:layout_width="65dp"
+            android:layout_width="@dimen/dp_75"
             android:layout_height="wrap_content"
             android:background="@mipmap/main_charging_backgroup"
             android:layout_marginStart="10dp"
