@@ -55,8 +55,7 @@ public class LanguageActivity extends MVPBaseActivity<UserLanguageContract.View,
 
 
     private void initData() {
-        mMainTvDone.setEnabled(false);
-        mAdapter = new LanguageAdapter(R.layout.main_language_item, mPresenter.getLanguageModels());
+         mAdapter = new LanguageAdapter(R.layout.main_language_item, mPresenter.getLanguageModels());
         mMainLanguageList.setLayoutManager(new LinearLayoutManager(this));
         mMainLanguageList.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
@@ -96,9 +95,12 @@ public class LanguageActivity extends MVPBaseActivity<UserLanguageContract.View,
                         @Override
                         public void onFailed(String errMsg) {
                             ViseLog.d("加载多语言失败" + errMsg);
+                            finish();
                         }
                     });
                 }
+            }else {
+                finish();
             }
         }
     }
