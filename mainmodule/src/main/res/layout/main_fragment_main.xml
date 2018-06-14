@@ -50,8 +50,6 @@
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@id/iv_robot_status"
             android:layout_centerVertical="true"
-            android:text="40%"
-            android:drawableStart="@mipmap/main_charging_yellow"
             android:textStyle="bold"
             android:gravity="center"
             android:paddingStart="8dp"

@@ -17,10 +17,12 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.ubt.baselib.commonModule.ModuleUtils;
+import com.ubt.baselib.globalConst.Constant1E;
 import com.ubt.baselib.mvp.MVPBaseFragment;
 import com.ubt.baselib.skin.SkinManager;
 import com.ubt.baselib.utils.AppStatusUtils;
 import com.ubt.baselib.utils.ContextUtils;
+import com.ubt.baselib.utils.SPUtils;
 import com.ubt.mainmodule.FloatView;
 import com.ubt.mainmodule.MainHttpEntity;
 import com.ubt.mainmodule.R;
@@ -81,6 +83,7 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
         super.onResume();
         AppStatusUtils.setBussiness(false);
         AppStatusUtils.setBtBussiness(false);
+        prePower = -1;
     }
 
     @Nullable
@@ -135,13 +138,19 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
             R2.id.iv_blockly, R2.id.iv_community, R2.id.iv_joystick})
     public void onViewClicked(View view) {
         if(view.getId() == R.id.iv_robot_status){
-//            BaseLowBattaryDialog.getInstance().showLow5Dialog();
             ARouter.getInstance().build(ModuleUtils.Bluetooh_BleStatuActivity).navigation();
         }else if(view.getId() == R.id.iv_play_center){
-            ARouter.getInstance().build(ModuleUtils.Playcenter_module).navigation();
+            if(mPresenter.isRobotConnected()) {
+                ARouter.getInstance().build(ModuleUtils.Playcenter_module).navigation();
+            }else{
+                ARouter.getInstance().build(ModuleUtils.Bluetooh_BleStatuActivity).navigation();
+            }
         }else if(view.getId() == R.id.iv_voice_cmd){
             ARouter.getInstance().build(ModuleUtils.BaseWebview_module)
-                    .withString(ModuleUtils.BaseWebview_KEY_URL, MainHttpEntity.VOICE_CMD)
+                    .withString(ModuleUtils.BaseWebview_KEY_URL, MainHttpEntity.VOICE_CMD
+                            +"?language="
+                            + SPUtils.getInstance().getString(Constant1E.CURRENT_APP_LANGUAGE)
+                    )
                     .navigation();
         }else if(view.getId() == R.id.iv_actions){
 //            BlueClientUtil.getInstance().connect("A0:2C:36:89:F3:7D");
@@ -194,7 +203,7 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
      * 刷新机器人电池状态
      */
     public void refreshBatteryStatus(int power) {
-        if (prePower == power && isAdded() && getActivity()!= null) {
+        if (prePower == power || !isAdded() || getActivity() == null) {
             return;
         }
         //纠正参数

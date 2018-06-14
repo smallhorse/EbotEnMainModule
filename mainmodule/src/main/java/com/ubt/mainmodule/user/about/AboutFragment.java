@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -53,6 +54,7 @@ public class AboutFragment extends SupportFragment {
     Unbinder unbinder;
 
     private UpdateModel updateModel;
+    private Handler mHandler;
 
     public static AboutFragment newInstance() {
 
@@ -68,7 +70,7 @@ public class AboutFragment extends SupportFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_fragment_about, container, false);
         unbinder = ButterKnife.bind(this, view);
-
+        mHandler = new Handler();
         return view;
     }
 
@@ -79,7 +81,8 @@ public class AboutFragment extends SupportFragment {
         String version = SkinManager.getInstance().getTextById(R.string.main_about_app_version) + getVersionName();
         tvAboutVersion.setText(version);
         initData();
-        checkUpdate(false);
+        mHandler.removeCallbacks(checkUpdataRunnable);
+        mHandler.postDelayed(checkUpdataRunnable,2000); //2秒后查询是否有新版本，防止界面未初始化完成
     }
 
     private void initData() {
@@ -224,8 +227,19 @@ public class AboutFragment extends SupportFragment {
                 tvAboutCheck.setCompoundDrawables(img, null, null, null);
             }
         }else{
-            tvAboutCheck.setCompoundDrawables(null, null, null, null);
+            if(tvAboutCheck != null) {
+                tvAboutCheck.setCompoundDrawables(null, null, null, null);
+            }else{
+                ViseLog.e("tvAboutCheck 未加载完成!!!");
+            }
         }
     }
 
+
+    private Runnable checkUpdataRunnable = new Runnable() {
+        @Override
+        public void run() {
+            checkUpdate(false);
+        }
+    };
 }

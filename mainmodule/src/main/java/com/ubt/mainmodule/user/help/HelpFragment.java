@@ -26,6 +26,8 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.ubt.baselib.globalConst.Constant1E;
+import com.ubt.baselib.utils.SPUtils;
 import com.ubt.mainmodule.MainHttpEntity;
 import com.ubt.mainmodule.R;
 import com.ubt.mainmodule.R2;
@@ -78,7 +80,9 @@ public class HelpFragment extends SupportFragment {
     public void onResume() {
         super.onResume();
         if(helpWebContent != null) {
-            helpWebContent.loadUrl(MainHttpEntity.HELP_FEEDBACK);
+            helpWebContent.loadUrl(MainHttpEntity.HELP_FEEDBACK
+                    +"?language="
+                    + SPUtils.getInstance().getString(Constant1E.CURRENT_APP_LANGUAGE));
         }
     }
 
@@ -208,17 +212,26 @@ public class HelpFragment extends SupportFragment {
             });
         }
         helpWebContent.setWebViewClient(webViewClient);
-        helpWebContent.loadUrl(MainHttpEntity.HELP_FEEDBACK);
+        helpWebContent.loadUrl(MainHttpEntity.HELP_FEEDBACK +"?language="
+                + SPUtils.getInstance().getString(Constant1E.CURRENT_APP_LANGUAGE) );
     }
 
     private void showErrorPage() {
-        loadErrorLayout.setVisibility(View.VISIBLE);
-        helpWebContent.postInvalidate();
+        if(loadErrorLayout != null) {
+            loadErrorLayout.setVisibility(View.VISIBLE);
+            helpWebContent.postInvalidate();
+        }else{
+            ViseLog.e("loadErrorLayout 未加载完成!!");
+        }
     }
 
     private void hideErrorPage() {
-        loadErrorLayout.setVisibility(View.GONE);
-        helpWebContent.postInvalidate();
+        if(loadErrorLayout != null) {
+            loadErrorLayout.setVisibility(View.GONE);
+            helpWebContent.postInvalidate();
+        }else{
+            ViseLog.e("loadErrorLayout 未加载完成!!");
+        }
     }
 
     private void doGotoPage(String url) {
@@ -242,7 +255,8 @@ public class HelpFragment extends SupportFragment {
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    helpWebContent.loadUrl(MainHttpEntity.HELP_FEEDBACK);
+                    helpWebContent.loadUrl(MainHttpEntity.HELP_FEEDBACK +"?language="
+                            + SPUtils.getInstance().getString(Constant1E.CURRENT_APP_LANGUAGE));
                 }
             },1000);
 

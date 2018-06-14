@@ -6,8 +6,6 @@ import android.os.Message;
 import com.ubt.baselib.BlueTooth.BTReadData;
 import com.ubt.baselib.BlueTooth.BTServiceStateChanged;
 import com.ubt.baselib.btCmd1E.BTCmd;
-import com.ubt.baselib.btCmd1E.BTCmdHelper;
-import com.ubt.baselib.btCmd1E.IProtolPackListener;
 import com.ubt.baselib.btCmd1E.ProtocolPacket;
 import com.ubt.baselib.btCmd1E.cmd.BTCmdGetWifiStatus;
 import com.ubt.baselib.btCmd1E.cmd.BTCmdReadBattery;
@@ -31,13 +29,11 @@ public class MainPresenter extends BasePresenterImpl<MainContract.View> implemen
 
     private Handler mViewHandler;
     private BlueClientUtil mBTUtil;
-    private IProtolPackListener mBTCmdListener;
 
     @Override
     public void init() {
         mViewHandler = mView.getViewHandler();
         EventBus.getDefault().register(MainPresenter.this);
-        initBTListener();
         mBTUtil = BlueClientUtil.getInstance();
     }
 
@@ -70,7 +66,8 @@ public class MainPresenter extends BasePresenterImpl<MainContract.View> implemen
 
     @Subscribe
     public void onBTRead(BTReadData data){
-        BTCmdHelper.parseBTCmd(data.getDatas(), mBTCmdListener);
+//        BTCmdHelper.parseBTCmd(data.getDatas(), mBTCmdListener);
+        parseBTCmd(data);
     }
 
     @Subscribe
@@ -86,40 +83,36 @@ public class MainPresenter extends BasePresenterImpl<MainContract.View> implemen
     }
 
 
-    private void initBTListener(){
-        mBTCmdListener = new IProtolPackListener() {
-            @Override
-            public void onProtocolPacket(ProtocolPacket packet) {
-                switch (packet.getmCmd()){
-                    case BTCmd.DV_READ_BATTERY: //更新电量
-                        if(packet.getmParamLen() < 4){
-                            ViseLog.e("电量参数错误，丢弃!!!");
-                            return;
-                        }
-                        Message msg = mViewHandler.obtainMessage(MainContract.HCMD_REFRESH_BATTERY);
-                        msg.arg1 = (int)packet.getmParam()[3];
-                        mViewHandler.sendMessage(msg);
-                        break;
-                    case BTCmd.DV_READ_NETWORK_STATUS: //wifi联网状态
-                        String status = new String(packet.getmParam());
-                        try {
-                            JSONObject jStatus = new JSONObject(status);
-                            if(jStatus.has("status")){
-                                ViseLog.i("status="+status);
-                                if(jStatus.getBoolean("status")){
-                                    mViewHandler.sendEmptyMessage(MainContract.HCMD_ROBOT_WIFI_CONNETED);
-                                }else{
-                                    mViewHandler.sendEmptyMessage(MainContract.HCMD_ROBOT_WIFI_DISCONNETED);
-                                }
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    default:
-                        break;
+    private void parseBTCmd(BTReadData readData){
+        ProtocolPacket packet = readData.getPack();
+        switch (packet.getmCmd()){
+            case BTCmd.DV_READ_BATTERY: //更新电量
+                if(packet.getmParamLen() < 4){
+                    ViseLog.e("电量参数错误，丢弃!!!");
+                    return;
                 }
-            }
-        };
+                Message msg = mViewHandler.obtainMessage(MainContract.HCMD_REFRESH_BATTERY);
+                msg.arg1 = (int)packet.getmParam()[3];
+                mViewHandler.sendMessage(msg);
+                break;
+            case BTCmd.DV_READ_NETWORK_STATUS: //wifi联网状态
+                String status = new String(packet.getmParam());
+                try {
+                    JSONObject jStatus = new JSONObject(status);
+                    if(jStatus.has("status")){
+                        ViseLog.i("status="+status);
+                        if(jStatus.getBoolean("status")){
+                            mViewHandler.sendEmptyMessage(MainContract.HCMD_ROBOT_WIFI_CONNETED);
+                        }else{
+                            mViewHandler.sendEmptyMessage(MainContract.HCMD_ROBOT_WIFI_DISCONNETED);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -6,8 +6,6 @@ import android.os.Message;
 import com.ubt.baselib.BlueTooth.BTReadData;
 import com.ubt.baselib.BlueTooth.BTServiceStateChanged;
 import com.ubt.baselib.btCmd1E.BTCmd;
-import com.ubt.baselib.btCmd1E.BTCmdHelper;
-import com.ubt.baselib.btCmd1E.IProtolPackListener;
 import com.ubt.baselib.btCmd1E.ProtocolPacket;
 import com.ubt.baselib.btCmd1E.cmd.BTCmdIRSensor;
 import com.ubt.baselib.btCmd1E.cmd.BTCmdReadDevStatus;
@@ -30,13 +28,11 @@ import org.greenrobot.eventbus.Subscribe;
 public class CtlPresenter extends BasePresenterImpl<CtlContract.View> implements CtlContract.Presenter{
     private BlueClientUtil mBTUtil = null;
     private Handler mHandler;
-    private IProtolPackListener mBTCmdListener;
 
     @Override
     public void init() {
         mBTUtil = BlueClientUtil.getInstance();
         mHandler = mView.getViewHandler();
-        initBTListener();
         EventBus.getDefault().register(this);
         if(isBTConnected()){
             readRobotStatus();
@@ -94,7 +90,8 @@ public class CtlPresenter extends BasePresenterImpl<CtlContract.View> implements
 
     @Subscribe
     public void onBTRead(BTReadData data){
-        BTCmdHelper.parseBTCmd(data.getDatas(), mBTCmdListener);
+//        BTCmdHelper.parseBTCmd(data.getDatas(), mBTCmdListener);
+        parseBTCmd(data);
     }
 
     @Subscribe
@@ -104,32 +101,28 @@ public class CtlPresenter extends BasePresenterImpl<CtlContract.View> implements
         }
     }
 
-    private void initBTListener(){
-        mBTCmdListener = new IProtolPackListener() {
-            @Override
-            public void onProtocolPacket(ProtocolPacket packet) {
-                Message msg;
-                switch (packet.getmCmd()){
-                    case BTCmd.DV_SENSOR_CONTROL: //更新跌倒保护状态
-                        msg = mHandler.obtainMessage(CtlContract.HCMD_REFRESH_FALL);
-                        msg.arg1 = (int)packet.getmParam()[0];
-                        mHandler.sendMessage(msg);
-                        break;
-                    case BTCmd.DV_CONTROL_IR_SENSOR: //更新红外状态
-                        msg = mHandler.obtainMessage(CtlContract.HCMD_REFRESH_IR);
-                        msg.arg1 = (int)packet.getmParam()[0];
-                        mHandler.sendMessage(msg);
-                        break;
-                    case BTCmd.DV_READSTATUS: //更新音量状态
-                        msg = mHandler.obtainMessage(CtlContract.HCMD_REFRESH_VOL);
-                        byte data[] = packet.getmParam();
-                        if(data[0] == 0x02) {
-                            msg.arg1 = packet.getmParam()[1]&0xff;
-                            mHandler.sendMessage(msg);
-                        }
-                        break;
+    private void parseBTCmd(BTReadData readData){
+        ProtocolPacket packet = readData.getPack();
+        Message msg;
+        switch (packet.getmCmd()){
+            case BTCmd.DV_SENSOR_CONTROL: //更新跌倒保护状态
+                msg = mHandler.obtainMessage(CtlContract.HCMD_REFRESH_FALL);
+                msg.arg1 = (int)packet.getmParam()[0];
+                mHandler.sendMessage(msg);
+                break;
+            case BTCmd.DV_CONTROL_IR_SENSOR: //更新红外状态
+                msg = mHandler.obtainMessage(CtlContract.HCMD_REFRESH_IR);
+                msg.arg1 = (int)packet.getmParam()[0];
+                mHandler.sendMessage(msg);
+                break;
+            case BTCmd.DV_READSTATUS: //更新音量状态
+                msg = mHandler.obtainMessage(CtlContract.HCMD_REFRESH_VOL);
+                byte data[] = packet.getmParam();
+                if(data[0] == 0x02) {
+                    msg.arg1 = packet.getmParam()[1]&0xff;
+                    mHandler.sendMessage(msg);
                 }
-            }
-        };
+                break;
+        }
     }
 }
