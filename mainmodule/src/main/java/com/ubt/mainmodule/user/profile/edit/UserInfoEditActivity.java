@@ -40,6 +40,7 @@ import com.vise.xsnow.permission.PermissionManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -125,8 +126,12 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
             Glide.with(this).load(userModel.getIcon()).centerCrop().into(ivEditIcon);
         }
         tvEditBirthdayContent.setText(userModel.getBirthday());
-        tvEditCountryContent.setText(SkinManager.getInstance()
-                .getSkinArrayResource(R.array.main_country)[Integer.valueOf(userModel.getCountry())]);
+        if(userModel.getCountry().equals(SkinManager.getInstance().getTextById(R.string.main_profile_unfilled))){
+            tvEditCountryContent.setText(userModel.getCountry());
+        }else {
+            tvEditCountryContent.setText(SkinManager.getInstance()
+                    .getSkinArrayResource(R.array.main_country)[Integer.valueOf(userModel.getCountry())]);
+        }
         tvEditName.setText(userModel.getName());
         tvEditId.setText(userModel.getId());
         switch (userModel.getGenderId()){
@@ -226,7 +231,7 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
             }
 
             try {
-                Matrix matrix = getImageMatrix(mImageUri.getPath());
+                Matrix matrix = getImageMatrix(mImageUri);
                 Bitmap bitmap = FileUtils.getBitmapFormUriWithDegree(ContextUtils.getContext(), mImageUri, matrix);
 //                Bitmap bitmap = FileUtils.getBitmapFormUri(ContextUtils.getContext(), mImageUri);
                 ivEditIcon.setImageBitmap(bitmap);
@@ -367,11 +372,17 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
     }
 
 
-    private Matrix getImageMatrix(String filePath){
+    private Matrix getImageMatrix(Uri uri){
         Matrix matrix = new Matrix();
 
         try {
-            ExifInterface exif = new ExifInterface(filePath);
+            InputStream input = UserInfoEditActivity.this.getContentResolver().openInputStream(uri);
+            ExifInterface exif = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                exif = new ExifInterface(input);
+            }else{
+                exif = new ExifInterface(uri.getPath());
+            }
             int degree=0;
             if (exif != null) {
                 // 读取图片中相机方向信息
