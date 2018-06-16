@@ -91,7 +91,16 @@ public class ProfileFragment extends SupportFragment {
             }else{
                 userModel.setBirthday(SkinManager.getInstance().getTextById(R.string.main_profile_unfilled));
             }
-            userModel.setCountry(SkinManager.getInstance().getTextById(R.string.main_profile_unfilled));
+            if(TextUtils.isEmpty(userInfo.getCountry())) {
+                userModel.setCountry(SkinManager.getInstance().getTextById(R.string.main_profile_unfilled));
+            }else{
+                try {
+                    userModel.setCountry(SkinManager.getInstance()
+                            .getSkinArrayResource(R.array.main_country)[Integer.valueOf(userInfo.getCountry())]);
+                }catch (Exception e){
+
+                }
+            }
             userModel.setId(userInfo.getEmail());
             if(!TextUtils.isEmpty(userInfo.getNickName())) {
                 userModel.setName(userInfo.getNickName());

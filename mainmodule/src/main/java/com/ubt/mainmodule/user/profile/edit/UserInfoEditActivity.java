@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,6 +40,7 @@ import com.vise.xsnow.permission.PermissionManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -123,7 +126,12 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
             Glide.with(this).load(userModel.getIcon()).centerCrop().into(ivEditIcon);
         }
         tvEditBirthdayContent.setText(userModel.getBirthday());
-        tvEditCountryContent.setText(userModel.getCountry());
+        if(userModel.getCountry().equals(SkinManager.getInstance().getTextById(R.string.main_profile_unfilled))){
+            tvEditCountryContent.setText(userModel.getCountry());
+        }else {
+            tvEditCountryContent.setText(SkinManager.getInstance()
+                    .getSkinArrayResource(R.array.main_country)[Integer.valueOf(userModel.getCountry())]);
+        }
         tvEditName.setText(userModel.getName());
         tvEditId.setText(userModel.getId());
         switch (userModel.getGenderId()){
@@ -223,7 +231,9 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
             }
 
             try {
-                Bitmap bitmap = FileUtils.getBitmapFormUri(ContextUtils.getContext(), mImageUri);
+                Matrix matrix = getImageMatrix(mImageUri);
+                Bitmap bitmap = FileUtils.getBitmapFormUriWithDegree(ContextUtils.getContext(), mImageUri, matrix);
+//                Bitmap bitmap = FileUtils.getBitmapFormUri(ContextUtils.getContext(), mImageUri);
                 ivEditIcon.setImageBitmap(bitmap);
                 headPath = FileUtils.SaveImage(ContextUtils.getContext(), "head", bitmap);
                 userModel.setIcon(headPath);
@@ -235,7 +245,7 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
 
     @OnClick({R2.id.iv_topbar_back, R2.id.tv_topbar_save, R2.id.iv_edit_icon, R2.id.iv_edit_icon_edit,
             R2.id.rg_edit_gender_select, R2.id.iv_edit_age_more, R2.id.iv_edit_country_more,
-            R2.id.tv_edit_birthday_content})
+            R2.id.tv_edit_birthday_content, R2.id.tv_edit_country_content})
     public void onViewClicked(View view) {
         if (view.getId() == R.id.iv_topbar_back) {
             if(mPresenter.isUserInfoModified()){
@@ -262,7 +272,14 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
                     })
                     .show();
         } else if ((view.getId() == R.id.iv_edit_country_more)||(view.getId() == R.id.tv_edit_country_content)) {
-
+            new CountrySelectDialog(UserInfoEditActivity.this, R.style.mainBirthDialogStyle)
+                    .setListener(new CountrySelectDialog.ICountryDialogListener() {
+                        @Override
+                        public void onConfirm(int pos, String country) {
+                            userModel.setCountry(pos+"");
+                            tvEditCountryContent.setText(country);
+                        }
+                    }).show();
         }
     }
 
@@ -352,5 +369,46 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
 
             }
         }, Manifest.permission.CAMERA);
+    }
+
+
+    private Matrix getImageMatrix(Uri uri){
+        Matrix matrix = new Matrix();
+
+        try {
+            InputStream input = UserInfoEditActivity.this.getContentResolver().openInputStream(uri);
+            ExifInterface exif = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                exif = new ExifInterface(input);
+            }else{
+                exif = new ExifInterface(uri.getPath());
+            }
+            int degree=0;
+            if (exif != null) {
+                // 读取图片中相机方向信息
+                int ori = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                        ExifInterface.ORIENTATION_UNDEFINED);
+                // 计算旋转角度
+                switch (ori) {
+                    case ExifInterface.ORIENTATION_ROTATE_90:
+                        degree = 90;
+                        break;
+                    case ExifInterface.ORIENTATION_ROTATE_180:
+                        degree = 180;
+                        break;
+                    case ExifInterface.ORIENTATION_ROTATE_270:
+                        degree = 270;
+                        break;
+                    default:
+                        degree = 0;
+                        break;
+                }
+            }
+            matrix.postRotate(degree);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return matrix;
     }
 }
