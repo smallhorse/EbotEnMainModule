@@ -10,26 +10,10 @@ package com.ubt.mainmodule.user.language;
  */
 
 public class GetLanguageRequest {
-    private String userId;
-    private String token;
-    private String type;
+      private String type;
     private String version;
 
-    public String getUserId() {
-        return userId;
-    }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 
     public String getType() {
         return type;
@@ -50,9 +34,7 @@ public class GetLanguageRequest {
     @Override
     public String toString() {
         return "GetLanguageRequest{" +
-                "userId='" + userId + '\'' +
-                ", token='" + token + '\'' +
-                ", type='" + type + '\'' +
+                "type='" + type + '\'' +
                 ", version='" + version + '\'' +
                 '}';
     }

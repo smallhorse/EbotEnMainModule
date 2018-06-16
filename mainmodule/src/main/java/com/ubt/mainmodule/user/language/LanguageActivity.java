@@ -69,36 +69,60 @@ public class LanguageActivity extends MVPBaseActivity<UserLanguageContract.View,
             finish();
         } else if (view.getId() == R.id.main_tv_done) {
             if (mLanguageModel != null) {
-                if (mLanguageModel.getLanguageType().equals("en")) {
-                    SkinManager.getInstance().restoreDefaultTheme();
-                    if (mLanguageModel != null) {
-                        SPUtils.getInstance().put(Constant1E.CURRENT_APP_LANGUAGE, mLanguageModel.getLanguageType());
+
+                SkinManager.getInstance().loadSkin(mLanguageModel.getLanguageType(), new SkinManager.SkinListener() {
+
+                    @Override
+                    public void onStart() {
+                        ViseLog.d("开始加载多语言");
                     }
-                    finish();
-                } else {
-                    SkinManager.getInstance().loadSkin(mLanguageModel.getLanguageType(), new SkinManager.SkinListener() {
 
-                        @Override
-                        public void onStart() {
-                            ViseLog.d("开始加载多语言");
+                    @Override
+                    public void onSuccess() {
+                        ViseLog.d("成功加载多语言");
+                        if (mLanguageModel != null) {
+                            SPUtils.getInstance().put(Constant1E.CURRENT_APP_LANGUAGE, mLanguageModel.getLanguageType());
                         }
+                        finish();
+                    }
 
-                        @Override
-                        public void onSuccess() {
-                            ViseLog.d("成功加载多语言");
-                            if (mLanguageModel != null) {
-                                SPUtils.getInstance().put(Constant1E.CURRENT_APP_LANGUAGE, mLanguageModel.getLanguageType());
-                            }
-                            finish();
-                        }
+                    @Override
+                    public void onFailed(String errMsg) {
+                        ViseLog.d("加载多语言失败" + errMsg);
+                        finish();
+                    }
+                });
 
-                        @Override
-                        public void onFailed(String errMsg) {
-                            ViseLog.d("加载多语言失败" + errMsg);
-                            finish();
-                        }
-                    });
-                }
+//                if (mLanguageModel.getLanguageType().equals("en")) {
+//                    SkinManager.getInstance().restoreDefaultTheme();
+//                    if (mLanguageModel != null) {
+//                        SPUtils.getInstance().put(Constant1E.CURRENT_APP_LANGUAGE, mLanguageModel.getLanguageType());
+//                    }
+//                    finish();
+//                } else {
+//                    SkinManager.getInstance().loadSkin(mLanguageModel.getLanguageType(), new SkinManager.SkinListener() {
+//
+//                        @Override
+//                        public void onStart() {
+//                            ViseLog.d("开始加载多语言");
+//                        }
+//
+//                        @Override
+//                        public void onSuccess() {
+//                            ViseLog.d("成功加载多语言");
+//                            if (mLanguageModel != null) {
+//                                SPUtils.getInstance().put(Constant1E.CURRENT_APP_LANGUAGE, mLanguageModel.getLanguageType());
+//                            }
+//                            finish();
+//                        }
+//
+//                        @Override
+//                        public void onFailed(String errMsg) {
+//                            ViseLog.d("加载多语言失败" + errMsg);
+//                            finish();
+//                        }
+//                    });
+//                }
             }else {
                 finish();
             }
