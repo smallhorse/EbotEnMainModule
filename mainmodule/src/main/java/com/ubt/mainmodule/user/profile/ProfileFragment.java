@@ -89,9 +89,18 @@ public class ProfileFragment extends SupportFragment {
             if(!TextUtils.isEmpty(userInfo.getBirthDate())) {
                 userModel.setBirthday(userInfo.getBirthDate());
             }else{
-                userModel.setBirthday(""/*SkinManager.getInstance().getTextById(R.string.main_profile_unfilled)*/);
+                userModel.setBirthday(SkinManager.getInstance().getTextById(R.string.main_profile_unfilled));
             }
-            userModel.setCountry(""/*SkinManager.getInstance().getTextById(R.string.main_profile_unfilled)*/);
+            if(TextUtils.isEmpty(userInfo.getCountry())) {
+                userModel.setCountry(SkinManager.getInstance().getTextById(R.string.main_profile_unfilled));
+            }else{
+                try {
+                    userModel.setCountry(SkinManager.getInstance()
+                            .getSkinArrayResource(R.array.main_country)[Integer.valueOf(userInfo.getCountry())]);
+                }catch (Exception e){
+
+                }
+            }
             userModel.setId(userInfo.getEmail());
             if(!TextUtils.isEmpty(userInfo.getNickName())) {
                 userModel.setName(userInfo.getNickName());
@@ -101,11 +110,11 @@ public class ProfileFragment extends SupportFragment {
             userModel.setIcon(userInfo.getHeadPic());
         }else{
             ViseLog.e("userInfo is null!!!!");
-            userModel.setName(""/*SkinManager.getInstance().getTextById(R.string.main_profile_unfilled)*/);
-            userModel.setId(""/*SkinManager.getInstance().getTextById(R.string.main_profile_unfilled)*/);
-            userModel.setBirthday(""/*SkinManager.getInstance().getTextById(R.string.main_profile_unfilled)*/);
+            userModel.setName(SkinManager.getInstance().getTextById(R.string.main_profile_unfilled));
+            userModel.setId(SkinManager.getInstance().getTextById(R.string.main_profile_unfilled));
+            userModel.setBirthday(SkinManager.getInstance().getTextById(R.string.main_profile_unfilled));
             userModel.setGenderId(-1);
-            userModel.setCountry(""/*SkinManager.getInstance().getTextById(R.string.main_profile_unfilled)*/);
+            userModel.setCountry(SkinManager.getInstance().getTextById(R.string.main_profile_unfilled));
         }
     }
 
@@ -131,7 +140,7 @@ public class ProfileFragment extends SupportFragment {
                     tvProfileGenderContent.setText(SkinManager.getInstance().getTextById(R.string.main_profile_gender_robot));
                     break;
                 default:
-                    tvProfileGenderContent.setText(""/*SkinManager.getInstance().getTextById(R.string.main_profile_unfilled)*/);
+                    tvProfileGenderContent.setText(SkinManager.getInstance().getTextById(R.string.main_profile_unfilled));
                     break;
             }
         }

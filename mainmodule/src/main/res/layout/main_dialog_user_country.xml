@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="430dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/main_bg_corner"
+    android:orientation="vertical"
+    >
+
+    <com.weigan.loopview.LoopView
+        android:id="@+id/loopView_country"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="@dimen/dp_25"
+        android:layout_marginBottom="@dimen/dp_35"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#E4E4E4" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        >
+        <Button
+            android:id="@+id/btn_country_cancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textAllCaps="false"
+            android:textColor="#FF37AAFF"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:text="@string/main_common_cancel"
+            android:layout_weight="1"
+            android:background="@null"
+            />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#E4E4E4" />
+        <Button
+            android:id="@+id/btn_country_confirm"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textAllCaps="false"
+            android:textColor="#FF37AAFF"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:text="@string/main_common_confirm"
+            android:layout_weight="1"
+            android:background="@null"
+            />
+    </LinearLayout>
+
+
+
+</LinearLayout>
