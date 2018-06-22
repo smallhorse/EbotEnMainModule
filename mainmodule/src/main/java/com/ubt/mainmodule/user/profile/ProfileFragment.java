@@ -125,7 +125,9 @@ public class ProfileFragment extends SupportFragment {
                 Glide.with(this).load(userModel.getIcon()).centerCrop().into(ivProfileIcon);
             }
             tvProfileName.setText(userModel.getName());
-            tvProfileId.setText(userModel.getId());
+            if(!TextUtils.isEmpty(userModel.getId())){
+                tvProfileId.setText(userModel.getId());
+            }
             tvProfileAgeContent.setText(userModel.getBirthday());
             tvProfileGenderContent.setText(userModel.getGender());
             tvProfileCountryContent.setText(userModel.getCountry());
