@@ -84,7 +84,7 @@ public class ProfileFragment extends SupportFragment {
     private void initData() {
         userInfo = (UserInfoModel) SPUtils.getInstance().readObject(Constant1E.SP_USER_INFO);
         if(userInfo != null) {
-            if(userInfo.getSex() != null) {
+            if(userInfo.getSex() != null && !userInfo.getSex().equals("null")) {
                 userModel.setGenderId(Integer.valueOf(userInfo.getSex()) - 1);
             }else{
                 userModel.setGenderId(-1);
