@@ -26,6 +26,8 @@ import com.vise.xsnow.http.callback.ACallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.regex.Pattern;
+
 /**
  * @作者：bin.zhang@ubtrobot.com
  * @日期: 2018/4/20 10:49
@@ -172,7 +174,11 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
     private void initData() {
         userInfo = (UserInfoModel) SPUtils.getInstance().readObject(Constant1E.SP_USER_INFO);
         if(userInfo != null) {
-            userModel.setGenderId(Integer.valueOf(userInfo.getSex()) - 1);
+            if(isStringNumber(userInfo.getSex())){
+                userModel.setGenderId(Integer.valueOf(userInfo.getSex()) - 1);
+            }else{
+                userModel.setGenderId(-1);
+            }
             if(!TextUtils.isEmpty(userInfo.getBirthDate())) {
                 userModel.setBirthday(userInfo.getBirthDate());
             }else{
@@ -277,4 +283,17 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
         }
         return false;
     }
+
+    /***
+     * 判断字符串是否都是数字
+     */
+    public  boolean isStringNumber(String str){
+        if(TextUtils.isEmpty(str)){
+            return false;
+        }
+
+        Pattern pattern = Pattern.compile("[0-9]*");
+        return pattern.matcher(str).matches();
+    }
+
 }
