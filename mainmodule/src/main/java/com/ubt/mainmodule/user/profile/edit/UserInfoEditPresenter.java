@@ -128,6 +128,7 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
                                         updateUserInfo();
                                     }
                                 } catch (JSONException e) {
+                                    sendCompletMsg(false);
                                     e.printStackTrace();
                                 }
                             } else {
@@ -222,6 +223,7 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
 
         if(juser == null){
             ViseLog.e(("juser is null!!"));
+            sendCompletMsg(false);
             return;
         }
         ViseLog.i("juser = "+juser.toString());

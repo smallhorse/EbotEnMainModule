@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.Glide;
 import com.ubt.baselib.globalConst.Constant1E;
 import com.ubt.baselib.model1E.UserInfoModel;
@@ -44,6 +45,8 @@ public class ProfileFragment extends SupportFragment {
     Unbinder unbinder;
     private UserModel userModel = new UserModel(); //本地显示使用的数据结构 因为本地显示需要重新格式化，所以重新定义了类
     private UserInfoModel userInfo; //后台保存的数据结构
+    private DrawableRequestBuilder<String> thumbnailRequest = null;
+    private String headSrc;   //本地头像
 
     public static ProfileFragment newInstance() {
 
@@ -63,7 +66,7 @@ public class ProfileFragment extends SupportFragment {
         view.findViewById(R.id.iv_user_edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserInfoEditActivity.startActivity(ProfileFragment.this);
+                UserInfoEditActivity.startActivity(ProfileFragment.this, headSrc);
             }
         });
         return view;
@@ -122,7 +125,15 @@ public class ProfileFragment extends SupportFragment {
         if(userModel != null){
             if(userModel.getIcon() != null) {
                 ViseLog.i("userModel.getIcon()="+userModel.getIcon());
-                Glide.with(this).load(userModel.getIcon()).centerCrop().into(ivProfileIcon);
+                if(thumbnailRequest != null){
+                    ViseLog.i("加载 thumbnailRequest");
+                    Glide.with(this).load(userModel.getIcon())
+                            .centerCrop().thumbnail(thumbnailRequest)
+                            .into(ivProfileIcon);
+
+                }else {
+                    Glide.with(this).load(userModel.getIcon()).centerCrop().into(ivProfileIcon);
+                }
             }
             tvProfileName.setText(userModel.getName());
             if(!TextUtils.isEmpty(userModel.getId()) && !userModel.getId().equals("null")){
@@ -155,6 +166,13 @@ public class ProfileFragment extends SupportFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == UserInfoEditActivity.USERINFO_EDIT  &&resultCode == RESULT_OK){
             ViseLog.i("用户信息保存成功!!!");
+            headSrc = data.getStringExtra("headPath");
+            if(!TextUtils.isEmpty(headSrc)){
+                thumbnailRequest = Glide
+                        .with( ProfileFragment.this )
+                        .load(headSrc);
+
+            }
             //兼容语言切换，在onResume()里刷新布局
             /*initData();
             initView();*/

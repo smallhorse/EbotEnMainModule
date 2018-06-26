@@ -16,12 +16,14 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.Glide;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.ubt.baselib.customView.BaseDialog;
@@ -80,9 +82,12 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
 
     private UserModel userModel; //用户参数
     private Handler mHandler;
+    private String headSrc = null;  //外部传进来的头像
+    private DrawableRequestBuilder<String> thumbnailRequest = null;
 
-    public static void startActivity(Fragment context) {
+    public static void startActivity(Fragment context, String headSrc) {
         Intent intent = new Intent(context.getActivity(), UserInfoEditActivity.class);
+        intent.putExtra("headSrc", headSrc);
         context.startActivityForResult (intent, USERINFO_EDIT);
     }
 
@@ -90,6 +95,12 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity_userinfoedit);
+        headSrc = getIntent().getStringExtra("headSrc");
+        if(!TextUtils.isEmpty(headSrc)){
+            thumbnailRequest = Glide
+                    .with( this)
+                    .load(headSrc);
+        }
         ButterKnife.bind(this);
         initHandler();
         mPresenter.init();
@@ -109,6 +120,7 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
                         BaseLoadingDialog.dismiss(UserInfoEditActivity.this);
                         if(msg.arg1 == 1){
                             Intent intent = new Intent();
+                            intent.putExtra("headPath", headPath);
                             UserInfoEditActivity.this.setResult(RESULT_OK, intent);
                             UserInfoEditActivity.this.finish();
                         }else{
@@ -123,7 +135,13 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
 
     private void initView() {
         if(userModel.getIcon() != null) {
-            Glide.with(this).load(userModel.getIcon()).centerCrop().into(ivEditIcon);
+            if(thumbnailRequest != null){
+                Glide.with(this).load(userModel.getIcon())
+                        .centerCrop().thumbnail(thumbnailRequest)
+                        .into(ivEditIcon);
+            }else {
+                Glide.with(this).load(userModel.getIcon()).centerCrop().into(ivEditIcon);
+            }
         }
         tvEditBirthdayContent.setText(userModel.getBirthday());
         if(userModel.getCountry().equals(SkinManager.getInstance().getTextById(R.string.main_profile_unfilled))){
