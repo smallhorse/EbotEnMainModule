@@ -12,7 +12,8 @@
             android:screenOrientation="landscape"/>
         <activity
             android:name=".user.language.LanguageActivity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:launchMode="singleTop">
         </activity>
     </application>
 

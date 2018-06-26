@@ -23,6 +23,7 @@ import com.ubt.baselib.skin.SkinManager;
 import com.ubt.baselib.utils.AppStatusUtils;
 import com.ubt.baselib.utils.ContextUtils;
 import com.ubt.baselib.utils.SPUtils;
+import com.ubt.baselib.utils.ToastUtils;
 import com.ubt.mainmodule.FloatView;
 import com.ubt.mainmodule.MainHttpEntity;
 import com.ubt.mainmodule.R;
@@ -159,7 +160,7 @@ public class MainFragment extends MVPBaseFragment<MainContract.View, MainPresent
         }else if(view.getId() == R.id.iv_blockly){
             ARouter.getInstance().build(ModuleUtils.Blockly_BlocklyProgram).navigation();
         }else if(view.getId() == R.id.iv_community){
-            ARouter.getInstance().build(ModuleUtils.Community_ActionProgram).navigation();
+            //ARouter.getInstance().build(ModuleUtils.Community_ActionProgram).navigation();
         }else if(view.getId() == R.id.iv_joystick){
             ARouter.getInstance().build(ModuleUtils.Joystick_ActionProgram).navigation();
         }
