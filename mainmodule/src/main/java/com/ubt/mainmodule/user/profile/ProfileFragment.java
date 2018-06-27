@@ -95,7 +95,7 @@ public class ProfileFragment extends SupportFragment {
                 userModel.setBirthday(""/*SkinManager.getInstance().getTextById(R.string.main_profile_unfilled)*/);
             }
             if(TextUtils.isEmpty(userInfo.getCountry())) {
-                userModel.setCountry(""/*SkinManager.getInstance().getTextById(R.string.main_profile_unfilled)*/);
+                userModel.setCountry(SkinManager.getInstance().getTextById(R.string.main_profile_unfilled));
             }else{
                 try {
                     userModel.setCountry(SkinManager.getInstance()
