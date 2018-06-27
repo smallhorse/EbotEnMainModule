@@ -52,6 +52,7 @@
     <string name="main_contact_us_email">Email</string>
     <string name="main_contact_us_email_address">ucare@ubtrobot.com</string>
     <string name="main_contact_us_email_send">Send an email to \n ucare@ubtrobot.com?</string>
+    <string name="main_contact_us_email_select">select app</string>
 
 
     <string name="main_contact_us_website_name">Official website</string>

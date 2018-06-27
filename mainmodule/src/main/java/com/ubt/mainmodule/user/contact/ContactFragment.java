@@ -16,6 +16,7 @@ import com.ubt.baselib.customView.BaseDialog;
 import com.ubt.baselib.utils.ContextUtils;
 import com.ubt.mainmodule.R;
 import com.ubt.mainmodule.R2;
+import com.vise.log.ViseLog;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
 import com.yanzhenjie.permission.Rationale;
@@ -118,9 +119,11 @@ public class ContactFragment extends SupportFragment {
                         dialog.dismiss();
                     } else if (view.getId() == com.ubt.baselib.R.id.button_cancle) {
                         dialog.dismiss();
-                        Uri uri = Uri.parse("mailto:"+getString(R.string.main_contact_us_email_address));
+                        sendEmail();
+                        /*Uri uri = Uri.parse("mailto:"+getString(R.string.main_contact_us_email_address));
                         Intent it = new Intent(Intent.ACTION_SENDTO, uri);
-                        startActivity(it);
+                        startActivity(it);*/
+
                     }
                 }
             });
@@ -150,5 +153,18 @@ public class ContactFragment extends SupportFragment {
                 .setButtonOnClickListener(buttonOnClickListener)
                 .create()
                 .show();
+    }
+
+    /**
+     * 发邮件
+     */
+    private void sendEmail(){
+        Intent i = new Intent(Intent.ACTION_SEND);
+        // i.setType("text/plain"); //模拟器请使用这行
+        i.setType("message/rfc822"); // 真机上使用这行
+        i.putExtra(Intent.EXTRA_EMAIL,new String[] { getString(R.string.main_contact_us_email_address) });
+        //i.putExtra(Intent.EXTRA_SUBJECT, "您的建议");
+        //i.putExtra(Intent.EXTRA_TEXT, "我们很希望能得到您的建议!");
+        startActivity(Intent.createChooser(i,getString(R.string.main_contact_us_email_select)));
     }
 }
