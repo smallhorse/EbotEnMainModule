@@ -35,7 +35,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="349599058@hotmail.com"
             android:textColor="#FF333333"
             android:textSize="12sp" />
 
