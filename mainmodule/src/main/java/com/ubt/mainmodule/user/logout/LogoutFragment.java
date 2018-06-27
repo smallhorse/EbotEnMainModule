@@ -74,7 +74,12 @@ public class LogoutFragment extends SupportFragment {
         if(userInfo != null){
             ViseLog.i("userInfo="+userInfo.toString());
             tvLogoutName.setText(userInfo.getNickName());
-            tvLogoutId.setText(userInfo.getEmail());
+            if(!TextUtils.isEmpty(userInfo.getEmail()) && !userInfo.getEmail().equals("null")){
+                tvLogoutId.setText(userInfo.getEmail());
+            }else{
+                tvLogoutId.setText("");
+            }
+
             if(!TextUtils.isEmpty(userInfo.getHeadPic())){
                 Glide.with(this).load(userInfo.getHeadPic()).centerCrop().into(ivLogoutIcon);
             }

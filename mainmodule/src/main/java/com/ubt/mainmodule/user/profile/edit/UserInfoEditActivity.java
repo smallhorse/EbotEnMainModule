@@ -151,7 +151,12 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
                     .getSkinArrayResource(R.array.main_country)[Integer.valueOf(userModel.getCountry())]);
         }
         tvEditName.setText(userModel.getName());
-        tvEditId.setText(userModel.getId());
+        if(!TextUtils.isEmpty(userModel.getId()) && !userModel.getId().equals("null")){
+            tvEditId.setText(userModel.getId());
+        }else{
+            tvEditId.setText("");
+        }
+
         switch (userModel.getGenderId()){
             case UserModel.MALE:
                 rbEditMale.setChecked(true);
