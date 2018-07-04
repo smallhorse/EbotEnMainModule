@@ -40,6 +40,7 @@ public class BirthdaySelectDialog extends Dialog {
     private List<String> listMonth;
     private List<String> listday;
     private IBirthDialogListener listener;
+    private int mSelectedYear = START_YEAR;
 
     public BirthdaySelectDialog(@NonNull Context context) {
         this(context, 0);
@@ -96,7 +97,7 @@ public class BirthdaySelectDialog extends Dialog {
         loopViewYear.setListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(int index) {
-
+                mSelectedYear = Integer.valueOf(listYear.get(index));
             }
         });
 
@@ -115,7 +116,12 @@ public class BirthdaySelectDialog extends Dialog {
                         getDayData(31);
                         break;
                     case 2:
-                        getDayData(28);
+                        if (((mSelectedYear % 4) == 0 && (mSelectedYear % 100) != 0) ||
+                            (mSelectedYear % 400) == 0) {
+                            getDayData(29);
+                        } else {
+                            getDayData(28);
+                        }
                         break;
                     case 4:
                     case 6:
