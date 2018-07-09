@@ -41,6 +41,7 @@ public class BirthdaySelectDialog extends Dialog {
     private List<String> listday;
     private IBirthDialogListener listener;
     private int mSelectedYear = START_YEAR;
+    private int mSelectedMonth = 1;
 
     public BirthdaySelectDialog(@NonNull Context context) {
         this(context, 0);
@@ -77,7 +78,7 @@ public class BirthdaySelectDialog extends Dialog {
         loopViewMonth.setItemsVisibleCount(5);
         loopViewMonth.setTextSize(18);
 
-        getDayData(31); //默认设置每月有31天，然后根据选择的月份再计算出相应月份的天数
+        //getDayData(31); //默认设置每月有31天，然后根据选择的月份再计算出相应月份的天数
         loopViewDay.setItemsVisibleCount(5);
         loopViewDay.setTextSize(18);
 
@@ -90,48 +91,35 @@ public class BirthdaySelectDialog extends Dialog {
             int monthPos = Integer.valueOf(birth[1]) - 1;
             loopViewMonth.setCurrentPosition(monthPos);
 
+            int days = calcDaysOfMonth(Integer.valueOf(birth[0]), Integer.valueOf(birth[1]));
+            getDayData(days);
             int dayPos = Integer.valueOf(birth[2]) - 1;
             loopViewDay.setCurrentPosition(dayPos);
+        } else {
+            getDayData(30);
         }
 
         loopViewYear.setListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(int index) {
                 mSelectedYear = Integer.valueOf(listYear.get(index));
+                if (mSelectedMonth == 2 ) {
+                    if (isLeapYear(mSelectedYear)) {
+                        getDayData(29);
+                    } else {
+                        getDayData(28);
+                    }
+                }
             }
         });
 
         loopViewMonth.setListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(int index) {
-                int month = Integer.valueOf(listMonth.get(index));
-                switch (month){
-                    case 1:
-                    case 3:
-                    case 5:
-                    case 7:
-                    case 8:
-                    case 10:
-                    case 12:
-                        getDayData(31);
-                        break;
-                    case 2:
-                        if (((mSelectedYear % 4) == 0 && (mSelectedYear % 100) != 0) ||
-                            (mSelectedYear % 400) == 0) {
-                            getDayData(29);
-                        } else {
-                            getDayData(28);
-                        }
-                        break;
-                    case 4:
-                    case 6:
-                    case 9:
-                    case 11:
-                        getDayData(30);
-                        break;
-                        default:break;
-                }
+                mSelectedMonth = Integer.valueOf(listMonth.get(index));
 
+                int days = calcDaysOfMonth(mSelectedYear, mSelectedMonth);
+                getDayData(days);
             }
         });
 
@@ -195,6 +183,36 @@ public class BirthdaySelectDialog extends Dialog {
             }
             BirthdaySelectDialog.this.dismiss();
         }
+    }
+
+    private int calcDaysOfMonth(int year, int month) {
+        int days = 30;
+        switch (month) {
+            case 1: case 3: case 5: case 7: case 8: case 10: case 12: {
+                days = 31;
+            }
+            break;
+            case 2:
+                if (isLeapYear(year)) {
+                    days = 29;
+                } else {
+                    days = 28;
+                }
+                break;
+
+            default:
+                break;
+        }
+
+        return days;
+    }
+
+    private boolean isLeapYear(int year) {
+        if (((year % 4) == 0 && (year % 100) != 0) ||
+                (year % 400) == 0) {
+            return true;
+        }
+        return false;
     }
 
 
