@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="htslib-1.0.0.1:@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/htslib-1.0.0.1.aar/4e24129d8eafca613884e6cdc58489ca/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/htslib-1.0.0.1.aar/4e24129d8eafca613884e6cdc58489ca/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/htslib-1.0.0.1.aar/4e24129d8eafca613884e6cdc58489ca/jars/libs/pg-2.0.2.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/htslib-1.0.0.1.aar/4e24129d8eafca613884e6cdc58489ca/jars/libs/jackson-annotations-2.2.3.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/htslib-1.0.0.1.aar/4e24129d8eafca613884e6cdc58489ca/jars/libs/jackson-core-2.2.3.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/htslib-1.0.0.1.aar/4e24129d8eafca613884e6cdc58489ca/jars/libs/jackson-all-1.8.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

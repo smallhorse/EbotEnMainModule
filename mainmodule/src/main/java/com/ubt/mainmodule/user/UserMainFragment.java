@@ -21,7 +21,6 @@ import com.ubt.mainmodule.user.contact.ContactFragment;
 import com.ubt.mainmodule.user.help.HelpFragment;
 import com.ubt.mainmodule.user.language.LanguageFragment;
 import com.ubt.mainmodule.user.logout.LogoutFragment;
-import com.ubt.mainmodule.user.notification.NotificationFragment;
 import com.ubt.mainmodule.user.profile.ProfileFragment;
 import com.ubt.mainmodule.user.recycleview.LeftAdapter;
 import com.vise.log.ViseLog;
@@ -44,10 +43,10 @@ public class UserMainFragment extends MVPBaseFragment<UserMainContract.View, Use
     public static final int FOUR = 3;
     public static final int FIVE = 4;
     public static final int SIX = 5;
-    public static final int SEVEN = 6;
+    //public static final int SEVEN = 6;
 
 
-    public static final int MAX_FRAGMENT = 7;
+    public static final int MAX_FRAGMENT = 6;
 
     @BindView(R2.id.rv_setting_left)
     RecyclerView recyclerView;
@@ -87,13 +86,15 @@ public class UserMainFragment extends MVPBaseFragment<UserMainContract.View, Use
     private void initFragment(){
         SupportFragment firstFragment = findChildFragment(ProfileFragment.class);
         if (firstFragment == null) {
+            //mFragments[SECOND] = NotificationFragment.newInstance();
+
             mFragments[FIRST] = ProfileFragment.newInstance();
-            mFragments[SECOND] = NotificationFragment.newInstance();
-            mFragments[THIRD] = AboutFragment.newInstance();
-            mFragments[FOUR] = ContactFragment.newInstance();
-            mFragments[FIVE] = HelpFragment.newInstance();
-            mFragments[SIX] = LanguageFragment.newInstance();
-            mFragments[SEVEN] = LogoutFragment.newInstance();
+            mFragments[SECOND] = AboutFragment.newInstance();
+            mFragments[THIRD] = ContactFragment.newInstance();
+            mFragments[FOUR] = HelpFragment.newInstance();
+            mFragments[FIVE] = LanguageFragment.newInstance();
+            mFragments[SIX] = LogoutFragment.newInstance();
+            //mFragments[SEVEN] = LogoutFragment.newInstance();
 
             loadMultipleRootFragment(R.id.frame_content_user, FIRST,
                     mFragments[FIRST],
@@ -101,18 +102,18 @@ public class UserMainFragment extends MVPBaseFragment<UserMainContract.View, Use
                     mFragments[THIRD],
                     mFragments[FOUR],
                     mFragments[FIVE],
-                    mFragments[SIX],
-                    mFragments[SEVEN]
+                    mFragments[SIX]
+                 //   mFragments[SEVEN]
                     );
         } else {
             ViseLog.i("fragmentCur == "+ fragmentCur);
             mFragments[FIRST] = firstFragment;
-            mFragments[SECOND] = findChildFragment(NotificationFragment.class);
-            mFragments[THIRD] = findChildFragment(AboutFragment.class);
-            mFragments[FOUR] = findChildFragment(ContactFragment.class);
-            mFragments[FIVE] = findChildFragment(HelpFragment.class);
-            mFragments[SIX] = findChildFragment(LanguageFragment.class);
-            mFragments[SEVEN] = findChildFragment(LogoutFragment.class);
+            mFragments[SECOND] = findChildFragment(AboutFragment.class);
+            mFragments[THIRD] = findChildFragment(ContactFragment.class);
+            mFragments[FOUR] = findChildFragment(HelpFragment.class);
+            mFragments[FIVE] = findChildFragment(LanguageFragment.class);
+            mFragments[SIX] = findChildFragment(LogoutFragment.class);
+            //mFragments[SEVEN] = findChildFragment(LogoutFragment.class);
         }
     }
 

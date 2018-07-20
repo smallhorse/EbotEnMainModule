@@ -30,6 +30,7 @@ import com.ubt.baselib.mvp.MVPBaseActivity;
 import com.ubt.baselib.skin.SkinManager;
 import com.ubt.baselib.utils.ContextUtils;
 import com.ubt.baselib.utils.FileUtils;
+import com.ubt.baselib.utils.LQRPhotoSelectUtils;
 import com.ubt.baselib.utils.ToastUtils;
 import com.ubt.mainmodule.R;
 import com.ubt.mainmodule.R2;
@@ -80,7 +81,7 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
 
     private UserModel userModel; //用户参数
     private Handler mHandler;
-
+    LQRPhotoSelectUtils mLqrPhotoSelectUtils;
     public static void startActivity(Fragment context) {
         Intent intent = new Intent(context.getActivity(), UserInfoEditActivity.class);
         context.startActivityForResult (intent, USERINFO_EDIT);
@@ -163,6 +164,33 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
                 ViseLog.i(userModel.getGender());
             }
         });
+
+        // 1、创建LQRPhotoSelectUtils（一个Activity对应一个LQRPhotoSelectUtils）
+        mLqrPhotoSelectUtils = new LQRPhotoSelectUtils(this, new LQRPhotoSelectUtils.PhotoSelectListener() {
+            @Override
+            public void onFinish(File outputFile, Uri outputUri) {
+//                // 4、当拍照或从图库选取图片成功后回调
+
+//                Bitmap bitmap = null;
+//                try {
+//                    bitmap = FileUtils.getBitmapFormUri(UserInfoEditActivity.this, outputUri);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+
+                Bitmap bitmap = null;
+                try {
+                    Matrix matrix = getImageMatrix(outputUri);
+                    bitmap = FileUtils.getBitmapFormUriWithDegree(ContextUtils.getContext(), mImageUri, matrix);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+//                Bitmap bitmap = FileUtils.getBitmapFormUri(ContextUtils.getContext(), mImageUri);
+                ivEditIcon.setImageBitmap(bitmap);
+                headPath = FileUtils.SaveImage(ContextUtils.getContext(), "head", bitmap);
+                userModel.setIcon(headPath);
+            }
+        }, false);//true裁剪，false不裁剪
     }
 
     /**

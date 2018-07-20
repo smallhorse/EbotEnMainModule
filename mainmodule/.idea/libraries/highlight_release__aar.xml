@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="highlight-release:@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/highlight-release.aar/9ab52eddf312f7afce7352f2cd094613/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/highlight-release.aar/9ab52eddf312f7afce7352f2cd094613/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

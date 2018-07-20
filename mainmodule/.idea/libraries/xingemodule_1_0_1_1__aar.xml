@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="xingemodule-1.0.1.1:@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/xingemodule-1.0.1.1.aar/6bfbb000fc3184e81abc66c8eaa2109d/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/xingemodule-1.0.1.1.aar/6bfbb000fc3184e81abc66c8eaa2109d/jars/libs/wup-1.0.0.E-SNAPSHOT.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/xingemodule-1.0.1.1.aar/6bfbb000fc3184e81abc66c8eaa2109d/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/xingemodule-1.0.1.1.aar/6bfbb000fc3184e81abc66c8eaa2109d/jars/libs/mid-core-sdk-4.0.0.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/xingemodule-1.0.1.1.aar/6bfbb000fc3184e81abc66c8eaa2109d/jars/libs/Xg_sdk_v3.2_20171211_1607.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/xingemodule-1.0.1.1.aar/6bfbb000fc3184e81abc66c8eaa2109d/jars/libs/jg_filter_sdk_1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

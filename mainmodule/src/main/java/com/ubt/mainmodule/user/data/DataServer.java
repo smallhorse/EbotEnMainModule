@@ -27,8 +27,8 @@ public class DataServer {
             Context context = ContextUtils.getContext();
             datas.add(new LeftMenuModel(R.string.main_profile_tab,
                     true, R.mipmap.main_user_profile, 0));
-            datas.add(new LeftMenuModel(R.string.main_notifications_tab,
-                    false, R.mipmap.main_user_notification, 0));
+//            datas.add(new LeftMenuModel(R.string.main_notifications_tab,
+//                    false, R.mipmap.main_user_notification, 0));
             datas.add(new LeftMenuModel(R.string.main_about_app_tab,
                     false, R.mipmap.main_user_about, 0));
             datas.add(new LeftMenuModel(R.string.main_contact_us_tab,

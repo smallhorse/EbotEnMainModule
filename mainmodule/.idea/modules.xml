@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../EbotEnMainModule.iml" filepath="$PROJECT_DIR$/../EbotEnMainModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../app/app.iml" filepath="$PROJECT_DIR$/../app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../Alpha1Ebot_En/baselib/baselib.iml" filepath="$PROJECT_DIR$/../../Alpha1Ebot_En/baselib/baselib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mainmodule.iml" filepath="$PROJECT_DIR$/mainmodule.iml" />
+    </modules>
+  </component>
+</project>
