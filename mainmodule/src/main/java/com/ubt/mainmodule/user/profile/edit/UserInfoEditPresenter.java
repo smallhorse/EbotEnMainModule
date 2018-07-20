@@ -26,6 +26,8 @@ import com.vise.xsnow.http.callback.ACallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.regex.Pattern;
+
 /**
  * @作者：bin.zhang@ubtrobot.com
  * @日期: 2018/4/20 10:49
@@ -49,6 +51,7 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
         viewHandler = mView.getViewHandler();
         Configuration config = new Configuration.Builder()
                 .zone(AutoZone.autoZone)
+                .responseTimeout(20)
                 .build();
         uploadManager = new UploadManager(config);
     }
@@ -113,23 +116,29 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
                     @Override
                     public void complete(String key, ResponseInfo info, JSONObject res) {
                         //  res 包含hash、key等信息，具体字段取决于上传策略的设置。
-                        ViseLog.i("res:"+res.toString());
-                        ViseLog.i("info:"+info.toString());
-                        if(info.isOK()){
-                            try {
-                                if(res.has("key")) {
-                                    qiniuPath = qiniuFileUrl+"/"+res.getString("key");
-                                    userInfo.setHeadPic(qiniuPath);
-                                    SPUtils.getInstance().saveObject(Constant1E.SP_USER_INFO, userInfo);
-                                    updateUserInfo();
+                        if(res != null) {
+                            ViseLog.i("res:" + res.toString());
+                        }
+                        if(info != null) {
+                            ViseLog.i("info:" + info.toString());
+                            if (info.isOK()) {
+                                try {
+                                    if (res.has("key")) {
+                                        qiniuPath = qiniuFileUrl + "/" + res.getString("key");
+                                        userInfo.setHeadPic(qiniuPath);
+                                        SPUtils.getInstance().saveObject(Constant1E.SP_USER_INFO, userInfo);
+                                        updateUserInfo();
+                                    }
+                                } catch (JSONException e) {
+                                    sendCompletMsg(false);
+                                    e.printStackTrace();
                                 }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                            } else {
+                                sendCompletMsg(false);
                             }
                         }else{
                             sendCompletMsg(false);
                         }
-
                     }
                 }, null);
     }
@@ -165,7 +174,11 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
     private void initData() {
         userInfo = (UserInfoModel) SPUtils.getInstance().readObject(Constant1E.SP_USER_INFO);
         if(userInfo != null) {
-            userModel.setGenderId(Integer.valueOf(userInfo.getSex()) - 1);
+            if(isStringNumber(userInfo.getSex())){
+                userModel.setGenderId(Integer.valueOf(userInfo.getSex()) - 1);
+            }else{
+                userModel.setGenderId(-1);
+            }
             if(!TextUtils.isEmpty(userInfo.getBirthDate())) {
                 userModel.setBirthday(userInfo.getBirthDate());
             }else{
@@ -216,6 +229,7 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
 
         if(juser == null){
             ViseLog.e(("juser is null!!"));
+            sendCompletMsg(false);
             return;
         }
         ViseLog.i("juser = "+juser.toString());
@@ -269,4 +283,17 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
         }
         return false;
     }
+
+    /***
+     * 判断字符串是否都是数字
+     */
+    public  boolean isStringNumber(String str){
+        if(TextUtils.isEmpty(str)){
+            return false;
+        }
+
+        Pattern pattern = Pattern.compile("[0-9]*");
+        return pattern.matcher(str).matches();
+    }
+
 }

@@ -16,12 +16,14 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.Glide;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.ubt.baselib.customView.BaseDialog;
@@ -58,20 +60,34 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
     public static final int PHOTO_BY_FILE = 1002;  //相册获取
     public static final int USERINFO_EDIT = 1003;  //用户信息编辑
 
-    @BindView(R2.id.iv_topbar_back)    ImageView ivTopbarBack;
-    @BindView(R2.id.tv_topbar_save)    TextView tvTopbarSave;
-    @BindView(R2.id.iv_edit_icon)    ImageView ivEditIcon;
-    @BindView(R2.id.iv_edit_icon_edit)    ImageView ivEditIconEdit;
-    @BindView(R2.id.rg_edit_gender_select)    RadioGroup rgEditGenderSelect;
-    @BindView(R2.id.iv_edit_age_more)    ImageView ivEditAgeMore;
-    @BindView(R2.id.iv_edit_country_more)    ImageView ivEditCountryMore;
-    @BindView(R2.id.tv_edit_name)    TextView tvEditName;
-    @BindView(R2.id.tv_edit_id)    TextView tvEditId;
-    @BindView(R2.id.rb_edit_male)    RadioButton rbEditMale;
-    @BindView(R2.id.rb_edit_female)    RadioButton rbEditFemale;
-    @BindView(R2.id.rb_edit_robot)    RadioButton rbEditRobot;
-    @BindView(R2.id.tv_edit_birthday_content)    TextView tvEditBirthdayContent;
-    @BindView(R2.id.tv_edit_country_content)    TextView tvEditCountryContent;
+    @BindView(R2.id.iv_topbar_back)
+    ImageView ivTopbarBack;
+    @BindView(R2.id.tv_topbar_save)
+    TextView tvTopbarSave;
+    @BindView(R2.id.iv_edit_icon)
+    ImageView ivEditIcon;
+    @BindView(R2.id.iv_edit_icon_edit)
+    ImageView ivEditIconEdit;
+    @BindView(R2.id.rg_edit_gender_select)
+    RadioGroup rgEditGenderSelect;
+    @BindView(R2.id.iv_edit_age_more)
+    ImageView ivEditAgeMore;
+    @BindView(R2.id.iv_edit_country_more)
+    ImageView ivEditCountryMore;
+    @BindView(R2.id.tv_edit_name)
+    TextView tvEditName;
+    @BindView(R2.id.tv_edit_id)
+    TextView tvEditId;
+    @BindView(R2.id.rb_edit_male)
+    RadioButton rbEditMale;
+    @BindView(R2.id.rb_edit_female)
+    RadioButton rbEditFemale;
+    @BindView(R2.id.rb_edit_robot)
+    RadioButton rbEditRobot;
+    @BindView(R2.id.tv_edit_birthday_content)
+    TextView tvEditBirthdayContent;
+    @BindView(R2.id.tv_edit_country_content)
+    TextView tvEditCountryContent;
 
 
     private FullSheetDialogFragment photoDialog;
@@ -82,15 +98,26 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
     private UserModel userModel; //用户参数
     private Handler mHandler;
     LQRPhotoSelectUtils mLqrPhotoSelectUtils;
-    public static void startActivity(Fragment context) {
+
+    private String headSrc = null;  //外部传进来的头像
+    private DrawableRequestBuilder<String> thumbnailRequest = null;
+
+    public static void startActivity(Fragment context, String headSrc) {
         Intent intent = new Intent(context.getActivity(), UserInfoEditActivity.class);
-        context.startActivityForResult (intent, USERINFO_EDIT);
+        intent.putExtra("headSrc", headSrc);
+        context.startActivityForResult(intent, USERINFO_EDIT);
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity_userinfoedit);
+        headSrc = getIntent().getStringExtra("headSrc");
+        if (!TextUtils.isEmpty(headSrc)) {
+            thumbnailRequest = Glide
+                    .with(this)
+                    .load(headSrc);
+        }
         ButterKnife.bind(this);
         initHandler();
         mPresenter.init();
@@ -101,18 +128,19 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
     }
 
     private void initHandler() {
-        mHandler = new Handler(Looper.getMainLooper()){
+        mHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                switch (msg.what){
+                switch (msg.what) {
                     case UserInfoEditContract.HCMD_UPDATE_COMPLET:
                         BaseLoadingDialog.dismiss(UserInfoEditActivity.this);
-                        if(msg.arg1 == 1){
+                        if (msg.arg1 == 1) {
                             Intent intent = new Intent();
+                            intent.putExtra("headPath", headPath);
                             UserInfoEditActivity.this.setResult(RESULT_OK, intent);
                             UserInfoEditActivity.this.finish();
-                        }else{
+                        } else {
                             ToastUtils.showShort(SkinManager.getInstance().getTextById(R.string.main_profile_saveFail));
                         }
                         break;
@@ -123,19 +151,30 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
 
 
     private void initView() {
-        if(userModel.getIcon() != null) {
-            Glide.with(this).load(userModel.getIcon()).centerCrop().into(ivEditIcon);
+        if (userModel.getIcon() != null) {
+            if (thumbnailRequest != null) {
+                Glide.with(this).load(userModel.getIcon())
+                        .centerCrop().thumbnail(thumbnailRequest)
+                        .into(ivEditIcon);
+            } else {
+                Glide.with(this).load(userModel.getIcon()).centerCrop().into(ivEditIcon);
+            }
         }
         tvEditBirthdayContent.setText(userModel.getBirthday());
-        if(userModel.getCountry().equals(SkinManager.getInstance().getTextById(R.string.main_profile_unfilled))){
+        if (userModel.getCountry().equals(SkinManager.getInstance().getTextById(R.string.main_profile_unfilled))) {
             tvEditCountryContent.setText(userModel.getCountry());
-        }else {
+        } else {
             tvEditCountryContent.setText(SkinManager.getInstance()
                     .getSkinArrayResource(R.array.main_country)[Integer.valueOf(userModel.getCountry())]);
         }
         tvEditName.setText(userModel.getName());
-        tvEditId.setText(userModel.getId());
-        switch (userModel.getGenderId()){
+        if (!TextUtils.isEmpty(userModel.getId()) && !userModel.getId().equals("null")) {
+            tvEditId.setText(userModel.getId());
+        } else {
+            tvEditId.setText("");
+        }
+
+        switch (userModel.getGenderId()) {
             case UserModel.MALE:
                 rbEditMale.setChecked(true);
                 break;
@@ -153,13 +192,13 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.rb_edit_male) {
                     userModel.setGenderId(UserModel.MALE);
-                    userModel.setGender(""+rbEditMale.getText());
+                    userModel.setGender("" + rbEditMale.getText());
                 } else if (checkedId == R.id.rb_edit_female) {
                     userModel.setGenderId(UserModel.FEMALE);
-                    userModel.setGender(""+rbEditFemale.getText());
+                    userModel.setGender("" + rbEditFemale.getText());
                 } else if (checkedId == R.id.rb_edit_robot) {
                     userModel.setGenderId(UserModel.OTHER);
-                    userModel.setGender(""+rbEditRobot.getText());
+                    userModel.setGender("" + rbEditRobot.getText());
                 }
                 ViseLog.i(userModel.getGender());
             }
@@ -201,9 +240,9 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
         photoDialog.setOnClickListener(new FullSheetDialogFragment.OnItemClickListener() {
             @Override
             public void OnCamera() {
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     getCameraPermission();
-                }else{
+                } else {
                     getShootCamera();
                 }
                 photoDialog.dismiss();
@@ -276,9 +315,9 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
             R2.id.tv_edit_birthday_content, R2.id.tv_edit_country_content})
     public void onViewClicked(View view) {
         if (view.getId() == R.id.iv_topbar_back) {
-            if(mPresenter.isUserInfoModified()){
+            if (mPresenter.isUserInfoModified()) {
                 showQuitDialog();
-            }else {
+            } else {
                 Intent intent = new Intent();
                 UserInfoEditActivity.this.setResult(RESULT_CANCELED, intent);
                 finish();
@@ -293,18 +332,18 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
                     .setListener(new BirthdaySelectDialog.IBirthDialogListener() {
                         @Override
                         public void onConfirm(String birth) {
-                            ViseLog.i("birth="+birth);
+                            ViseLog.i("birth=" + birth);
                             userModel.setBirthday(birth);
                             tvEditBirthdayContent.setText(userModel.getBirthday());
                         }
                     })
                     .show();
-        } else if ((view.getId() == R.id.iv_edit_country_more)||(view.getId() == R.id.tv_edit_country_content)) {
+        } else if ((view.getId() == R.id.iv_edit_country_more) || (view.getId() == R.id.tv_edit_country_content)) {
             new CountrySelectDialog(UserInfoEditActivity.this, R.style.mainBirthDialogStyle)
                     .setListener(new CountrySelectDialog.ICountryDialogListener() {
                         @Override
                         public void onConfirm(int pos, String country) {
-                            userModel.setCountry(pos+"");
+                            userModel.setCountry(pos + "");
                             tvEditCountryContent.setText(country);
                         }
                     }).show();
@@ -360,7 +399,7 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
         mPresenter.release();
     }
 
-    private void showQuitDialog(){
+    private void showQuitDialog() {
         new BaseDialog.Builder(this)
                 .setMessage(R.string.main_profile_quit_edit)
                 .setConfirmButtonId(R.string.main_common_cancel)
@@ -380,7 +419,7 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
                 .show();
     }
 
-    private void getCameraPermission(){
+    private void getCameraPermission() {
         PermissionManager.instance().with(this).request(new OnPermissionCallback() {
             @Override
             public void onRequestAllow(String permissionName) {
@@ -400,7 +439,7 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
     }
 
 
-    private Matrix getImageMatrix(Uri uri){
+    private Matrix getImageMatrix(Uri uri) {
         Matrix matrix = new Matrix();
 
         try {
@@ -408,10 +447,10 @@ public class UserInfoEditActivity extends MVPBaseActivity<UserInfoEditContract.V
             ExifInterface exif = null;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                 exif = new ExifInterface(input);
-            }else{
+            } else {
                 exif = new ExifInterface(uri.getPath());
             }
-            int degree=0;
+            int degree = 0;
             if (exif != null) {
                 // 读取图片中相机方向信息
                 int ori = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,

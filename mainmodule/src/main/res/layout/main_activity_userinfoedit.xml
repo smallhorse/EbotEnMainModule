@@ -16,6 +16,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/edit_topbar">
 
+        <!--android:tint="#60ffffff"-->
         <com.ubt.baselib.customView.ShapedImageView
             android:id="@+id/iv_edit_icon"
             android:layout_width="70dp"
@@ -39,7 +40,7 @@
             app:layout_constraintEnd_toEndOf="@+id/iv_edit_icon"
             app:layout_constraintStart_toStartOf="@+id/iv_edit_icon"
             app:layout_constraintTop_toTopOf="@+id/iv_edit_icon"
-            app:srcCompat="@mipmap/main_profile_user_edit" />
+            android:src="@mipmap/main_profile_user_edit" />
 
         <TextView
             android:id="@+id/tv_edit_name"

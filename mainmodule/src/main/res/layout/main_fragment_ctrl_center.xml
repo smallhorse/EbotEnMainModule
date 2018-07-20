@@ -78,8 +78,10 @@
         app:main_max="255"
         app:main_second_track_color="@color/base_blue"
         app:main_track_color="#E2E2E2"
-        app:main_track_size="5dp"
+        app:main_track_size="3dp"
         app:main_touch_to_seek="false"
+        app:main_thumb_color="#eeeeee"
+        app:main_thumb_radius="15dp"
 
         />
 
@@ -125,6 +127,8 @@
         android:layout_alignTop="@id/iv_ctl_fall"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="30dp"
+        android:track="@drawable/main_switch_track_selector"
+        android:thumb="@drawable/main_switch_thumb_selector"
         />
 
     <TextView
@@ -182,6 +186,8 @@
         android:layout_alignTop="@id/iv_ctl_ir"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="30dp"
+        android:track="@drawable/main_switch_track_selector"
+        android:thumb="@drawable/main_switch_thumb_selector"
         />
 
     <TextView
