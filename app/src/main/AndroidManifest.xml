@@ -38,6 +38,12 @@
     </activity>
     <activity android:name=".settings.SettingsActivity"
               android:screenOrientation="landscape"/>
+
+    <activity android:name=".webview.UserServiceActivity"
+        android:screenOrientation="landscape"/>
+
+    <activity android:name=".webview.UserNoticeActivity"
+        android:screenOrientation="landscape"/>
     <!--activity声明结束-->
 
     <!--服务声明-->

@@ -77,6 +77,19 @@
     <string name="main_log_out_button">Log out account</string>
     <string name="main_log_out_dialogue">Are you sure to log out?</string>
 
+    <string name="main_security_center">Security Center</string>
+    <string name="main_request_cancellation">Request Cancellation</string>
+    <string name="main_security_tip">Are you sure you want to submit Account Cancellation?</string>
+    <string name="main_submit">Submit</string>
+    <string name="main_input_tip">Please enter your password below to ensure that it is your own operation</string>
+    
+    <string name="main_privacy_policy">Privacy Policy</string>
+    <string name="main_privacy_cancle">Withdraw Consent</string>
+    <string name="main_important_notice">Important Notice</string>
+    <string name="main_privacy_msg">Please make sure you have read the Important Notice before submitting the request.
+
+All related content and settings cannot be restored, restrieved or recovered once they are erased.</string>
+
 
     <string name="main_guide_robotstatus">Click here to connect to the robot and its Wi-Fi.\nMore information is also available here.</string>
     <string name="main_guide_voicecmd">Click here to know how to talk with Alpha.</string>

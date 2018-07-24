@@ -37,8 +37,13 @@ public class DataServer {
                     false, R.mipmap.main_user_help, 0));
             datas.add(new LeftMenuModel(R.string.main_language_tab,
                     false, R.mipmap.main_user_lanuague, 0));
+            datas.add(new LeftMenuModel(R.string.policy_tab,
+                    false, R.mipmap.ic_privacy_policy, 0));
             datas.add(new LeftMenuModel(R.string.main_log_out_tab,
                     false, R.mipmap.main_user_logout, 0));
+            datas.add(new LeftMenuModel(R.string.security_center_tab,
+                    false, R.mipmap.ic_security_center, 0));
+
         }
         return datas;
     }

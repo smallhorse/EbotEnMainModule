@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:layout_marginLeft="@dimen/dp_16"
+    android:layout_marginRight="@dimen/dp_16"
+    >
+
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/policy_title"
+        android:layout_margin="@dimen/dp_16"
+        android:textSize="@dimen/sp_14"
+        android:textColor="#333333"
+        />
+
+
+
+
+    <WebView
+        android:id="@+id/wv_privacy_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_title"
+        android:layout_above="@+id/tv_privacy_cancel"
+        >
+    </WebView>
+
+
+    <TextView
+        android:id="@+id/tv_privacy_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_50"
+        android:text="@string/policy_withdraw_button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:textColor="#37AAFF"
+        android:textSize="@dimen/sp_12"
+        />
+
+
+    <View
+        android:id="@+id/view_bottom_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="#E2E2E2"
+        android:layout_above="@+id/tv_request_cancel"
+        />
+
+</RelativeLayout>
