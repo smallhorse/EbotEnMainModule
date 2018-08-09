@@ -280,6 +280,8 @@ public class UserInfoEditPresenter extends BasePresenterImpl<UserInfoEditContrac
             return true;
         }else if(userModel.getIcon()!= null  &&!userModel.getIcon().equals(userInfo.getHeadPic())){
             return true;
+        }else if (userModel.getCountry()!=null&&!userModel.getCountry().equals(userInfo.getCountry())){
+            return true;
         }
         return false;
     }

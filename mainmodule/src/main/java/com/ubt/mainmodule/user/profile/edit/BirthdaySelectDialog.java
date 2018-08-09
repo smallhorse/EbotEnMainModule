@@ -86,14 +86,17 @@ public class BirthdaySelectDialog extends Dialog {
         if(userInfo != null && !TextUtils.isEmpty(userInfo.getBirthDate())){
             String[] birth = userInfo.getBirthDate().split("-");
             int yearPos = Integer.valueOf(birth[0]) - 1900;
+            loopViewYear.setInitPosition(0);
             loopViewYear.setCurrentPosition(yearPos);
 
             int monthPos = Integer.valueOf(birth[1]) - 1;
+            loopViewMonth.setInitPosition(0);
             loopViewMonth.setCurrentPosition(monthPos);
 
             int days = calcDaysOfMonth(Integer.valueOf(birth[0]), Integer.valueOf(birth[1]));
             getDayData(days);
             int dayPos = Integer.valueOf(birth[2]) - 1;
+            loopViewDay.setInitPosition(0);
             loopViewDay.setCurrentPosition(dayPos);
         } else {
             getDayData(30);

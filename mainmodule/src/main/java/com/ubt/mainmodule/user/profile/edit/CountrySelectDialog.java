@@ -12,6 +12,7 @@ import com.ubt.baselib.globalConst.Constant1E;
 import com.ubt.baselib.model1E.UserInfoModel;
 import com.ubt.baselib.skin.SkinManager;
 import com.ubt.baselib.utils.SPUtils;
+import com.ubt.baselib.utils.ULog;
 import com.ubt.mainmodule.R;
 import com.ubt.mainmodule.R2;
 import com.weigan.loopview.LoopView;
@@ -26,7 +27,8 @@ import butterknife.OnClick;
 
 public class CountrySelectDialog extends Dialog {
 
-    @BindView(R2.id.loopView_country)    LoopView loopViewCountry;
+    @BindView(R2.id.loopView_country)
+    LoopView loopViewCountry;
 
 
     private List<String> mListCountry; //国家列表形式
@@ -64,15 +66,27 @@ public class CountrySelectDialog extends Dialog {
         loopViewCountry.setItemsVisibleCount(9);
         loopViewCountry.setTextSize(16);
 
-
         //初始化当前位置
-        if (userInfo != null && !TextUtils.isEmpty(userInfo.getCountry())) {
+        if (userInfo != null && !TextUtils.isEmpty(userInfo.getCountry()) && isNumeric(userInfo.getCountry())) {
+            ULog.d("userEditActivity", "user.getCountry===" + userInfo.getCountry());
             int countryPos = Integer.valueOf(userInfo.getCountry());
+            loopViewCountry.setInitPosition(0);
             loopViewCountry.setCurrentPosition(countryPos);
         }
 
 
     }
+
+    public boolean isNumeric(String str) {
+        for (int i = 0; i < str.length(); i++) {
+            System.out.println(str.charAt(i));
+            if (!Character.isDigit(str.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     @OnClick({R2.id.btn_country_cancel, R2.id.btn_country_confirm})
     public void onViewClicked(View view) {
