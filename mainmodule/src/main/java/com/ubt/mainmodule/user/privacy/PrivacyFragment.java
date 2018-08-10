@@ -68,7 +68,7 @@ public class PrivacyFragment extends SupportFragment {
     @BindView(R2.id.wv_privacy_content)
     WebView mWebView;
 
-    String URL = "http://10.10.1.14:8080/alpha1e/gdpr/cancelCount.html?systemLanguage=CN";
+    String URL = BaseHttpEntity.BASIC_UBX_SYS + "alpha1e/gdpr/procy.html?systemLanguage=" +  SPUtils.getInstance().getString(Constant1E.CURRENT_APP_LANGUAGE, "en");
     Unbinder unbinder;
     private UserInfoModel userInfo;
 

@@ -20,9 +20,8 @@ import com.ubt.mainmodule.user.about.AboutFragment;
 import com.ubt.mainmodule.user.contact.ContactFragment;
 import com.ubt.mainmodule.user.help.HelpFragment;
 import com.ubt.mainmodule.user.language.LanguageFragment;
-import com.ubt.mainmodule.user.privacy.PrivacyFragment;
 import com.ubt.mainmodule.user.logout.LogoutFragment;
-import com.ubt.mainmodule.user.notification.NotificationFragment;
+import com.ubt.mainmodule.user.privacy.PrivacyFragment;
 import com.ubt.mainmodule.user.profile.ProfileFragment;
 import com.ubt.mainmodule.user.recycleview.LeftAdapter;
 import com.ubt.mainmodule.user.security.SecurityFragment;
@@ -48,10 +47,10 @@ public class UserMainFragment extends MVPBaseFragment<UserMainContract.View, Use
     public static final int SIX = 5;
     public static final int SEVEN = 6;
     public static final int EIGHT = 7;
-    public static final int NINE = 8;
+//    public static final int NINE = 8;
 
 
-    public static final int MAX_FRAGMENT = 9;
+    public static final int MAX_FRAGMENT = 8;
 
     @BindView(R2.id.rv_setting_left)
     RecyclerView recyclerView;
@@ -91,15 +90,18 @@ public class UserMainFragment extends MVPBaseFragment<UserMainContract.View, Use
     private void initFragment(){
         SupportFragment firstFragment = findChildFragment(ProfileFragment.class);
         if (firstFragment == null) {
+            //            mFragments[SECOND] = NotificationFragment.newInstance();
+
+
             mFragments[FIRST] = ProfileFragment.newInstance();
-            mFragments[SECOND] = NotificationFragment.newInstance();
-            mFragments[THIRD] = AboutFragment.newInstance();
-            mFragments[FOUR] = ContactFragment.newInstance();
-            mFragments[FIVE] = HelpFragment.newInstance();
-            mFragments[SIX] = LanguageFragment.newInstance();
-            mFragments[SEVEN] = PrivacyFragment.newInstance();
-            mFragments[EIGHT] = LogoutFragment.newInstance();
-            mFragments[NINE] = SecurityFragment.newInstance();
+            mFragments[SECOND] = AboutFragment.newInstance();
+            mFragments[THIRD] = ContactFragment.newInstance();
+            mFragments[FOUR] = HelpFragment.newInstance();
+            mFragments[FIVE] = LanguageFragment.newInstance();
+            mFragments[SIX] = PrivacyFragment.newInstance();
+            mFragments[SEVEN] = LogoutFragment.newInstance();
+            mFragments[EIGHT] = SecurityFragment.newInstance();
+//            mFragments[NINE] = SecurityFragment.newInstance();
 
 
             loadMultipleRootFragment(R.id.frame_content_user, FIRST,
@@ -110,20 +112,22 @@ public class UserMainFragment extends MVPBaseFragment<UserMainContract.View, Use
                     mFragments[FIVE],
                     mFragments[SIX],
                     mFragments[SEVEN],
-                    mFragments[EIGHT],
-                    mFragments[NINE]
+                    mFragments[EIGHT]
+//                    mFragments[NINE]
                     );
         } else {
             ViseLog.i("fragmentCur == "+ fragmentCur);
+//            mFragments[SECOND] = findChildFragment(NotificationFragment.class);
+
             mFragments[FIRST] = firstFragment;
-            mFragments[SECOND] = findChildFragment(NotificationFragment.class);
-            mFragments[THIRD] = findChildFragment(AboutFragment.class);
-            mFragments[FOUR] = findChildFragment(ContactFragment.class);
-            mFragments[FIVE] = findChildFragment(HelpFragment.class);
-            mFragments[SIX] = findChildFragment(LanguageFragment.class);
-            mFragments[SEVEN] = findChildFragment(PrivacyFragment.class);
-            mFragments[EIGHT] = findChildFragment(LogoutFragment.class);
-            mFragments[NINE] = findChildFragment(SecurityFragment.class);
+            mFragments[SECOND] = findChildFragment(AboutFragment.class);
+            mFragments[THIRD] = findChildFragment(ContactFragment.class);
+            mFragments[FOUR] = findChildFragment(HelpFragment.class);
+            mFragments[FIVE] = findChildFragment(LanguageFragment.class);
+            mFragments[SIX] = findChildFragment(PrivacyFragment.class);
+            mFragments[SEVEN] = findChildFragment(LogoutFragment.class);
+            mFragments[EIGHT] = findChildFragment(SecurityFragment.class);
+//            mFragments[NINE] = findChildFragment(SecurityFragment.class);
 
         }
     }

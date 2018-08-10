@@ -73,7 +73,7 @@ public class SecurityFragment extends SupportFragment {
     @BindView(R2.id.wv_request_content)
     WebView mWebView;
 
-    String URL = "http://10.10.1.14:8080/alpha1e/gdpr/warning.html?systemLanguage=CN ";
+    String URL = BaseHttpEntity.BASIC_UBX_SYS + "alpha1e/gdpr/warning.html?systemLanguage=" +  SPUtils.getInstance().getString(Constant1E.CURRENT_APP_LANGUAGE, "en");
     Unbinder unbinder;
     private UserInfoModel userInfo;
 
